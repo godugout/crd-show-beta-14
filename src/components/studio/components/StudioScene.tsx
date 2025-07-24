@@ -15,7 +15,7 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
   showGrid = true
  }) => {
   // Camera texture for the slab surface
-  const { texture: cameraTexture, isActive: cameraActive, error: cameraError } = useCameraTexture();
+  const { texture: cameraTexture, isActive: cameraActive } = useCameraTexture();
   
   // Use space-themed background image instead of provided one
   const spaceBackgroundUrl = 'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=2000&q=80';
@@ -114,9 +114,6 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
 
       {/* Convergence point indicator */}
       {process.env.NODE_ENV === 'development' && convergenceIndicator}
-
-      {/* Camera status - logged to console */}
-      {cameraError && console.error('Camera Error:', cameraError)}
 
       {/* Ambient particles or atmosphere effects could go here */}
     </>

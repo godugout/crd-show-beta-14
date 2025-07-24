@@ -4,6 +4,7 @@ import { CRDEditorProvider } from '@/contexts/CRDEditorContext';
 import { useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { CreateFooter } from '@/components/create/CreateFooter';
+import { CameraPermissions } from '@/components/camera/CameraPermissions';
 import type { CardData } from '@/hooks/useCardEditor';
 
 const CreateCRD = () => {
@@ -33,6 +34,9 @@ const CreateCRD = () => {
               isVisible={true}
             />
           </ErrorBoundary>
+          
+          {/* Camera Permission UI */}
+          <CameraPermissions />
         </div>
         
         {/* Footer */}

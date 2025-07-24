@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Camera, AlertCircle } from 'lucide-react';
+import { useCameraTexture } from '@/hooks/useCameraTexture';
 
 interface CameraPermissionsProps {
   onPermissionGranted?: () => void;
@@ -11,33 +12,23 @@ export const CameraPermissions: React.FC<CameraPermissionsProps> = ({
   onPermissionGranted,
   onPermissionDenied
 }) => {
+  const { startCamera, isActive, error, hasPermission } = useCameraTexture();
   const [isRequesting, setIsRequesting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const requestCameraPermission = async () => {
+  const handleCameraRequest = async () => {
     setIsRequesting(true);
-    setError(null);
-
     try {
-      // Test camera access
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'user' } 
-      });
-      
-      // Stop the test stream immediately
-      stream.getTracks().forEach(track => track.stop());
-      
-      console.log('📷 Camera permission granted');
+      await startCamera();
       onPermissionGranted?.();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Camera access denied';
-      console.error('❌ Camera permission denied:', errorMessage);
-      setError(errorMessage);
       onPermissionDenied?.();
     } finally {
       setIsRequesting(false);
     }
   };
+
+  // Don't show if camera is already active
+  if (isActive) return null;
 
   return (
     <div className="fixed top-4 right-4 bg-black/80 backdrop-blur-sm border border-white/10 rounded-lg p-4 max-w-sm z-50">
@@ -58,7 +49,7 @@ export const CameraPermissions: React.FC<CameraPermissionsProps> = ({
       )}
 
       <Button 
-        onClick={requestCameraPermission}
+        onClick={handleCameraRequest}
         disabled={isRequesting}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white"
       >
