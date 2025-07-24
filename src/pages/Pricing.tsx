@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Check, Coins, Crown, Star } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +9,12 @@ import { toast } from 'sonner';
 
 const Pricing = () => {
   const { plans, userSubscription, isProcessing, createSubscription } = useSubscription();
-  const { currentPalette } = useTeamTheme();
+  const { currentPalette, currentThemeId } = useTeamTheme();
+
+  // Force re-render when theme changes for real-time updates
+  useEffect(() => {
+    console.log('Theme changed on pricing page:', currentThemeId);
+  }, [currentThemeId]);
 
   const handleSelectPlan = async (planId: string, planName: string, price: number) => {
     if (price === 0) {
@@ -160,7 +165,7 @@ const Pricing = () => {
               <div 
                 key={plan.id} 
                 className={`
-                  relative bg-card border rounded-xl transition-all duration-300 hover-scale animate-fade-in
+                  relative bg-card border rounded-xl transition-all duration-300 hover-scale animate-fade-in flex flex-col h-full
                   ${isCurrent ? 'ring-2 ring-primary' : 'hover:border-primary/40'}
                   ${isPopular ? 'ring-2' : ''}
                 `}
@@ -185,7 +190,7 @@ const Pricing = () => {
                   </div>
                 )}
                 
-                <div className="p-8">
+                <div className="p-8 flex flex-col h-full">
                   {/* Plan Header */}
                   <div className="text-center pb-6">
                     <div className="flex justify-center mb-4">
@@ -214,7 +219,7 @@ const Pricing = () => {
                   </div>
 
                   {/* Features List */}
-                  <div className="space-y-4 mb-8">
+                  <div className="space-y-4 mb-8 flex-1">
                     <div className="flex items-center gap-3">
                       <Check 
                         className="w-5 h-5 flex-shrink-0"
@@ -308,14 +313,18 @@ const Pricing = () => {
                     )}
                   </div>
 
-                  {/* CTA Button */}
-                  <button
-                    className={`btn-primary w-full ${isCurrent ? 'opacity-50 cursor-not-allowed' : 'hover-scale'}`}
-                    disabled={isCurrent || isProcessing}
-                    onClick={() => handleSelectPlan(plan.id, plan.name, plan.price_monthly)}
-                  >
-                    {isCurrent ? 'Current Plan' : `Get ${plan.name}`}
-                  </button>
+                  {/* CTA Button - Auto-aligned to bottom */}
+                  <div className="mt-auto">
+                    <CRDButton
+                      variant="create"
+                      size="lg"
+                      className={`w-full min-w-[200px] ${isCurrent ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      disabled={isCurrent || isProcessing}
+                      onClick={() => handleSelectPlan(plan.id, plan.name, plan.price_monthly)}
+                    >
+                      {isCurrent ? 'Current Plan' : isProcessing ? 'Processing...' : `Get ${plan.name}`}
+                    </CRDButton>
+                  </div>
                 </div>
               </div>
             );
