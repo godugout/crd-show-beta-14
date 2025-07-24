@@ -110,6 +110,26 @@
     @apply transform scale-[0.98];
   }
 
+  /* Official CRD Free Button - Orange-Green gradient for free tier */
+  .crd-free-button {
+    @apply relative overflow-hidden text-white font-bold shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(25, 95%, 55%), hsl(142, 70%, 45%));
+    background-size: 200% 200%;
+    animation: liquid-gradient 18s ease-in-out infinite;
+    will-change: background-position;
+  }
+
+  .crd-free-button:hover {
+    @apply shadow-xl transform scale-[1.02];
+    background: linear-gradient(135deg, hsl(25, 100%, 60%), hsl(142, 75%, 50%));
+    background-size: 250% 250%;
+    animation: liquid-gradient 12s ease-in-out infinite;
+  }
+
+  .crd-free-button:active {
+    @apply transform scale-[0.98];
+  }
+
   /* Official CRD Collective Button - Community/Creator CTA */
   .crd-collective-button {
     @apply relative overflow-hidden text-white font-bold shadow-lg transition-all duration-300;

@@ -19,7 +19,9 @@ const buttonVariants = cva(
         glass: "crd-glass-button",
         // Official Create CTA button with orange-green-blue CRD gradient
         create: "crd-create-button",
-        // Official Collective CTA button with orange gradient
+        // Free tier button with orange-green gradient
+        free: "crd-free-button",
+        // Official Collective CTA button with orange gradient  
         collective: "crd-collective-button",
         // Official Collect CTA button with blue-purple gradient
         collect: "crd-collect-button",

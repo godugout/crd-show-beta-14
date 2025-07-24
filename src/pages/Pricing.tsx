@@ -316,7 +316,12 @@ const Pricing = () => {
                   {/* CTA Button - Auto-aligned to bottom */}
                   <div className="mt-auto">
                     <CRDButton
-                      variant="create"
+                      variant={
+                        plan.name === 'Free' ? 'free' :
+                        plan.name === 'Collector' ? 'collective' :
+                        plan.name === 'Creator Pro' ? 'collect' :
+                        'create'
+                      }
                       size="lg"
                       className={`w-full min-w-[200px] ${isCurrent ? 'opacity-50 cursor-not-allowed' : ''}`}
                       disabled={isCurrent || isProcessing}
