@@ -33,7 +33,124 @@
     color: hsl(220 17% 56%) !important;
   }
   
-  /* CRD Color Utilities - All HSL */
+  /* NEW: CRD Brand Color Utilities */
+  .bg-crd-black { background-color: hsl(var(--crd-black)); }
+  .bg-crd-surface { background-color: hsl(var(--crd-surface)); }
+  .bg-crd-surface-light { background-color: hsl(var(--crd-surface-light)); }
+  .bg-crd-text { background-color: hsl(var(--crd-text)); }
+  .bg-crd-text-dim { background-color: hsl(var(--crd-text-dim)); }
+  .bg-crd-green { background-color: hsl(var(--crd-green)); }
+  .bg-crd-orange { background-color: hsl(var(--crd-orange)); }
+  .bg-crd-blue { background-color: hsl(var(--crd-blue)); }
+  .bg-crd-yellow { background-color: hsl(var(--crd-yellow)); }
+  .bg-crd-hover { background-color: hsl(var(--crd-hover)); }
+
+  .text-crd-black { color: hsl(var(--crd-black)); }
+  .text-crd-surface { color: hsl(var(--crd-surface)); }
+  .text-crd-surface-light { color: hsl(var(--crd-surface-light)); }
+  .text-crd-text { color: hsl(var(--crd-text)); }
+  .text-crd-text-dim { color: hsl(var(--crd-text-dim)); }
+  .text-crd-green { color: hsl(var(--crd-green)); }
+  .text-crd-orange { color: hsl(var(--crd-orange)); }
+  .text-crd-blue { color: hsl(var(--crd-blue)); }
+  .text-crd-yellow { color: hsl(var(--crd-yellow)); }
+
+  .border-crd-black { border-color: hsl(var(--crd-black)); }
+  .border-crd-surface { border-color: hsl(var(--crd-surface)); }
+  .border-crd-surface-light { border-color: hsl(var(--crd-surface-light)); }
+  .border-crd-border { border-color: hsl(var(--crd-border)); }
+  .border-crd-green { border-color: hsl(var(--crd-green)); }
+  .border-crd-orange { border-color: hsl(var(--crd-orange)); }
+  .border-crd-blue { border-color: hsl(var(--crd-blue)); }
+  .border-crd-yellow { border-color: hsl(var(--crd-yellow)); }
+
+  /* Premium Component Classes */
+  .btn-primary {
+    background: hsl(var(--crd-orange));
+    color: hsl(var(--crd-black));
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s ease;
+    min-height: 44px; /* Touch target */
+  }
+
+  .btn-primary:hover {
+    background: hsl(var(--crd-green));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-secondary {
+    background: hsl(var(--crd-surface-light));
+    color: hsl(var(--crd-text));
+    border: 1px solid hsl(var(--crd-border));
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s ease;
+    min-height: 44px;
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--crd-hover));
+    border-color: hsl(var(--crd-green));
+  }
+
+  /* Trading Card Component */
+  .trading-card {
+    aspect-ratio: 2.5 / 3.5;
+    border-radius: 12px;
+    background: hsl(var(--crd-surface));
+    border: 1px solid hsl(var(--crd-border));
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .trading-card:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .trading-card.rare {
+    border: 2px solid hsl(var(--crd-blue));
+    box-shadow: 0 0 20px hsl(var(--crd-blue) / 0.3);
+  }
+
+  .trading-card.epic {
+    border: 2px solid hsl(var(--crd-purple));
+    box-shadow: 0 0 20px hsl(var(--crd-purple) / 0.3);
+  }
+
+  .trading-card.legendary {
+    border: 2px solid hsl(var(--crd-yellow));
+    box-shadow: 0 0 20px hsl(var(--crd-yellow) / 0.3);
+  }
+
+  /* CRD Token Display */
+  .token-amount {
+    color: hsl(var(--crd-yellow));
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .token-amount::before {
+    content: "🪙 ";
+  }
+
+  /* Marketplace Gradients */
+  .bg-marketplace-hero {
+    background: var(--gradient-crd-marketplace);
+  }
+
+  .bg-premium-glow {
+    background: var(--gradient-crd-premium);
+  }
+
+  /* CRD Color Utilities - Legacy support */
   .bg-crd-darkest { background-color: hsl(var(--crd-darkest)); }
   .bg-crd-darker { background-color: hsl(var(--crd-darker)); }
   .bg-crd-dark { background-color: hsl(var(--crd-dark)); }
@@ -41,10 +158,8 @@
   .bg-crd-mediumGray { background-color: hsl(var(--crd-mediumGray)); }
   .bg-crd-lightGray { background-color: hsl(var(--crd-lightGray)); }
   .bg-crd-white { background-color: hsl(var(--crd-white)); }
-  .bg-crd-blue { background-color: hsl(var(--crd-blue)); }
   .bg-crd-purple { background-color: hsl(var(--crd-purple)); }
-  .bg-crd-orange { background-color: hsl(var(--crd-orange)); }
-  .bg-crd-green { background-color: hsl(var(--crd-green)); }
+  .bg-crd-gold { background-color: hsl(var(--crd-gold)); }
 
   .text-crd-darkest { color: hsl(var(--crd-darkest)); }
   .text-crd-darker { color: hsl(var(--crd-darker)); }
@@ -53,10 +168,8 @@
   .text-crd-mediumGray { color: hsl(var(--crd-mediumGray)); }
   .text-crd-lightGray { color: hsl(var(--crd-lightGray)); }
   .text-crd-white { color: hsl(var(--crd-white)); }
-  .text-crd-blue { color: hsl(var(--crd-blue)); }
   .text-crd-purple { color: hsl(var(--crd-purple)); }
-  .text-crd-orange { color: hsl(var(--crd-orange)); }
-  .text-crd-green { color: hsl(var(--crd-green)); }
+  .text-crd-gold { color: hsl(var(--crd-gold)); }
 
   .border-crd-darkest { border-color: hsl(var(--crd-darkest)); }
   .border-crd-darker { border-color: hsl(var(--crd-darker)); }
@@ -65,10 +178,8 @@
   .border-crd-mediumGray { border-color: hsl(var(--crd-mediumGray)); }
   .border-crd-lightGray { border-color: hsl(var(--crd-lightGray)); }
   .border-crd-white { border-color: hsl(var(--crd-white)); }
-  .border-crd-blue { border-color: hsl(var(--crd-blue)); }
-  .border-crd-purple { color: hsl(var(--crd-purple)); }
-  .border-crd-orange { border-color: hsl(var(--crd-orange)); }
-  .border-crd-green { border-color: hsl(var(--crd-green)); }
+  .border-crd-purple { border-color: hsl(var(--crd-purple)); }
+  .border-crd-gold { border-color: hsl(var(--crd-gold)); }
 
   /* Editor Color Utilities */
   .bg-editor-dark { background-color: hsl(var(--editor-dark)); }

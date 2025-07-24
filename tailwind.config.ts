@@ -160,6 +160,11 @@ export default {
           canvas: 'var(--editor-canvas)',
         },
       },
+      aspectRatio: {
+        'card': '2.5 / 3.5', // Trading card standard
+        'banner': '16 / 9',
+        'square': '1 / 1',
+      },
       spacing: {
         'xs': '0.5rem',   // 8px
         'sm': '0.75rem',  // 12px
@@ -168,10 +173,11 @@ export default {
         'xl': '2rem',     // 32px
         '2xl': '3rem',    // 48px
         '3xl': '4rem',    // 64px
+        '44': '11rem',    // 176px - Touch target minimum
       },
       borderRadius: {
         'sm': '0.5rem',   // 8px - buttons, inputs
-        'md': '0.75rem',  // 12px - small cards
+        'md': '0.75rem',  // 12px - small cards / TRADING CARD STANDARD
         'lg': '1rem',     // 16px - main cards
         'xl': '1.5rem',   // 24px - hero sections
         'pill': '5.625rem', // 90px - full rounded buttons
