@@ -94,13 +94,13 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Orange Sun Light Source - Bottom Right */}
       <div 
-        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none z-30"
+        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none z-45"
         style={{
           background: `radial-gradient(
             circle at 85% 85%,
-            rgba(255, 165, 0, 0.15) 0%,
-            rgba(255, 140, 0, 0.08) 20%,
-            rgba(255, 120, 0, 0.04) 40%,
+            rgba(255, 165, 0, 0.25) 0%,
+            rgba(255, 140, 0, 0.15) 20%,
+            rgba(255, 120, 0, 0.08) 40%,
             transparent 60%
           )`,
           transform: 'translate(25%, 25%)'
@@ -108,7 +108,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
       />
 
       {/* Sun Rays */}
-      <div className="absolute bottom-0 right-0 w-full h-full pointer-events-none z-25 overflow-hidden">
+      <div className="absolute bottom-0 right-0 w-full h-full pointer-events-none z-42 overflow-hidden">
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
@@ -118,8 +118,8 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
               height: '2px',
               background: `linear-gradient(
                 to left,
-                rgba(255, 165, 0, 0.1) 0%,
-                rgba(255, 140, 0, 0.05) 30%,
+                rgba(255, 165, 0, 0.2) 0%,
+                rgba(255, 140, 0, 0.1) 30%,
                 transparent 70%
               )`,
               transform: `rotate(${-45 + i * 15}deg)`,
@@ -131,7 +131,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Surface Reflection - Subtle orange glow on the "slab" */}
       <div 
-        className="absolute inset-0 pointer-events-none z-35"
+        className="absolute inset-0 pointer-events-none z-43"
         style={{
           background: `radial-gradient(
             ellipse 40% 20% at 70% 60%,
