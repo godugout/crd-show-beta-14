@@ -1,6 +1,5 @@
 
 import { supabase } from '@/lib/supabase-client';
-import { getAppId } from '@/integrations/supabase/client';
 import type { MemoryListOptions, PaginatedMemories } from '../types';
 import { calculateOffset } from '../core';
 
@@ -23,10 +22,6 @@ export const getMemoriesByUserId = async (
       .select('*, media(*)', { count: 'exact' })
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
-      
-    // Add app_id filter if available
-    const appId = await getAppId();
-    if (appId) query = query.eq('app_id', appId);
     
     if (visibility && visibility !== 'all') {
       query = query.eq('visibility', visibility);

@@ -2,7 +2,6 @@
 import type { Collection, CollectionItem, CollectionListOptions, PaginatedCollections } from './types';
 import { getCollectionQuery, getCollectionItemsQuery, calculateOffset } from './core';
 import { supabase } from '@/lib/supabase-client';
-import { getAppId } from '@/integrations/supabase/client';
 import type { Visibility } from '@/types/common';
 
 export const getCollectionById = async (id: string): Promise<Collection | null> => {

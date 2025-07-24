@@ -2,12 +2,8 @@
 import { supabase } from '@/lib/supabase-client';
 import type { Collection, CreateCollectionParams, UpdateCollectionParams } from './types';
 import { getCollectionById } from './queries';
-import { getAppId } from '@/integrations/supabase/client';
 
 export const createCollection = async (params: CreateCollectionParams): Promise<Collection> => {
-  // Get app_id if available
-  const appId = await getAppId();
-  
   // Create the collection
   const { data, error } = await supabase
     .from('collections')
@@ -15,8 +11,7 @@ export const createCollection = async (params: CreateCollectionParams): Promise<
       title: params.title,
       description: params.description,
       owner_id: params.ownerId,
-      visibility: params.visibility || 'private',
-      app_id: appId
+      visibility: params.visibility || 'private'
     })
     .select()
     .single();

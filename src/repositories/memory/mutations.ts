@@ -3,13 +3,9 @@ import { supabase } from '@/lib/supabase-client';
 import type { Memory } from '@/types/memory';
 import type { CreateMemoryParams, UpdateMemoryParams } from './types';
 import { getMemoryById } from './queries';
-import { getAppId } from '@/integrations/supabase/client';
 
 export const createMemory = async (params: CreateMemoryParams): Promise<Memory> => {
   try {
-    // Get app_id if available
-    const appId = await getAppId();
-    
     const { data, error } = await supabase
       .from('memories')
       .insert({
@@ -21,8 +17,7 @@ export const createMemory = async (params: CreateMemoryParams): Promise<Memory> 
         location: params.location,
         visibility: params.visibility,
         tags: params.tags || [],
-        metadata: params.metadata,
-        app_id: appId
+        metadata: params.metadata
       })
       .select('*, media(*)')
       .single();
