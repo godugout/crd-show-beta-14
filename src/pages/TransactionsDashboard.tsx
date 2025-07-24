@@ -242,7 +242,7 @@ const TransactionsDashboard = () => {
           <button 
             onClick={handleRefreshData} 
             disabled={isLoading}
-            className="flex items-center gap-2 hover-scale px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-lg font-medium transition-all duration-200"
+            className="flex items-center gap-2 hover-scale px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-md font-medium transition-all duration-200"
             style={{
               backgroundColor: 'hsl(var(--theme-primary))',
               color: 'white'
@@ -322,7 +322,7 @@ const TransactionsDashboard = () => {
             <button
               key={tab.key}
               className={`
-                px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-lg font-medium transition-all duration-200 hover-scale
+                px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-md font-medium transition-all duration-200 hover-scale
                 ${activeTab === tab.key 
                   ? 'text-primary-foreground' 
                   : 'bg-card text-muted-foreground hover:text-foreground border border-border'
@@ -347,7 +347,7 @@ const TransactionsDashboard = () => {
               {activeTab === 'payouts' && 'Payout History'}
             </h2>
             <button 
-              className="flex items-center gap-2 px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-lg font-medium transition-all duration-200 hover-scale"
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 text-sm sm:text-base min-h-[40px] rounded-md font-medium transition-all duration-200 hover-scale"
               style={{
                 backgroundColor: 'hsl(var(--theme-accent))',
                 color: 'white'
