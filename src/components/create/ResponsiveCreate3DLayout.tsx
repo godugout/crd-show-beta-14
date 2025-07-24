@@ -94,21 +94,25 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Orange Sun Light Source - Bottom Right */}
       <div 
-        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none z-45"
+        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none"
         style={{
           background: `radial-gradient(
             circle at 85% 85%,
-            rgba(255, 165, 0, 0.25) 0%,
-            rgba(255, 140, 0, 0.15) 20%,
-            rgba(255, 120, 0, 0.08) 40%,
+            rgba(255, 165, 0, 0.4) 0%,
+            rgba(255, 140, 0, 0.25) 20%,
+            rgba(255, 120, 0, 0.15) 40%,
             transparent 60%
           )`,
-          transform: 'translate(25%, 25%)'
+          transform: 'translate(25%, 25%)',
+          zIndex: 60
         }}
       />
 
       {/* Sun Rays */}
-      <div className="absolute bottom-0 right-0 w-full h-full pointer-events-none z-42 overflow-hidden">
+      <div 
+        className="absolute bottom-0 right-0 w-full h-full pointer-events-none overflow-hidden"
+        style={{ zIndex: 58 }}
+      >
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
@@ -118,8 +122,8 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
               height: '2px',
               background: `linear-gradient(
                 to left,
-                rgba(255, 165, 0, 0.2) 0%,
-                rgba(255, 140, 0, 0.1) 30%,
+                rgba(255, 165, 0, 0.3) 0%,
+                rgba(255, 140, 0, 0.2) 30%,
                 transparent 70%
               )`,
               transform: `rotate(${-45 + i * 15}deg)`,
@@ -131,14 +135,15 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Surface Reflection - Subtle orange glow on the "slab" */}
       <div 
-        className="absolute inset-0 pointer-events-none z-43"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(
             ellipse 40% 20% at 70% 60%,
-            rgba(255, 165, 0, 0.08) 0%,
-            rgba(255, 140, 0, 0.04) 30%,
+            rgba(255, 165, 0, 0.12) 0%,
+            rgba(255, 140, 0, 0.08) 30%,
             transparent 60%
-          )`
+          )`,
+          zIndex: 59
         }}
       />
 
