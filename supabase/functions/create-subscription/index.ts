@@ -32,8 +32,14 @@ serve(async (req) => {
       throw new Error('No authorization header');
     }
 
+    // Use the anon client to get user from auth header
+    const anonClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
+    );
+    
     const token = authHeader.replace('Bearer ', '');
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
+    const { data: userData, error: userError } = await anonClient.auth.getUser(token);
     if (userError || !userData.user) {
       throw new Error('Invalid user token');
     }
