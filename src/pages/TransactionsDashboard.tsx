@@ -62,7 +62,7 @@ const TransactionsDashboard = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'transactions' | 'earnings' | 'payouts'>('transactions');
-  const { currentPalette } = useTeamTheme();
+  const { currentPalette, currentThemeId } = useTeamTheme();
 
   const fetchTransactions = async () => {
     try {
@@ -224,7 +224,7 @@ const TransactionsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div key={currentThemeId} className="min-h-screen bg-background flex flex-col">
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         {/* Premium Header */}
         <div className="flex justify-between items-center mb-8 animate-fade-in">
@@ -233,7 +233,7 @@ const TransactionsDashboard = () => {
               🪙 CRD <span 
                 className="text-transparent bg-clip-text"
                 style={{
-                  backgroundImage: `linear-gradient(135deg, ${currentPalette?.colors.accent || 'hsl(var(--accent))'}, ${currentPalette?.colors.primary || 'hsl(var(--primary))'})`
+                  backgroundImage: 'linear-gradient(135deg, hsl(var(--theme-accent)), hsl(var(--theme-primary)))'
                 }}
               >Wallet</span>
             </h1>
@@ -257,7 +257,7 @@ const TransactionsDashboard = () => {
               value: `$${stats.totalEarnings.toFixed(2)}`,
               description: "All-time creator earnings",
               icon: DollarSign,
-              color: currentPalette?.colors.accent || 'hsl(var(--accent))',
+              color: 'hsl(var(--theme-accent))',
               delay: "0s"
             },
             {
@@ -265,7 +265,7 @@ const TransactionsDashboard = () => {
               value: `$${stats.pendingEarnings.toFixed(2)}`,
               description: "Awaiting payout",
               icon: TrendingUp,
-              color: currentPalette?.colors.secondary || 'hsl(var(--secondary))',
+              color: 'hsl(var(--theme-secondary))',
               delay: "0.1s"
             },
             {
@@ -273,7 +273,7 @@ const TransactionsDashboard = () => {
               value: `$${stats.totalPayouts.toFixed(2)}`,
               description: "Successfully paid out",
               icon: CreditCard,
-              color: currentPalette?.colors.primary || 'hsl(var(--primary))',
+              color: 'hsl(var(--theme-primary))',
               delay: "0.2s"
             },
             {
@@ -281,7 +281,7 @@ const TransactionsDashboard = () => {
               value: stats.transactionCount.toString(),
               description: "Total transactions", 
               icon: Calendar,
-              color: currentPalette?.colors.accent || 'hsl(var(--accent))',
+              color: 'hsl(var(--theme-accent))',
               delay: "0.3s"
             }
           ].map((stat) => (
@@ -325,7 +325,7 @@ const TransactionsDashboard = () => {
                 }
               `}
               style={activeTab === tab.key ? {
-                background: currentPalette?.colors.primary || 'hsl(var(--primary))'
+                background: 'hsl(var(--theme-primary))'
               } : {}}
               onClick={() => setActiveTab(tab.key as any)}
             >
@@ -357,7 +357,7 @@ const TransactionsDashboard = () => {
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
+                      <div style={{ color: 'hsl(var(--theme-accent))' }}>
                         {getStatusIcon(transaction.status)}
                       </div>
                       <div>
@@ -389,7 +389,7 @@ const TransactionsDashboard = () => {
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
+                      <div style={{ color: 'hsl(var(--theme-accent))' }}>
                         {getStatusIcon(earning.status)}
                       </div>
                       <div>
@@ -422,7 +422,7 @@ const TransactionsDashboard = () => {
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
+                      <div style={{ color: 'hsl(var(--theme-accent))' }}>
                         {getStatusIcon(payout.status)}
                       </div>
                       <div>

@@ -51,7 +51,7 @@ const Pricing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div key={currentThemeId} className="min-h-screen bg-background flex flex-col">
       <div className="max-w-7xl mx-auto px-4 py-16 flex-1">
         {/* Premium Hero Section */}
         <div className="text-center mb-16 animate-fade-in">
@@ -59,7 +59,7 @@ const Pricing = () => {
             <div 
               className="absolute inset-0 blur-3xl opacity-30"
               style={{
-                background: `linear-gradient(135deg, ${currentPalette?.colors.primary || 'hsl(var(--primary))'}, ${currentPalette?.colors.secondary || 'hsl(var(--secondary))'}, ${currentPalette?.colors.accent || 'hsl(var(--accent))'})`
+                background: 'linear-gradient(135deg, hsl(var(--theme-primary)), hsl(var(--theme-secondary)), hsl(var(--theme-accent)))'
               }}
             ></div>
             <h1 className="relative text-5xl md:text-6xl font-bold mb-6 text-foreground">
@@ -81,25 +81,25 @@ const Pricing = () => {
           <div 
             className="absolute inset-0 rounded-lg blur-xl opacity-20"
             style={{
-              background: `linear-gradient(135deg, ${currentPalette?.colors.accent || 'hsl(var(--accent))'}, ${currentPalette?.colors.primary || 'hsl(var(--primary))'})`
+              background: 'linear-gradient(135deg, hsl(var(--theme-accent)), hsl(var(--theme-primary)))'
             }}
           ></div>
           <div 
             className="relative bg-card border rounded-lg p-8"
             style={{
-              borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+              borderColor: 'hsl(var(--theme-accent) / 0.25)'
             }}
           >
             <div className="flex items-center gap-3 mb-6">
               <div 
                 className="p-3 rounded-lg"
                 style={{
-                  backgroundColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}20`
+                  backgroundColor: 'hsl(var(--theme-accent) / 0.2)'
                 }}
               >
                 <Coins 
                   className="w-8 h-8"
-                  style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                  style={{ color: 'hsl(var(--theme-accent))' }}
                 />
               </div>
               <h2 className="text-3xl font-bold text-foreground flex items-center gap-2">
