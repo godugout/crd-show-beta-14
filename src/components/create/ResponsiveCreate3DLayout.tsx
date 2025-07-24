@@ -98,40 +98,17 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
         style={{
           background: `radial-gradient(
             circle at 85% 85%,
-            rgba(255, 165, 0, 0.4) 0%,
-            rgba(255, 140, 0, 0.25) 20%,
-            rgba(255, 120, 0, 0.15) 40%,
-            transparent 60%
+            rgba(255, 255, 0, 0.5) 0%,
+            rgba(255, 200, 0, 0.4) 15%,
+            rgba(255, 165, 0, 0.3) 30%,
+            rgba(255, 140, 0, 0.2) 50%,
+            transparent 70%
           )`,
           transform: 'translate(25%, 25%)',
           zIndex: 60
         }}
       />
 
-      {/* Sun Rays */}
-      <div 
-        className="absolute bottom-0 right-0 w-full h-full pointer-events-none overflow-hidden"
-        style={{ zIndex: 58 }}
-      >
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bottom-0 right-0 origin-bottom-right"
-            style={{
-              width: '200px',
-              height: '2px',
-              background: `linear-gradient(
-                to left,
-                rgba(255, 165, 0, 0.3) 0%,
-                rgba(255, 140, 0, 0.2) 30%,
-                transparent 70%
-              )`,
-              transform: `rotate(${-45 + i * 15}deg)`,
-              transformOrigin: '100% 100%'
-            }}
-          />
-        ))}
-      </div>
 
       {/* Surface Reflection - Subtle orange glow on the "slab" */}
       <div 
@@ -139,8 +116,9 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
         style={{
           background: `radial-gradient(
             ellipse 40% 20% at 70% 60%,
-            rgba(255, 165, 0, 0.12) 0%,
-            rgba(255, 140, 0, 0.08) 30%,
+            rgba(255, 255, 0, 0.15) 0%,
+            rgba(255, 200, 0, 0.12) 20%,
+            rgba(255, 165, 0, 0.08) 40%,
             transparent 60%
           )`,
           zIndex: 59
