@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Globe, Sparkles, Sun, Moon, Zap } from 'lucide-react';
 import { Button } from '../ui/button';
 
-export type SpaceEnvironment = 'starfield' | 'nebula' | 'deep_space' | 'cinematic' | 'clean';
+export type SpaceEnvironment = 'starfield' | 'nebula' | 'deep_space' | 'cinematic' | 'clean' | 'cinematic_deep_space';
 
 interface EnvironmentSwitcherProps {
   currentEnvironment: SpaceEnvironment;
@@ -39,6 +39,12 @@ const environments = [
     name: 'Clean',
     icon: Globe,
     description: 'Studio-style space'
+  },
+  {
+    id: 'cinematic_deep_space' as SpaceEnvironment,
+    name: 'Deep Space HDRI',
+    icon: Sparkles,
+    description: 'Premium cinematic space'
   }
 ];
 

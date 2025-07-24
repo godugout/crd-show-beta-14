@@ -131,6 +131,37 @@ export const SpaceEnvironmentRenderer: React.FC<SpaceEnvironmentProps> = ({
           background: '#0f0f23'
         };
 
+      case 'cinematic_deep_space':
+        return {
+          stars: {
+            radius: 600,
+            depth: 120,
+            count: 8000,
+            factor: 12,
+            saturation: 0.1,
+            fade: true
+          },
+          lighting: {
+            ambient: { intensity: 0.15 * intensity, color: '#1a1a2e' },
+            key: { 
+              position: [20, 15, 25] as [number, number, number], 
+              intensity: 1.8 * intensity, 
+              color: '#ffffff' 
+            },
+            rim: { 
+              position: [-15, 10, -20] as [number, number, number], 
+              intensity: 0.6 * intensity, 
+              color: '#4a90e2' 
+            },
+            accent: { 
+              position: [0, -20, 0] as [number, number, number], 
+              intensity: 0.3 * intensity, 
+              color: '#6a4c93' 
+            }
+          },
+          background: '#000005'
+        };
+
       default:
         return {
           stars: {
@@ -225,6 +256,15 @@ export const SpaceEnvironmentRenderer: React.FC<SpaceEnvironmentProps> = ({
           position={config.lighting.accent.position}
           intensity={config.lighting.accent.intensity}
           color={config.lighting.accent.color}
+        />
+      )}
+      
+      {/* Rim Light (for cinematic_deep_space) */}
+      {config.lighting.rim && (
+        <directionalLight 
+          position={config.lighting.rim.position}
+          intensity={config.lighting.rim.intensity}
+          color={config.lighting.rim.color}
         />
       )}
     </>
