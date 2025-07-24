@@ -79,14 +79,14 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
         }}
       />
 
-      {/* Bottom Glow Enhancement */}
+      {/* Bottom Glow Enhancement - Pure dark blend without color tint */}
       <div 
         className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-40"
         style={{
           background: `radial-gradient(
             ellipse at center bottom,
-            hsla(var(--theme-primary) / 0.15) 0%,
-            hsla(var(--theme-primary) / 0.08) 30%,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.1) 30%,
             transparent 70%
           )`
         }}
