@@ -30,6 +30,10 @@ const Gallery = lazy(() => import('@/pages/Gallery'));
 const Studio = lazy(() => import('@/pages/Studio'));
 const Collections = lazy(() => import('@/pages/Collections'));
 const CollectionsCatalog = lazy(() => import('@/pages/CollectionsCatalog'));
+const Marketplace = lazy(() => import('@/pages/Marketplace'));
+const ListingDetail = lazy(() => import('@/pages/ListingDetail'));
+const Pricing = lazy(() => import('@/pages/Pricing'));
+const TransactionsDashboard = lazy(() => import('@/pages/TransactionsDashboard'));
 
 // Development/testing pages - low priority for lazy loading
 const UploadTestPage = lazy(() => import('@/pages/UploadTestPage'));
@@ -245,6 +249,49 @@ const App = () => {
                       </RouteErrorBoundary>
                     } 
                   />
+                  
+                  {/* Marketplace and Payment routes */}
+                  <Route 
+                    path="/marketplace" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <Marketplace />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/marketplace/:id" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <ListingDetail />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/pricing" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <Pricing />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/dashboard/transactions" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <TransactionsDashboard />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  
                   {/* Auth pages - immediately loaded for better UX */}
                   <Route 
                     path="/auth/signin" 

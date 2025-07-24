@@ -177,6 +177,47 @@ export type Database = {
           },
         ]
       }
+      auction_escrow: {
+        Row: {
+          amount: number
+          auction_id: string
+          bidder_id: string
+          created_at: string
+          id: string
+          released_at: string | null
+          status: string
+          stripe_payment_intent_id: string | null
+        }
+        Insert: {
+          amount: number
+          auction_id: string
+          bidder_id: string
+          created_at?: string
+          id?: string
+          released_at?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+        }
+        Update: {
+          amount?: number
+          auction_id?: string
+          bidder_id?: string
+          created_at?: string
+          id?: string
+          released_at?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "auction_escrow_auction_id_fkey"
+            columns: ["auction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -2961,6 +3002,42 @@ export type Database = {
           },
         ]
       }
+      creator_payouts: {
+        Row: {
+          amount: number
+          created_at: string
+          creator_id: string
+          earnings_period_end: string
+          earnings_period_start: string
+          id: string
+          processed_at: string | null
+          status: string
+          stripe_transfer_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          creator_id: string
+          earnings_period_end: string
+          earnings_period_start: string
+          id?: string
+          processed_at?: string | null
+          status?: string
+          stripe_transfer_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          creator_id?: string
+          earnings_period_end?: string
+          earnings_period_start?: string
+          id?: string
+          processed_at?: string | null
+          status?: string
+          stripe_transfer_id?: string | null
+        }
+        Relationships: []
+      }
       creator_profiles: {
         Row: {
           avg_rating: number | null
@@ -4902,6 +4979,86 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      payment_refunds: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          processed_at: string | null
+          processed_by: string | null
+          reason: string | null
+          requested_by: string
+          status: string
+          stripe_refund_id: string | null
+          transaction_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_by: string
+          status?: string
+          stripe_refund_id?: string | null
+          transaction_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_by?: string
+          status?: string
+          stripe_refund_id?: string | null
+          transaction_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_refunds_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_webhooks: {
+        Row: {
+          created_at: string
+          data: Json
+          error_message: string | null
+          event_type: string
+          id: string
+          processed: boolean | null
+          processed_at: string | null
+          stripe_event_id: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          error_message?: string | null
+          event_type: string
+          id?: string
+          processed?: boolean | null
+          processed_at?: string | null
+          stripe_event_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          error_message?: string | null
+          event_type?: string
+          id?: string
+          processed?: boolean | null
+          processed_at?: string | null
+          stripe_event_id?: string
+        }
+        Relationships: []
       }
       performance_metrics: {
         Row: {
@@ -6876,12 +7033,16 @@ export type Database = {
           id: string
           is_creator: boolean | null
           is_verified: boolean | null
+          kyc_verified: boolean | null
           last_active_date: string | null
           level: number | null
           location: string | null
+          payment_methods_enabled: boolean | null
           privacy_settings: Json | null
           progress_milestones: Json | null
           social_links: Json | null
+          stripe_connect_account_id: string | null
+          stripe_customer_id: string | null
           subscription_tier: string | null
           total_followers: number | null
           total_following: number | null
@@ -6905,12 +7066,16 @@ export type Database = {
           id: string
           is_creator?: boolean | null
           is_verified?: boolean | null
+          kyc_verified?: boolean | null
           last_active_date?: string | null
           level?: number | null
           location?: string | null
+          payment_methods_enabled?: boolean | null
           privacy_settings?: Json | null
           progress_milestones?: Json | null
           social_links?: Json | null
+          stripe_connect_account_id?: string | null
+          stripe_customer_id?: string | null
           subscription_tier?: string | null
           total_followers?: number | null
           total_following?: number | null
@@ -6934,12 +7099,16 @@ export type Database = {
           id?: string
           is_creator?: boolean | null
           is_verified?: boolean | null
+          kyc_verified?: boolean | null
           last_active_date?: string | null
           level?: number | null
           location?: string | null
+          payment_methods_enabled?: boolean | null
           privacy_settings?: Json | null
           progress_milestones?: Json | null
           social_links?: Json | null
+          stripe_connect_account_id?: string | null
+          stripe_customer_id?: string | null
           subscription_tier?: string | null
           total_followers?: number | null
           total_following?: number | null
@@ -7376,6 +7545,10 @@ export type Database = {
         Args: { creator_uuid: string }
         Returns: number
       }
+      calculate_pending_earnings: {
+        Args: { creator_uuid: string }
+        Returns: number
+      }
       calculate_platform_fee: {
         Args: { amount: number }
         Returns: number
@@ -7454,6 +7627,10 @@ export type Database = {
       }
       get_current_user_admin_role: {
         Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_or_create_stripe_customer: {
+        Args: { user_uuid: string; email_param: string }
         Returns: string
       }
       get_platform_metrics: {

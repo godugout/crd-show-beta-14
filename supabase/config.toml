@@ -28,6 +28,15 @@ verify_jwt = true
 [functions.create-subscription]
 verify_jwt = true
 
+[functions.stripe-webhooks]
+verify_jwt = false
+
+[functions.setup-stripe-connect]
+verify_jwt = true
+
+[functions.process-refund]
+verify_jwt = true
+
 [db]
 port = 54322
 shadow_port = 54320
