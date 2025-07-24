@@ -8,12 +8,12 @@ const CARD_HEIGHT = 336;
 
 export const CardPreview = () => {
   return (
-    <div className="relative bg-[#353945] rounded-2xl" style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
+    <div className="relative bg-crd-mediumGray rounded-2xl" style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
       <div className="absolute top-6 left-6 flex gap-2">
-        <span className="px-2 py-2 text-xs font-raleway font-semibold uppercase bg-white text-[#23262F] rounded">
+        <span className="px-2 py-2 text-xs font-raleway font-semibold uppercase bg-background text-foreground rounded">
           Art
         </span>
-        <span className="px-2 py-2 text-xs font-raleway font-semibold uppercase bg-[#9757D7] text-white rounded">
+        <span className="px-2 py-2 text-xs font-raleway font-semibold uppercase bg-crd-purple text-primary-foreground rounded">
           Unlockable
         </span>
       </div>

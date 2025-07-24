@@ -19,23 +19,23 @@ export const CardBidInfo = () => {
   const serviceFeeUsd = 4540;
 
   return (
-    <div className="flex flex-col gap-8 px-4 py-4 border border-[#353945] bg-[#23262F] rounded-2xl shadow-[0px_64px_64px_-48px_rgba(31,47,70,0.12)]">
+    <div className="flex flex-col gap-8 px-4 py-4 border border-border bg-card rounded-2xl shadow-lg">
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="text-sm font-raleway font-semibold text-[#777E90]">
+          <span className="text-sm font-raleway font-semibold text-muted-foreground">
             Highest bid by
           </span>
-          <span className="text-sm font-raleway font-semibold text-white">
+          <span className="text-sm font-raleway font-semibold text-foreground">
             Kohaku Tora
           </span>
-          <span className="text-xl font-raleway font-bold text-white flex items-center gap-1">
+          <span className="text-xl font-raleway font-bold text-foreground flex items-center gap-1">
             {formatCredits(highestBid)}
           </span>
-          <span className="text-xl font-raleway font-bold text-[#777E90]">
+          <span className="text-xl font-raleway font-bold text-muted-foreground">
             ${usd.toLocaleString()}
           </span>
         </div>
-        <div className="w-12 h-12 rounded-full bg-[#45B26B] relative">
+        <div className="w-12 h-12 rounded-full bg-crd-green relative">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/2d51e97c03168fc86320c5b5288785196fd658cf"
             alt="Bidder Avatar"
@@ -45,26 +45,26 @@ export const CardBidInfo = () => {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button className="flex-1 bg-[#3772FF] hover:bg-[#3772FF]/90 text-lg font-raleway font-extrabold rounded-[90px]">
+        <Button className="flex-1 bg-crd-blue hover:bg-crd-blue/90 text-lg font-raleway font-extrabold rounded-[90px]">
           Purchase now
         </Button>
         <Button 
           variant="outline" 
-          className="flex-1 border-2 border-[#353945] text-lg font-raleway font-extrabold rounded-[90px]"
+          className="flex-1 border-2 border-border text-lg font-raleway font-extrabold rounded-[90px]"
         >
           Place a bid
         </Button>
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="text-sm font-poppins text-[#777E90]">
+        <span className="text-sm font-poppins text-muted-foreground">
           Service fee
         </span>
-        <span className="text-sm font-poppins text-white">1.5%</span>
-        <span className="text-sm font-poppins text-white flex items-center gap-1">
+        <span className="text-sm font-poppins text-foreground">1.5%</span>
+        <span className="text-sm font-poppins text-foreground flex items-center gap-1">
           {formatCredits(serviceFeeCredits)}
         </span>
-        <span className="text-sm font-poppins text-[#777E90]">
+        <span className="text-sm font-poppins text-muted-foreground">
           ${serviceFeeUsd.toLocaleString()}
         </span>
       </div>

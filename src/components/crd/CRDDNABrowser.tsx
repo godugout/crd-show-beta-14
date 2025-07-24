@@ -43,24 +43,24 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
 
   const getStyleBadgeColor = (entry: CRDEntry) => {
     switch (entry.styleTag) {
-      case 'Classic': return 'bg-[#F97316]/20 text-[#F97316] border-[#F97316]/30';
-      case 'Vintage': return 'bg-[#EA6E48]/20 text-[#EA6E48] border-[#EA6E48]/30';
-      case 'Sketch': return 'bg-[#9757D7]/20 text-[#9757D7] border-[#9757D7]/30';
-      case '3D': return 'bg-[#2D9CDB]/20 text-[#2D9CDB] border-[#2D9CDB]/30';
-      case 'Jersey': return 'bg-[#45B26B]/20 text-[#45B26B] border-[#45B26B]/30';
-      default: return 'bg-[#777E90]/20 text-[#777E90] border-[#777E90]/30';
+      case 'Classic': return 'bg-crd-orange/20 text-crd-orange border-crd-orange/30';
+      case 'Vintage': return 'bg-crd-orangeDark/20 text-crd-orangeDark border-crd-orangeDark/30';
+      case 'Sketch': return 'bg-crd-purple/20 text-crd-purple border-crd-purple/30';
+      case '3D': return 'bg-crd-lightBlue/20 text-crd-lightBlue border-crd-lightBlue/30';
+      case 'Jersey': return 'bg-crd-green/20 text-crd-green border-crd-green/30';
+      default: return 'bg-crd-lightGray/20 text-crd-lightGray border-crd-lightGray/30';
     }
   };
 
   const getRarityColor = (rarity: RarityLevel) => {
     switch (rarity) {
-      case 'Common': return 'bg-[#777E90]/20 text-[#777E90] border-[#777E90]/30';
-      case 'Uncommon': return 'bg-[#45B26B]/20 text-[#45B26B] border-[#45B26B]/30';
-      case 'Rare': return 'bg-[#2D9CDB]/20 text-[#2D9CDB] border-[#2D9CDB]/30';
-      case 'Epic': return 'bg-[#9757D7]/20 text-[#9757D7] border-[#9757D7]/30';
-      case 'Legendary': return 'bg-[#F97316]/20 text-[#F97316] border-[#F97316]/30';
-      case 'Mythic': return 'bg-[#EF466F]/20 text-[#EF466F] border-[#EF466F]/30';
-      default: return 'bg-[#777E90]/20 text-[#777E90] border-[#777E90]/30';
+      case 'Common': return 'bg-crd-lightGray/20 text-crd-lightGray border-crd-lightGray/30';
+      case 'Uncommon': return 'bg-crd-green/20 text-crd-green border-crd-green/30';
+      case 'Rare': return 'bg-crd-lightBlue/20 text-crd-lightBlue border-crd-lightBlue/30';
+      case 'Epic': return 'bg-crd-purple/20 text-crd-purple border-crd-purple/30';
+      case 'Legendary': return 'bg-crd-orange/20 text-crd-orange border-crd-orange/30';
+      case 'Mythic': return 'bg-destructive/20 text-destructive border-destructive/30';
+      default: return 'bg-crd-lightGray/20 text-crd-lightGray border-crd-lightGray/30';
     }
   };
 
@@ -81,9 +81,9 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
       {/* Header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <Palette className="h-6 w-6 text-[#3772FF]" />
-          <h1 className="text-3xl font-bold text-[#FCFCFD]">CRD:DNA Browser</h1>
-          <Badge variant="outline" className="text-xs border-[#353945] text-[#777E90]">
+          <Palette className="h-6 w-6 text-crd-blue" />
+          <h1 className="text-3xl font-bold text-foreground">CRD:DNA Browser</h1>
+          <Badge variant="outline" className="text-xs border-border text-muted-foreground">
             {filteredEntries.length} entries
           </Badge>
         </div>
@@ -91,29 +91,29 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#777E90]" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search teams, cities, or codes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-[#141416] border-[#353945] text-[#FCFCFD] placeholder:text-[#777E90] focus:border-[#3772FF]"
+              className="pl-10 bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-crd-blue"
             />
           </div>
           
           <div className="flex gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="border-[#353945] text-[#FCFCFD] hover:bg-[#23262F]">
+                <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-muted">
                   <Filter className="h-4 w-4 mr-2" />
                   Group: {selectedGroup}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#1A1D24] border-[#353945]">
+              <DropdownMenuContent className="bg-background border-border">
                 {groups.map(group => (
                   <DropdownMenuItem 
                     key={group} 
                     onClick={() => setSelectedGroup(group)}
-                    className="text-[#FCFCFD] hover:bg-[#23262F]"
+                    className="text-foreground hover:bg-muted"
                   >
                     {group.toUpperCase()}
                   </DropdownMenuItem>
@@ -123,17 +123,17 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="border-[#353945] text-[#FCFCFD] hover:bg-[#23262F]">
+                <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-muted">
                   <Tag className="h-4 w-4 mr-2" />
                   Style: {selectedStyle}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#1A1D24] border-[#353945]">
+              <DropdownMenuContent className="bg-background border-border">
                 {styles.map(style => (
                   <DropdownMenuItem 
                     key={style} 
                     onClick={() => setSelectedStyle(style)}
-                    className="text-[#FCFCFD] hover:bg-[#23262F]"
+                    className="text-foreground hover:bg-muted"
                   >
                     {style || 'Unknown'}
                   </DropdownMenuItem>
@@ -143,17 +143,17 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="border-[#353945] text-[#FCFCFD] hover:bg-[#23262F]">
+                <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-muted">
                   <Star className="h-4 w-4 mr-2" />
                   Rarity: {selectedRarity}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#1A1D24] border-[#353945]">
+              <DropdownMenuContent className="bg-background border-border">
                 {rarities.map(rarity => (
                   <DropdownMenuItem 
                     key={rarity} 
                     onClick={() => setSelectedRarity(rarity)}
-                    className="text-[#FCFCFD] hover:bg-[#23262F]"
+                    className="text-foreground hover:bg-muted"
                   >
                     {rarity}
                   </DropdownMenuItem>
@@ -169,11 +169,11 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
         {filteredEntries.map((entry) => (
           <div
             key={entry.fileName}
-            className="group relative bg-[#1A1D24] border border-[#353945] rounded-2xl p-4 hover:bg-[#23262F] hover:border-[#777E90] hover:shadow-2xl hover:shadow-[#3772FF]/5 hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+            className="group relative bg-card border border-border rounded-2xl p-4 hover:bg-muted hover:border-muted-foreground hover:shadow-2xl hover:shadow-crd-blue/5 hover:scale-[1.02] transition-all duration-300 cursor-pointer"
             onClick={() => onEntrySelect?.(entry)}
           >
             {/* Logo */}
-            <div className="aspect-square bg-[#141416] border border-[#353945] rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+            <div className="aspect-square bg-background border border-border rounded-lg flex items-center justify-center mb-4 overflow-hidden">
               <img 
                 src={entry.imagePath}
                 alt={entry.fileName}
@@ -181,7 +181,7 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  target.parentElement!.innerHTML = `<div class="text-[#777E90] text-sm">${entry.fileName}</div>`;
+                  target.parentElement!.innerHTML = `<div class="text-muted-foreground text-sm">${entry.fileName}</div>`;
                 }}
               />
             </div>
@@ -190,17 +190,17 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
             <div className="space-y-3">
               {/* Team Info */}
               <div>
-                <h3 className="font-semibold text-[#FCFCFD]">
+                <h3 className="font-semibold text-foreground">
                   {entry.teamName || entry.styleCode}
                 </h3>
                 {entry.teamCity && (
-                  <p className="text-sm text-[#E6E8EC]">{entry.teamCity}</p>
+                  <p className="text-sm text-muted-foreground">{entry.teamCity}</p>
                 )}
               </div>
               
               {/* Badges */}
               <div className="flex flex-wrap gap-1">
-                <Badge variant="outline" className="text-xs border-[#353945] text-[#777E90]">
+                <Badge variant="outline" className="text-xs border-border text-muted-foreground">
                   {entry.group}
                 </Badge>
                 <Badge className={`text-xs flex items-center gap-1 ${getRarityColor(entry.rarity)}`}>
@@ -213,11 +213,11 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
                   </Badge>
                 )}
                 {entry.decade && (
-                  <Badge className="text-xs bg-[#EF466F]/20 text-[#EF466F] border-[#EF466F]/30">
+                  <Badge className="text-xs bg-destructive/20 text-destructive border-destructive/30">
                     {entry.decade}
                   </Badge>
                 )}
-                <Badge variant="secondary" className="text-xs bg-[#23262F] text-[#E6E8EC] border-[#353945]">
+                <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground border-border">
                   {entry.fontStyle}
                 </Badge>
               </div>
@@ -225,33 +225,33 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
               {/* Gaming Stats */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#E6E8EC]">Power</span>
+                  <span className="text-muted-foreground">Power</span>
                   <div className="flex items-center gap-1">
-                    <div className="w-12 h-1.5 bg-[#141416] border border-[#353945] rounded-full overflow-hidden">
+                    <div className="w-12 h-1.5 bg-background border border-border rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-[#F97316] to-[#EA6E48] rounded-full transition-all duration-300"
+                        className="h-full bg-gradient-to-r from-crd-orange to-crd-orangeDark rounded-full transition-all duration-300"
                         style={{ width: `${entry.powerLevel}%` }}
                       />
                     </div>
-                    <span className="font-mono text-[#FCFCFD]">{entry.powerLevel}</span>
+                    <span className="font-mono text-foreground">{entry.powerLevel}</span>
                   </div>
                 </div>
                 
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#E6E8EC]">Supply</span>
-                  <span className="font-mono text-[#FCFCFD]">
+                  <span className="text-muted-foreground">Supply</span>
+                  <span className="font-mono text-foreground">
                     {entry.totalSupply ? `${entry.currentSupply}/${entry.totalSupply}` : entry.currentSupply}
                   </span>
                 </div>
                 
                 <div className="flex gap-1 text-xs">
                   {entry.isBlendable && (
-                    <Badge variant="outline" className="text-xs bg-[#2D9CDB]/10 text-[#2D9CDB] border-[#2D9CDB]/30">
+                    <Badge variant="outline" className="text-xs bg-crd-lightBlue/10 text-crd-lightBlue border-crd-lightBlue/30">
                       Blendable
                     </Badge>
                   )}
                   {entry.isRemixable && (
-                    <Badge variant="outline" className="text-xs bg-[#9757D7]/10 text-[#9757D7] border-[#9757D7]/30">
+                    <Badge variant="outline" className="text-xs bg-crd-purple/10 text-crd-purple border-crd-purple/30">
                       Remixable
                     </Badge>
                   )}
@@ -261,18 +261,18 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
               {/* Colors */}
               <div className="flex gap-1">
                 <div 
-                  className="w-4 h-4 rounded-full border-2 border-[#353945]"
+                  className="w-4 h-4 rounded-full border-2 border-border"
                   style={{ backgroundColor: entry.primaryColor }}
                   title={`Primary: ${entry.primaryColor}`}
                 />
                 <div 
-                  className="w-4 h-4 rounded-full border-2 border-[#353945]"
+                  className="w-4 h-4 rounded-full border-2 border-border"
                   style={{ backgroundColor: entry.secondaryColor }}
                   title={`Secondary: ${entry.secondaryColor}`}
                 />
                 {entry.tertiaryColor && (
                   <div 
-                    className="w-4 h-4 rounded-full border-2 border-[#353945]"
+                    className="w-4 h-4 rounded-full border-2 border-border"
                     style={{ backgroundColor: entry.tertiaryColor }}
                     title={`Tertiary: ${entry.tertiaryColor}`}
                   />
@@ -281,26 +281,26 @@ export const CRDDNABrowser = ({ onEntrySelect }: CRDDNABrowserProps) => {
               
               {/* Mascot */}
               {entry.mascot && (
-                <p className="text-xs text-[#E6E8EC]">🎭 {entry.mascot}</p>
+                <p className="text-xs text-muted-foreground">🎭 {entry.mascot}</p>
               )}
               
               {/* Notes */}
               {entry.notes && (
-                <p className="text-xs text-[#777E90] italic">{entry.notes}</p>
+                <p className="text-xs text-muted-foreground italic">{entry.notes}</p>
               )}
             </div>
 
             {/* Hover Indicator */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#3772FF] transition-all duration-300 pointer-events-none" />
+            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-crd-blue transition-all duration-300 pointer-events-none" />
           </div>
         ))}
       </div>
       
       {filteredEntries.length === 0 && (
         <div className="text-center py-12">
-          <Search className="h-12 w-12 text-[#777E90] mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-[#FCFCFD] mb-2">No entries found</h3>
-          <p className="text-[#E6E8EC]">No entries found matching your criteria</p>
+          <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-foreground mb-2">No entries found</h3>
+          <p className="text-muted-foreground">No entries found matching your criteria</p>
         </div>
       )}
     </div>

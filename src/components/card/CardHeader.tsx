@@ -11,14 +11,14 @@ export const CardHeader = () => {
           alt="Logo"
           className="w-auto h-6"
         />
-        <span className="font-orbitron text-lg font-black text-[#F4F5F6]">
+        <span className="font-orbitron text-lg font-black text-foreground">
           CARDSHOW
         </span>
       </div>
       
       <div className="flex items-center gap-5">
         <div className="relative w-10 h-10">
-          <div className="absolute top-0 right-0 w-3 h-3 bg-[#45B26B] rounded-full" />
+          <div className="absolute top-0 right-0 w-3 h-3 bg-crd-green rounded-full" />
           <svg
             width="24"
             height="24"
@@ -29,11 +29,11 @@ export const CardHeader = () => {
           >
             <path
               d="M21 18.0233C21 18.5113 20.6043 18.907 20.1163 18.907H3.88372C3.39565 18.907 3 18.5113 3 18.0233C3 17.5352 3.39566 17.1395 3.88372 17.1395H3.9V10.9809C3.9 6.57288 7.527 3 12 3C16.473 3 20.1 6.57288 20.1 10.9809V17.1395H20.1163C20.6043 17.1395 21 17.5352 21 18.0233Z"
-              fill="#777E91"
+              fill="currentColor"
             />
           </svg>
         </div>
-        <div className="w-8 h-8 rounded-full bg-[#45B26B] relative">
+        <div className="w-8 h-8 rounded-full bg-crd-green relative">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/7ef08b78402d8e2b895007bd2da7a1f4b99d053f"
             alt="Avatar"
@@ -50,11 +50,11 @@ export const CardHeader = () => {
           >
             <path
               d="M6.66732 10.6667C5.93094 10.6667 5.33398 11.2636 5.33398 12C5.33398 12.7364 5.93094 13.3333 6.66732 13.3333H25.334C26.0704 13.3333 26.6673 12.7364 26.6673 12C26.6673 11.2636 26.0704 10.6667 25.334 10.6667H6.66732Z"
-              fill="#777E91"
+              fill="currentColor"
             />
             <path
               d="M6.66732 18.6667C5.93094 18.6667 5.33398 19.2636 5.33398 20C5.33398 20.7364 5.93094 21.3333 6.66732 21.3333H25.334C26.0704 21.3333 26.6673 20.7364 26.6673 20C26.6673 19.2636 26.0704 18.6667 25.334 18.6667H6.66732Z"
-              fill="#777E91"
+              fill="currentColor"
             />
           </svg>
         </button>
