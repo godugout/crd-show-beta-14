@@ -19,6 +19,15 @@ verify_jwt = true
 [functions.end-auction]
 verify_jwt = true
 
+[functions.purchase-tokens]
+verify_jwt = true
+
+[functions.finalize-token-purchase]
+verify_jwt = true
+
+[functions.create-subscription]
+verify_jwt = true
+
 [db]
 port = 54322
 shadow_port = 54320

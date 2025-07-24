@@ -71,8 +71,8 @@ serve(async (req) => {
       console.error('Error updating listing:', listingError);
     }
 
-    // Calculate platform fee (5%)
-    const platformFee = transaction.amount * 0.05;
+    // Calculate platform fee (2.5% as per user specs)
+    const platformFee = transaction.amount * 0.025;
     const sellerAmount = transaction.amount - platformFee;
 
     // Create seller earnings record

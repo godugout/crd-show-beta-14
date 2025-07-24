@@ -4595,6 +4595,7 @@ export type Database = {
           id: string
           listing_id: string
           payment_method: string | null
+          platform_fee: number
           seller_id: string
           status: string
           transaction_fee: number
@@ -4609,6 +4610,7 @@ export type Database = {
           id?: string
           listing_id: string
           payment_method?: string | null
+          platform_fee?: number
           seller_id: string
           status?: string
           transaction_fee?: number
@@ -4623,6 +4625,7 @@ export type Database = {
           id?: string
           listing_id?: string
           payment_method?: string | null
+          platform_fee?: number
           seller_id?: string
           status?: string
           transaction_fee?: number
@@ -5829,6 +5832,48 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_plans: {
+        Row: {
+          created_at: string
+          features: Json
+          id: string
+          is_active: boolean
+          monthly_card_limit: number | null
+          name: string
+          price_annual: number | null
+          price_monthly: number
+          sort_order: number
+          stripe_price_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          features?: Json
+          id?: string
+          is_active?: boolean
+          monthly_card_limit?: number | null
+          name: string
+          price_annual?: number | null
+          price_monthly: number
+          sort_order?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          features?: Json
+          id?: string
+          is_active?: boolean
+          monthly_card_limit?: number | null
+          name?: string
+          price_annual?: number | null
+          price_monthly?: number
+          sort_order?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       support_messages: {
         Row: {
           attachments: Json | null
@@ -6164,6 +6209,42 @@ export type Database = {
           source?: string
           title?: string
           url?: string | null
+        }
+        Relationships: []
+      }
+      token_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          source_id: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          source_id?: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          source_id?: string | null
+          transaction_type?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -7076,6 +7157,89 @@ export type Database = {
           },
         ]
       }
+      user_subscriptions: {
+        Row: {
+          canceled_at: string | null
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_id: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_tokens: {
+        Row: {
+          created_at: string
+          id: string
+          last_transaction_at: string | null
+          lifetime_earned: number
+          lifetime_spent: number
+          token_balance: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_transaction_at?: string | null
+          lifetime_earned?: number
+          lifetime_spent?: number
+          token_balance?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_transaction_at?: string | null
+          lifetime_earned?: number
+          lifetime_spent?: number
+          token_balance?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_trade_preferences: {
         Row: {
           auto_accept_threshold: number | null
@@ -7415,6 +7579,17 @@ export type Database = {
       update_seo_optimization: {
         Args: { listing_uuid: string }
         Returns: undefined
+      }
+      update_user_token_balance: {
+        Args: {
+          user_uuid: string
+          amount_change: number
+          transaction_type_param: string
+          source_param: string
+          source_id_param?: string
+          description_param?: string
+        }
+        Returns: boolean
       }
       user_has_admin_permission: {
         Args: { permission_name: string }
