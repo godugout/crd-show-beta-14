@@ -2,7 +2,7 @@ import React from 'react';
 
 export const CreateFooter: React.FC = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-surface-deep border-t border-surface-medium py-6 px-6 z-50">
+    <footer className="fixed bottom-0 left-0 right-0 w-full bg-surface-deep border-t border-surface-medium py-6 px-6 z-[100]">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           <div className="text-text-secondary text-sm">
