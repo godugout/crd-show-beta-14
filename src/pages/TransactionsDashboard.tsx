@@ -173,14 +173,14 @@ const TransactionsDashboard = () => {
     switch (status) {
       case 'completed':
       case 'paid':
-        return 'bg-green-100 text-green-800';
+        return 'text-green-700 border border-green-200';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'text-yellow-700 border border-yellow-200';
       case 'failed':
       case 'refunded':
-        return 'bg-red-100 text-red-800';
+        return 'text-red-700 border border-red-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'text-muted-foreground border border-border';
     }
   };
 
@@ -242,7 +242,11 @@ const TransactionsDashboard = () => {
           <button 
             onClick={handleRefreshData} 
             disabled={isLoading}
-            className="btn-primary flex items-center gap-2 hover-scale"
+            className="flex items-center gap-2 hover-scale px-4 py-2 rounded-lg font-medium transition-all duration-200"
+            style={{
+              backgroundColor: 'hsl(var(--theme-primary))',
+              color: 'white'
+            }}
           >
             <RefreshCw className="w-4 h-4" />
             Refresh
@@ -342,7 +346,13 @@ const TransactionsDashboard = () => {
               {activeTab === 'earnings' && 'Creator Earnings'}
               {activeTab === 'payouts' && 'Payout History'}
             </h2>
-            <button className="btn-primary flex items-center gap-2">
+            <button 
+              className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover-scale"
+              style={{
+                backgroundColor: 'hsl(var(--theme-accent))',
+                color: 'white'
+              }}
+            >
               <Download className="w-4 h-4" />
               Export
             </button>
@@ -371,7 +381,9 @@ const TransactionsDashboard = () => {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-foreground token-amount">${transaction.amount.toFixed(2)}</p>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(transaction.status)}`}>
+                      <span 
+                        className={`px-2 py-1 rounded-full text-xs font-medium bg-card/50 ${getStatusColor(transaction.status)}`}
+                      >
                         {transaction.status}
                       </span>
                     </div>
@@ -404,7 +416,9 @@ const TransactionsDashboard = () => {
                       <p className="text-sm text-muted-foreground">
                         Gross: ${(earning.gross_amount || earning.amount || 0).toFixed(2)} - Fee: ${earning.platform_fee.toFixed(2)}
                       </p>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(earning.status)}`}>
+                      <span 
+                        className={`px-2 py-1 rounded-full text-xs font-medium bg-card/50 ${getStatusColor(earning.status)}`}
+                      >
                         {earning.status}
                       </span>
                     </div>
@@ -437,7 +451,9 @@ const TransactionsDashboard = () => {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-foreground token-amount">${payout.amount.toFixed(2)}</p>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(payout.status)}`}>
+                      <span 
+                        className={`px-2 py-1 rounded-full text-xs font-medium bg-card/50 ${getStatusColor(payout.status)}`}
+                      >
                         {payout.status}
                       </span>
                     </div>
