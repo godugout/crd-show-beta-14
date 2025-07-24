@@ -222,126 +222,142 @@ const TransactionsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-crd-black flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
+        {/* Premium Header */}
+        <div className="flex justify-between items-center mb-8 animate-fade-in">
           <div>
-            <h1 className="text-3xl font-bold">Transactions Dashboard</h1>
-            <p className="text-muted-foreground">Manage your payments, earnings, and payouts</p>
+            <h1 className="text-4xl font-bold text-white mb-2">
+              🪙 CRD <span className="text-transparent bg-clip-text bg-gradient-to-r from-crd-yellow to-crd-orange">Wallet</span>
+            </h1>
+            <p className="text-crd-text-dim">Manage your payments, earnings, and payouts</p>
           </div>
-          <Button onClick={handleRefreshData} disabled={isLoading}>
-            <RefreshCw className="w-4 h-4 mr-2" />
+          <button 
+            onClick={handleRefreshData} 
+            disabled={isLoading}
+            className="btn-primary flex items-center gap-2 hover-scale"
+          >
+            <RefreshCw className="w-4 h-4" />
             Refresh
-          </Button>
+          </button>
         </div>
 
-        {/* Stats Cards */}
+        {/* Premium Stats Cards */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Earnings</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${stats.totalEarnings.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                All-time creator earnings
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Earnings</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${stats.pendingEarnings.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                Awaiting payout
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Payouts</CardTitle>
-              <CreditCard className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${stats.totalPayouts.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                Successfully paid out
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Transactions</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.transactionCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Total transactions
-              </p>
-            </CardContent>
-          </Card>
+          {[
+            {
+              title: "Total Earnings",
+              value: `$${stats.totalEarnings.toFixed(2)}`,
+              description: "All-time creator earnings",
+              icon: DollarSign,
+              color: "crd-green",
+              delay: "0s"
+            },
+            {
+              title: "Pending Earnings",
+              value: `$${stats.pendingEarnings.toFixed(2)}`,
+              description: "Awaiting payout",
+              icon: TrendingUp,
+              color: "crd-yellow",
+              delay: "0.1s"
+            },
+            {
+              title: "Total Payouts",
+              value: `$${stats.totalPayouts.toFixed(2)}`,
+              description: "Successfully paid out",
+              icon: CreditCard,
+              color: "crd-blue",
+              delay: "0.2s"
+            },
+            {
+              title: "Transactions",
+              value: stats.transactionCount.toString(),
+              description: "Total transactions",
+              icon: Calendar,
+              color: "crd-orange",
+              delay: "0.3s"
+            }
+          ].map((stat) => (
+            <div 
+              key={stat.title}
+              className="bg-crd-surface border border-crd-border rounded-lg p-6 hover-scale animate-fade-in"
+              style={{ animationDelay: stat.delay }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-medium text-crd-text-dim">{stat.title}</h3>
+                <div className={`p-2 bg-${stat.color}/20 rounded-lg`}>
+                  <stat.icon className={`h-5 w-5 text-${stat.color}`} />
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
+              <p className="text-xs text-crd-text-dim">{stat.description}</p>
+            </div>
+          ))}
         </div>
 
-        {/* Tabs */}
-        <div className="flex space-x-1 mb-6">
+        {/* Premium Tabs */}
+        <div className="flex space-x-2 mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           {[
             { key: 'transactions', label: 'Transactions' },
             { key: 'earnings', label: 'Earnings' },
             { key: 'payouts', label: 'Payouts' },
           ].map((tab) => (
-            <Button
+            <button
               key={tab.key}
-              variant={activeTab === tab.key ? 'default' : 'outline'}
+              className={`
+                px-6 py-3 rounded-lg font-medium transition-all duration-200 hover-scale
+                ${activeTab === tab.key 
+                  ? 'bg-crd-orange text-crd-black' 
+                  : 'bg-crd-surface text-crd-text-dim hover:text-white border border-crd-border'
+                }
+              `}
               onClick={() => setActiveTab(tab.key as any)}
             >
               {tab.label}
-            </Button>
+            </button>
           ))}
         </div>
 
-        {/* Tab Content */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>
+        {/* Premium Content Card */}
+        <div className="bg-crd-surface border border-crd-border rounded-lg animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="flex items-center justify-between p-6 border-b border-crd-border">
+            <h2 className="text-xl font-bold text-white">
               {activeTab === 'transactions' && 'Recent Transactions'}
               {activeTab === 'earnings' && 'Creator Earnings'}
               {activeTab === 'payouts' && 'Payout History'}
-            </CardTitle>
-            <Button variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
+            </h2>
+            <button className="btn-primary flex items-center gap-2">
+              <Download className="w-4 h-4" />
               Export
-            </Button>
-          </CardHeader>
-          <CardContent>
+            </button>
+          </div>
+          <div className="p-6">
             {activeTab === 'transactions' && (
               <div className="space-y-4">
-                {transactions.map((transaction) => (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {transactions.map((transaction, index) => (
+                  <div 
+                    key={transaction.id} 
+                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
                     <div className="flex items-center space-x-4">
-                      {getStatusIcon(transaction.status)}
+                      <div className="text-crd-green">
+                        {getStatusIcon(transaction.status)}
+                      </div>
                       <div>
-                        <p className="font-medium">
+                        <p className="font-medium text-white">
                           {transaction.marketplace_listings?.card?.title || 'Marketplace Transaction'}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-crd-text-dim">
                           {formatDistanceToNow(new Date(transaction.created_at), { addSuffix: true })}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold">${transaction.amount.toFixed(2)}</p>
-                      <Badge className={getStatusColor(transaction.status)}>
+                      <p className="font-bold text-white token-amount">${transaction.amount.toFixed(2)}</p>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(transaction.status)}`}>
                         {transaction.status}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -350,25 +366,31 @@ const TransactionsDashboard = () => {
 
             {activeTab === 'earnings' && (
               <div className="space-y-4">
-                {earnings.map((earning) => (
-                  <div key={earning.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {earnings.map((earning, index) => (
+                  <div 
+                    key={earning.id} 
+                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
                     <div className="flex items-center space-x-4">
-                      {getStatusIcon(earning.status)}
+                      <div className="text-crd-green">
+                        {getStatusIcon(earning.status)}
+                      </div>
                       <div>
-                        <p className="font-medium">Creator Earning</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-medium text-white">Creator Earning</p>
+                        <p className="text-sm text-crd-text-dim">
                           {formatDistanceToNow(new Date(earning.transaction_date), { addSuffix: true })}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold">${earning.net_amount.toFixed(2)}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-bold text-white token-amount">${earning.net_amount.toFixed(2)}</p>
+                      <p className="text-sm text-crd-text-dim">
                         Gross: ${(earning.gross_amount || earning.amount || 0).toFixed(2)} - Fee: ${earning.platform_fee.toFixed(2)}
                       </p>
-                      <Badge className={getStatusColor(earning.status)}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(earning.status)}`}>
                         {earning.status}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -377,13 +399,19 @@ const TransactionsDashboard = () => {
 
             {activeTab === 'payouts' && (
               <div className="space-y-4">
-                {payouts.map((payout) => (
-                  <div key={payout.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {payouts.map((payout, index) => (
+                  <div 
+                    key={payout.id} 
+                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
                     <div className="flex items-center space-x-4">
-                      {getStatusIcon(payout.status)}
+                      <div className="text-crd-green">
+                        {getStatusIcon(payout.status)}
+                      </div>
                       <div>
-                        <p className="font-medium">Payout</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-medium text-white">Payout</p>
+                        <p className="text-sm text-crd-text-dim">
                           Created: {formatDistanceToNow(new Date(payout.created_at), { addSuffix: true })}
                           {payout.processed_at && (
                             <span> • Processed: {formatDistanceToNow(new Date(payout.processed_at), { addSuffix: true })}</span>
@@ -392,17 +420,17 @@ const TransactionsDashboard = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold">${payout.amount.toFixed(2)}</p>
-                      <Badge className={getStatusColor(payout.status)}>
+                      <p className="font-bold text-white token-amount">${payout.amount.toFixed(2)}</p>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(payout.status)}`}>
                         {payout.status}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
