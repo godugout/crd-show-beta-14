@@ -346,7 +346,7 @@ export const StudioCardManager: React.FC<StudioCardManagerProps> = ({
         {lightingSetup}
 
         {/* Environment */}
-        <Environment preset="studio" />
+        <Environment preset="night" />
 
         {/* Studio Scene Background */}
         <StudioScene 
