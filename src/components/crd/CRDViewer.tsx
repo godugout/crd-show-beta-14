@@ -775,14 +775,14 @@ export const CRDViewer: React.FC<CRDViewerProps> = ({
       )}
       
       {showPauseButton && (
-        <div className="fixed bottom-6 right-6 z-nav-controls flex gap-3">
-          <EnvironmentSwitcher
-            currentEnvironment={spaceEnvironment}
-            onEnvironmentChange={onSpaceEnvironmentChange || (() => {})}
-          />
+        <div className="fixed bottom-24 right-6 z-[70] flex flex-col gap-3 items-end">
           <StudioPauseButton 
             isPaused={isPaused} 
             onTogglePause={handleTogglePause} 
+          />
+          <EnvironmentSwitcher
+            currentEnvironment={spaceEnvironment}
+            onEnvironmentChange={onSpaceEnvironmentChange || (() => {})}
           />
         </div>
       )}
