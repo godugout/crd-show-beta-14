@@ -350,7 +350,6 @@ export const StudioCardManager: React.FC<StudioCardManagerProps> = ({
 
         {/* Studio Scene Background */}
         <StudioScene 
-          backgroundImage={backgroundImage}
           convergencePoint={convergencePoint}
           showGrid={showGrid}
         />
