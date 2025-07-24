@@ -16,6 +16,34 @@ interface GalacticCompassProps {
   onSpaceEnvironmentChange?: (environment: SpaceEnvironment) => void;
 }
 
+// Custom hook for scroll-based fade
+const useScrollFade = () => {
+  const [opacity, setOpacity] = useState(1);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fadeStart = windowHeight * 0.1; // Start fading at 10% scroll
+      const fadeEnd = windowHeight * 0.6;   // Fully faded at 60% scroll
+      
+      if (scrollY <= fadeStart) {
+        setOpacity(1);
+      } else if (scrollY >= fadeEnd) {
+        setOpacity(0);
+      } else {
+        const fadeProgress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+        setOpacity(1 - fadeProgress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  return opacity;
+};
+
 export const GalacticCompass: React.FC<GalacticCompassProps> = ({
   onReset,
   isResetting = false,
@@ -32,6 +60,7 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
   const [compassAngle, setCompassAngle] = useState(0); // 0 = pointing up
   const [isTracking, setIsTracking] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout>();
+  const scrollOpacity = useScrollFade();
 
   // Update compass needles based on real card rotation
   useEffect(() => {
@@ -63,7 +92,10 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
   return (
     <>
       {/* Left Side - Creating Tools Bar */}
-      <div className="fixed bottom-6 left-6 galactic-compass">
+      <div 
+        className="fixed bottom-6 left-6 galactic-compass transition-opacity duration-300"
+        style={{ opacity: scrollOpacity }}
+      >
         <div className="flex flex-col items-start gap-2">
           {/* Future creating tools will go here */}
           <div className="flex flex-col items-start gap-2">
@@ -128,7 +160,10 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
       </div>
 
       {/* Right Side - Playing Controls Bar */}
-      <div className="fixed bottom-6 right-6 galactic-compass">
+      <div 
+        className="fixed bottom-6 right-6 galactic-compass transition-opacity duration-300"
+        style={{ opacity: scrollOpacity }}
+      >
         <div className="flex flex-col items-end gap-3">
           {/* Control Buttons - Pause/Play and Refresh above compass */}
           <div className="flex flex-col items-end gap-3">
