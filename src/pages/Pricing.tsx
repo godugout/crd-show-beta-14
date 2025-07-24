@@ -66,7 +66,7 @@ const Pricing = () => {
               Choose Your <span 
                 className="text-transparent bg-clip-text"
                 style={{
-                  backgroundImage: `linear-gradient(135deg, ${currentPalette?.colors.primary || 'hsl(var(--primary))'}, ${currentPalette?.colors.accent || 'hsl(var(--accent))'})`
+                  backgroundImage: 'linear-gradient(135deg, hsl(var(--theme-primary)), hsl(var(--theme-accent)))'
                 }}
               >Plan</span>
             </h1>
@@ -110,7 +110,7 @@ const Pricing = () => {
               <div>
                 <h3 
                   className="font-semibold mb-3 text-lg"
-                  style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                  style={{ color: 'hsl(var(--theme-accent))' }}
                 >
                   What are CRD Tokens?
                 </h3>
@@ -122,7 +122,7 @@ const Pricing = () => {
               <div>
                 <h3 
                   className="font-semibold mb-3 text-lg"
-                  style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                  style={{ color: 'hsl(var(--theme-accent))' }}
                 >
                   Premium Usage
                 </h3>
@@ -130,21 +130,21 @@ const Pricing = () => {
                   <li className="flex items-center gap-2">
                     <span 
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                      style={{ backgroundColor: 'hsl(var(--theme-accent))' }}
                     ></span>
                     Marketplace purchases (100-5000 CRD typical)
                   </li>
                   <li className="flex items-center gap-2">
                     <span 
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                      style={{ backgroundColor: 'hsl(var(--theme-accent))' }}
                     ></span>
                     Auction bidding (50 CRD minimum)
                   </li>
                   <li className="flex items-center gap-2">
                     <span 
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                      style={{ backgroundColor: 'hsl(var(--theme-accent))' }}
                     ></span>
                     Premium card templates and effects
                   </li>
@@ -169,20 +169,20 @@ const Pricing = () => {
                   ${isCurrent ? 'ring-2 ring-primary' : 'hover:border-primary/40'}
                   ${isPopular ? 'ring-2' : ''}
                 `}
-                style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  ...(isPopular ? { 
-                    borderColor: currentPalette?.colors.accent || 'hsl(var(--accent))',
-                    ringColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
-                  } : {})
-                }}
+                  style={{ 
+                    animationDelay: `${index * 0.1}s`,
+                    ...(isPopular ? { 
+                      borderColor: 'hsl(var(--theme-accent))',
+                      ringColor: 'hsl(var(--theme-accent) / 0.4)'
+                    } : {})
+                  }}
               >
                 {isPopular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
                     <div 
                       className="text-white px-4 py-2 rounded-full text-sm font-semibold animate-pulse"
                       style={{
-                        background: `linear-gradient(135deg, ${currentPalette?.colors.primary || 'hsl(var(--primary))'}, ${currentPalette?.colors.accent || 'hsl(var(--accent))'})`
+                        background: 'linear-gradient(135deg, hsl(var(--theme-primary)), hsl(var(--theme-accent)))'
                       }}
                     >
                       Most Popular
@@ -197,7 +197,7 @@ const Pricing = () => {
                       <div 
                         className="p-3 rounded-lg"
                         style={{
-                          backgroundColor: `${currentPalette?.colors.primary || 'hsl(var(--primary))'}20`
+                          backgroundColor: 'hsl(var(--theme-primary) / 0.2)'
                         }}
                       >
                         {getPlanIcon(plan.name)}
@@ -211,7 +211,7 @@ const Pricing = () => {
                     {plan.price_annual && plan.price_annual > 0 && (
                       <p 
                         className="text-sm"
-                        style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                        style={{ color: 'hsl(var(--theme-accent))' }}
                       >
                         or ${plan.price_annual}/year (save {Math.round((1 - plan.price_annual / (plan.price_monthly * 12)) * 100)}%)
                       </p>
@@ -223,7 +223,7 @@ const Pricing = () => {
                     <div className="flex items-center gap-3">
                       <Check 
                         className="w-5 h-5 flex-shrink-0"
-                        style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                        style={{ color: 'hsl(var(--theme-accent))' }}
                       />
                       <span className="text-muted-foreground">
                         {plan.monthly_card_limit === -1 
@@ -236,7 +236,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Basic card effects</span>
                       </div>
@@ -246,7 +246,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Premium card effects</span>
                       </div>
@@ -256,7 +256,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Community access</span>
                       </div>
@@ -266,7 +266,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Marketplace buying</span>
                       </div>
@@ -276,7 +276,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Marketplace selling (70/30 split)</span>
                       </div>
@@ -286,7 +286,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Advanced analytics</span>
                       </div>
@@ -296,7 +296,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Priority support</span>
                       </div>
@@ -306,7 +306,7 @@ const Pricing = () => {
                       <div className="flex items-center gap-3">
                         <Check 
                           className="w-5 h-5 flex-shrink-0"
-                          style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                          style={{ color: 'hsl(var(--theme-accent))' }}
                         />
                         <span className="text-muted-foreground">Revenue sharing program</span>
                       </div>
@@ -341,37 +341,57 @@ const Pricing = () => {
           <div 
             className="absolute inset-0 rounded-lg blur-xl opacity-20"
             style={{
-              background: `linear-gradient(135deg, ${currentPalette?.colors.primary || 'hsl(var(--primary))'}, ${currentPalette?.colors.accent || 'hsl(var(--accent))'})`
+              background: 'linear-gradient(135deg, hsl(var(--theme-primary)), hsl(var(--theme-accent)))'
             }}
           ></div>
-          <div className="relative bg-card border border-border rounded-lg p-8">
+          <div 
+            className="relative bg-card border rounded-lg p-8"
+            style={{
+              borderColor: 'hsl(var(--theme-accent) / 0.25)'
+            }}
+          >
             <h2 className="text-3xl font-bold mb-8 text-center text-foreground">Platform Fees</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center p-6 bg-card border border-border rounded-lg hover-scale">
+              <div 
+                className="text-center p-6 bg-card border rounded-lg hover-scale"
+                style={{
+                  borderColor: 'hsl(var(--theme-accent) / 0.3)'
+                }}
+              >
                 <h3 className="font-semibold mb-3 text-foreground">Marketplace Sales</h3>
                 <div 
                   className="text-4xl font-bold mb-3"
-                  style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}
+                  style={{ color: 'hsl(var(--theme-accent))' }}
                 >
                   2.5%
                 </div>
                 <p className="text-muted-foreground">Platform fee on all marketplace transactions</p>
               </div>
-              <div className="text-center p-6 bg-card border border-border rounded-lg hover-scale">
+              <div 
+                className="text-center p-6 bg-card border rounded-lg hover-scale"
+                style={{
+                  borderColor: 'hsl(var(--theme-primary) / 0.3)'
+                }}
+              >
                 <h3 className="font-semibold mb-3 text-foreground">Creator Revenue</h3>
                 <div 
                   className="text-4xl font-bold mb-3"
-                  style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+                  style={{ color: 'hsl(var(--theme-primary))' }}
                 >
                   70%
                 </div>
                 <p className="text-muted-foreground">Creator keeps 70%, platform takes 30%</p>
               </div>
-              <div className="text-center p-6 bg-card border border-border rounded-lg hover-scale">
+              <div 
+                className="text-center p-6 bg-card border rounded-lg hover-scale"
+                style={{
+                  borderColor: 'hsl(var(--theme-secondary) / 0.3)'
+                }}
+              >
                 <h3 className="font-semibold mb-3 text-foreground">Auction Fees</h3>
                 <div 
                   className="text-4xl font-bold mb-3"
-                  style={{ color: currentPalette?.colors.secondary || 'hsl(var(--secondary))' }}
+                  style={{ color: 'hsl(var(--theme-secondary))' }}
                 >
                   2.5%
                 </div>
@@ -388,12 +408,12 @@ const Pricing = () => {
             <div 
               className="bg-card rounded-lg p-6 hover-scale border"
               style={{
-                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+                borderColor: 'hsl(var(--theme-accent) / 0.4)'
               }}
             >
               <h3 
                 className="font-semibold mb-3 text-lg"
-                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+                style={{ color: 'hsl(var(--theme-primary))' }}
               >
                 Can I change plans anytime?
               </h3>
@@ -404,12 +424,12 @@ const Pricing = () => {
             <div 
               className="bg-card rounded-lg p-6 hover-scale border"
               style={{
-                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+                borderColor: 'hsl(var(--theme-accent) / 0.4)'
               }}
             >
               <h3 
                 className="font-semibold mb-3 text-lg"
-                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+                style={{ color: 'hsl(var(--theme-primary))' }}
               >
                 What payment methods do you accept?
               </h3>
@@ -420,12 +440,12 @@ const Pricing = () => {
             <div 
               className="bg-card rounded-lg p-6 hover-scale border"
               style={{
-                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+                borderColor: 'hsl(var(--theme-accent) / 0.4)'
               }}
             >
               <h3 
                 className="font-semibold mb-3 text-lg"
-                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+                style={{ color: 'hsl(var(--theme-primary))' }}
               >
                 How do CRD tokens work?
               </h3>
@@ -436,12 +456,12 @@ const Pricing = () => {
             <div 
               className="bg-card rounded-lg p-6 hover-scale border"
               style={{
-                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+                borderColor: 'hsl(var(--theme-accent) / 0.4)'
               }}
             >
               <h3 
                 className="font-semibold mb-3 text-lg"
-                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+                style={{ color: 'hsl(var(--theme-primary))' }}
               >
                 Is there a free trial?
               </h3>
