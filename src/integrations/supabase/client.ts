@@ -2,8 +2,8 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://kwxsnkckyjkmpdzrsyxi.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eHNua2NreWprbXBkenJzeXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1OTQ3NDQsImV4cCI6MjA2NTE3MDc0NH0.s4nuV8CnLnHhfTFUlMQVg5XFV4VluJtJaxAyc3hWBPU";
+const SUPABASE_URL = "https://qlggzunfzhhemntwbisn.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ2d6dW5memhoZW1udHdiaXNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MjQ5MjksImV4cCI6MjA2NzEwMDkyOX0.148uvxjCPOXX8W3ZW8P7plsGUBs1nDShrpVZzXJqJsg";
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
@@ -15,8 +15,3 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     autoRefreshToken: true,
   }
 });
-
-// Helper function to get app ID from project
-export const getAppId = async (): Promise<string> => {
-  return "kwxsnkckyjkmpdzrsyxi";
-};
