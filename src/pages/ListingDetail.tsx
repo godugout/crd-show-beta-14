@@ -11,6 +11,7 @@ import { ArrowLeft, Heart, Share2, Clock, Eye, Users, TrendingUp } from 'lucide-
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
+import { PaymentModal } from '@/components/marketplace/PaymentModal';
 
 interface ListingDetail {
   id: string;
@@ -44,6 +45,7 @@ const ListingDetail = () => {
   const [loading, setLoading] = useState(true);
   const [bidAmount, setBidAmount] = useState('');
   const [placing, setPlacing] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -138,41 +140,7 @@ const ListingDetail = () => {
 
   const handlePurchase = async () => {
     if (!listing) return;
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error('Please login to purchase');
-        return;
-      }
-
-      if (user.id === listing.seller_id) {
-        toast.error('You cannot purchase your own listing');
-        return;
-      }
-
-      // For fixed price listings, update listing status to sold
-      if (listing.listing_type === 'fixed_price') {
-        // Update listing status
-        const { error } = await supabase
-          .from('marketplace_listings')
-          .update({ status: 'sold' })
-          .eq('id', listing.id);
-
-        if (error) {
-          console.error('Error updating listing:', error);
-          toast.error('Purchase failed');
-          return;
-        }
-
-        // TODO: Create transaction record once marketplace_transactions types are available
-        toast.success('Purchase successful!');
-        navigate('/marketplace');
-      }
-    } catch (error) {
-      console.error('Error purchasing:', error);
-      toast.error('Purchase failed');
-    }
+    setShowPaymentModal(true);
   };
 
   const handlePlaceBid = async () => {
@@ -200,13 +168,12 @@ const ListingDetail = () => {
         return;
       }
 
-      const { error } = await supabase
-        .from('auction_bids')
-        .insert([{
+      const { data, error } = await supabase.functions.invoke('place-auction-bid', {
+        body: {
           auction_id: listing.id,
-          bidder_id: user.id,
-          amount: bidValue
-        }]);
+          amount: bidValue,
+        },
+      });
 
       if (error) {
         console.error('Error placing bid:', error);
@@ -470,6 +437,19 @@ const ListingDetail = () => {
             </Card>
           </div>
         </div>
+
+        {/* Payment Modal */}
+        {listing && (
+          <PaymentModal
+            isOpen={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            listing={listing}
+            onSuccess={() => {
+              toast.success('Purchase completed successfully!');
+              fetchListingDetail();
+            }}
+          />
+        )}
       </div>
     </div>
   );
