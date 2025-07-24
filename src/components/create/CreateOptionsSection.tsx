@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const CreateOptionsSection: React.FC = () => {
   return (
-    <div className="relative z-10 py-32 px-4 sm:px-6 lg:px-8 min-h-screen bg-space-to-purple">
+    <div className="relative z-10 py-32 px-4 sm:px-6 lg:px-8 min-h-screen bg-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
