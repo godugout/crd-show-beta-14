@@ -21,7 +21,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   const StudioLights = () => (
     <>
       {/* Space Environment */}
-      <Environment preset="night" />
+      <Environment preset="sunset" />
       
       {/* Key Light */}
       <directionalLight
