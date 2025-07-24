@@ -54,7 +54,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
           <FloatingCard3D 
             isPaused={isPaused}
             onTogglePause={onTogglePause}
-            showPauseButton={false}
+            showPauseButton={true}
             onShowTutorial={() => setShowTutorial(true)}
             spaceEnvironment={spaceEnvironment}
             onSpaceEnvironmentChange={setSpaceEnvironment}
