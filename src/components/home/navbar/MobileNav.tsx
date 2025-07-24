@@ -11,10 +11,12 @@ interface MobileNavProps {
 
 const navigationItems = [
   { label: 'HOME', href: '/', active: false },
-  { label: 'EXPLORE', href: '/explore', active: false },
   { label: 'CREATE', href: '/create', active: false },
-  { label: 'MARKETPLACE', href: '/marketplace', active: false },
   { label: 'COLLECTIONS', href: '/collections', active: false },
+  { label: 'STUDIO', href: '/studio/demo', active: false },
+  { label: 'MARKETPLACE', href: '/marketplace', active: false },
+  { label: 'PRICING', href: '/pricing', active: false },
+  { label: 'WALLET', href: '/dashboard/transactions', active: false },
 ];
 
 export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
@@ -22,8 +24,16 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
   const { user } = useAuth();
 
   const isActive = (path: string) => {
-    return location.pathname === path || 
-           (path === '/collections' && location.pathname.startsWith('/collections'));
+    if (path === '/collections') {
+      return location.pathname === path || location.pathname.startsWith('/collections');
+    }
+    if (path === '/studio/demo') {
+      return location.pathname.startsWith('/studio');
+    }
+    if (path === '/dashboard/transactions') {
+      return location.pathname.startsWith('/dashboard');
+    }
+    return location.pathname === path;
   };
 
   return (

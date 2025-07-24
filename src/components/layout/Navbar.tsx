@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, Home, Palette, Menu } from 'lucide-react';
+import { Plus, Home, Palette, Menu, ShoppingBag, CreditCard, DollarSign } from 'lucide-react';
 import { LogoSelector } from '@/components/home/navbar/LogoSelector';
 import { useEnhancedNavbar } from '@/hooks/useEnhancedNavbar';
 import { useTeamTheme } from '@/hooks/useTeamTheme';
@@ -201,12 +201,12 @@ export const Navbar = () => {
               </Link>
 
               <Link
-                to="/studio"
+                to="/studio/demo"
                 className={`
                   flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
                   min-h-[44px] min-w-[44px]
                   transition-all duration-200 group
-                  ${isActive('/studio') 
+                  ${location.pathname.startsWith('/studio') 
                     ? (isHomeTeamMode 
                         ? 'text-slate-800 bg-slate-200/60' 
                         : 'text-themed-active bg-themed-active/10'
@@ -221,6 +221,75 @@ export const Navbar = () => {
               >
                 <Palette className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
                 <span className="hidden lg:inline">Studio</span>
+              </Link>
+
+              <Link
+                to="/marketplace"
+                className={`
+                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
+                  min-h-[44px] min-w-[44px]
+                  transition-all duration-200 group
+                  ${isActive('/marketplace') 
+                    ? (isHomeTeamMode 
+                        ? 'text-slate-800 bg-slate-200/60' 
+                        : 'text-themed-active bg-themed-active/10'
+                      )
+                    : (isHomeTeamMode 
+                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
+                        : 'text-themed-secondary hover-themed'
+                      )
+                  }
+                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
+                `}
+              >
+                <ShoppingBag className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
+                <span className="hidden lg:inline">Market</span>
+              </Link>
+
+              <Link
+                to="/pricing"
+                className={`
+                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
+                  min-h-[44px] min-w-[44px]
+                  transition-all duration-200 group
+                  ${isActive('/pricing') 
+                    ? (isHomeTeamMode 
+                        ? 'text-slate-800 bg-slate-200/60' 
+                        : 'text-themed-active bg-themed-active/10'
+                      )
+                    : (isHomeTeamMode 
+                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
+                        : 'text-themed-secondary hover-themed'
+                      )
+                  }
+                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
+                `}
+              >
+                <CreditCard className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
+                <span className="hidden xl:inline">Pricing</span>
+              </Link>
+
+              <Link
+                to="/dashboard/transactions"
+                className={`
+                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
+                  min-h-[44px] min-w-[44px]
+                  transition-all duration-200 group
+                  ${location.pathname.startsWith('/dashboard') 
+                    ? (isHomeTeamMode 
+                        ? 'text-slate-800 bg-slate-200/60' 
+                        : 'text-themed-active bg-themed-active/10'
+                      )
+                    : (isHomeTeamMode 
+                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
+                        : 'text-themed-secondary hover-themed'
+                      )
+                  }
+                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
+                `}
+              >
+                <DollarSign className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
+                <span className="hidden xl:inline">Wallet</span>
               </Link>
 
               {/* DNA Helix Trigger */}
