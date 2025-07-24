@@ -105,7 +105,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
             rgba(255, 80, 0, 0.04) 70%,
             transparent 85%
           )`,
-          transform: 'translate(40%, 40%)',
+          transform: 'translate(60%, 60%)',
           zIndex: 99,
         }}
       />
