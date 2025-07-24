@@ -385,26 +385,66 @@ const Pricing = () => {
         <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="bg-card border border-border rounded-lg p-6 hover-scale">
-              <h3 className="font-semibold mb-3 text-foreground text-lg">Can I change plans anytime?</h3>
+            <div 
+              className="bg-card rounded-lg p-6 hover-scale border"
+              style={{
+                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+              }}
+            >
+              <h3 
+                className="font-semibold mb-3 text-lg"
+                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+              >
+                Can I change plans anytime?
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
                 Yes! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle.
               </p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6 hover-scale">
-              <h3 className="font-semibold mb-3 text-foreground text-lg">What payment methods do you accept?</h3>
+            <div 
+              className="bg-card rounded-lg p-6 hover-scale border"
+              style={{
+                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+              }}
+            >
+              <h3 
+                className="font-semibold mb-3 text-lg"
+                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+              >
+                What payment methods do you accept?
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
                 We accept all major credit cards, PayPal, and our in-app CRD tokens for marketplace purchases.
               </p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6 hover-scale">
-              <h3 className="font-semibold mb-3 text-foreground text-lg">How do CRD tokens work?</h3>
+            <div 
+              className="bg-card rounded-lg p-6 hover-scale border"
+              style={{
+                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+              }}
+            >
+              <h3 
+                className="font-semibold mb-3 text-lg"
+                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+              >
+                How do CRD tokens work?
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
                 CRD tokens are purchased at <span className="token-amount">$1 USD = 100 CRD</span>. Use them for marketplace purchases, auctions, and premium features.
               </p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-6 hover-scale">
-              <h3 className="font-semibold mb-3 text-foreground text-lg">Is there a free trial?</h3>
+            <div 
+              className="bg-card rounded-lg p-6 hover-scale border"
+              style={{
+                borderColor: `${currentPalette?.colors.accent || 'hsl(var(--accent))'}40`
+              }}
+            >
+              <h3 
+                className="font-semibold mb-3 text-lg"
+                style={{ color: currentPalette?.colors.primary || 'hsl(var(--primary))' }}
+              >
+                Is there a free trial?
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
                 Our Free plan gives you full access to basic features. Upgrade anytime to unlock premium capabilities.
               </p>
