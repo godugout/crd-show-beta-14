@@ -94,14 +94,16 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Orange Sun Light Source - Bottom Right */}
       <div 
-        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none"
+        className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none"
         style={{
           background: `radial-gradient(
             circle at 85% 85%,
-            rgba(255, 165, 0, 0.4) 0%,
-            rgba(255, 140, 0, 0.25) 20%,
-            rgba(255, 120, 0, 0.15) 40%,
-            transparent 60%
+            rgba(255, 165, 0, 0.3) 0%,
+            rgba(255, 140, 0, 0.2) 15%,
+            rgba(255, 120, 0, 0.12) 30%,
+            rgba(255, 100, 0, 0.08) 50%,
+            rgba(255, 80, 0, 0.04) 70%,
+            transparent 85%
           )`,
           transform: 'translate(25%, 25%)',
           zIndex: 60
@@ -118,16 +120,19 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
             key={i}
             className="absolute bottom-0 right-0 origin-bottom-right"
             style={{
-              width: '200px',
-              height: '2px',
+              width: '400px',
+              height: '8px',
               background: `linear-gradient(
                 to left,
-                rgba(255, 165, 0, 0.3) 0%,
-                rgba(255, 140, 0, 0.2) 30%,
-                transparent 70%
+                rgba(255, 165, 0, 0.2) 0%,
+                rgba(255, 140, 0, 0.15) 20%,
+                rgba(255, 120, 0, 0.1) 40%,
+                rgba(255, 100, 0, 0.05) 60%,
+                transparent 80%
               )`,
               transform: `rotate(${-45 + i * 15}deg)`,
-              transformOrigin: '100% 100%'
+              transformOrigin: '100% 100%',
+              filter: 'blur(4px)'
             }}
           />
         ))}
