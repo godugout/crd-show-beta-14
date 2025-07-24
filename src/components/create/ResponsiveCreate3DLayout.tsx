@@ -63,6 +63,35 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
         </StarsBackground>
       </div>
 
+      {/* Seamless Bottom Blend Overlay - Creates glow effect where hero meets footer */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-40"
+        style={{
+          background: `linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 60%,
+            rgba(0, 0, 0, 0.1) 70%,
+            rgba(0, 0, 0, 0.3) 80%,
+            rgba(0, 0, 0, 0.5) 90%,
+            rgba(0, 0, 0, 0.8) 100%
+          )`
+        }}
+      />
+
+      {/* Bottom Glow Enhancement */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-40"
+        style={{
+          background: `radial-gradient(
+            ellipse at center bottom,
+            hsla(var(--theme-primary) / 0.15) 0%,
+            hsla(var(--theme-primary) / 0.08) 30%,
+            transparent 70%
+          )`
+        }}
+      />
+
       {/* SCROLL PRIORITY ZONE - Complete bottom area for page scrolling only */}
       <div 
         id="scroll-priority-zone"
