@@ -92,42 +92,6 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
         }}
       />
 
-      {/* Orange Sun Light Source - Bottom Right */}
-      <div 
-        className="absolute bottom-0 right-0 w-[800px] h-[800px] pointer-events-none"
-        style={{
-          background: `radial-gradient(
-            circle at 85% 85%,
-            rgba(255, 165, 0, 0.3) 0%,
-            rgba(255, 140, 0, 0.2) 15%,
-            rgba(255, 120, 0, 0.12) 30%,
-            rgba(255, 100, 0, 0.08) 50%,
-            rgba(255, 80, 0, 0.04) 70%,
-            transparent 85%
-          )`,
-          transform: 'translate(60%, 60%)',
-          zIndex: 99,
-        }}
-      />
-
-      {/* Surface Reflection - Subtle orange glow on the "slab" */}
-      <div 
-        className="absolute bottom-0 left-1/2 pointer-events-none"
-        style={{
-          width: '60%',
-          height: '30%',
-          transform: 'translateX(-50%)',
-          background: `radial-gradient(
-            ellipse 80% 40% at center top,
-            rgba(255, 165, 0, 0.15) 0%,
-            rgba(255, 140, 0, 0.10) 40%,
-            rgba(255, 120, 0, 0.05) 70%,
-            transparent 100%
-          )`,
-          zIndex: 59
-        }}
-      />
-
       {/* SCROLL PRIORITY ZONE - Complete bottom area for page scrolling only */}
       <div 
         id="scroll-priority-zone"
