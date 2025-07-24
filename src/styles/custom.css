@@ -1,0 +1,137 @@
+/* Custom utility classes for specialized components */
+
+/* Editor-specific utilities */
+.editor-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--editor-tool) var(--editor-darker);
+}
+
+.editor-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-sidebar::-webkit-scrollbar-track {
+  background: var(--editor-darker);
+}
+
+.editor-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--editor-tool);
+  border-radius: 4px;
+}
+
+/* Duplicate keyframes removed - now consolidated in animations.css */
+
+/* Duplicate keyframes removed - now consolidated in animations.css */
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-wave {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.animate-typing {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(20, end) infinite;
+}
+
+.animate-gradient-flow {
+  background: linear-gradient(45deg, hsl(var(--crd-green)), hsl(var(--crd-blue)), hsl(var(--crd-purple)), hsl(var(--crd-orange)));
+  background-size: 300% 300%;
+  animation: gradient-flow 4s ease infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.sparkle-container {
+  position: relative;
+  display: inline-block;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, hsl(var(--crd-green)), hsl(var(--crd-blue)));
+  border-radius: 50%;
+  animation: sparkle-float 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.sparkle-large {
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, hsl(var(--crd-purple)), hsl(var(--crd-orange)));
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+.sparkle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 25%; left: 85%; animation-delay: 0.5s; }
+.sparkle:nth-child(3) { top: 60%; left: 10%; animation-delay: 1s; }
+.sparkle:nth-child(4) { top: 80%; left: 90%; animation-delay: 1.5s; }
+.sparkle:nth-child(5) { top: 40%; left: 95%; animation-delay: 2s; }
+.sparkle:nth-child(6) { top: 15%; left: 75%; animation-delay: 2.5s; }
+.sparkle:nth-child(7) { top: 70%; left: 25%; animation-delay: 3s; }
+.sparkle:nth-child(8) { top: 90%; left: 60%; animation-delay: 0.3s; }
+
+/* Custom slider styling for secret menu */
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: hsl(var(--crd-green));
+  cursor: pointer;
+  border: 2px solid hsl(var(--crd-green));
+}
+
+.slider-thumb::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: hsl(var(--crd-green));
+  cursor: pointer;
+  border: 2px solid hsl(var(--crd-green));
+}
+
+/* Interactive Elements */
+.interactive-element-active {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.interactive-element-active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, hsl(var(--crd-green)), hsl(var(--crd-blue)), hsl(var(--crd-purple)), hsl(var(--crd-green)));
+  background-size: 400% 400%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: gradient-shift 3s ease infinite;
+  opacity: 0.3;
+}
+
+/* Gradient Animation */
+/* Duplicate keyframes removed - now consolidated in animations.css */
+
+/* Enhanced hover states for interactive elements */
+.interactive-element-active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsl(var(--crd-green) / 0.3);
+}
+
+/* Pulse effect for active interactive elements */
+.interactive-element-active.pulse-active {
+  animation: interactive-pulse 2s ease-in-out infinite;
+}
+
+/* Duplicate keyframes removed - now consolidated in animations.css */

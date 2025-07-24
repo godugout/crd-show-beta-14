@@ -1,0 +1,17 @@
+/* Studio mode styles - Hide navbar when in studio mode */
+body.studio-mode .navbar,
+body.studio-mode nav[class*="navbar"],
+body.studio-mode header[class*="nav"] {
+  display: none !important;
+}
+
+/* Ensure studio mode takes full viewport */
+body.studio-mode main {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Studio mode specific overrides */
+body.studio-mode {
+  overflow: hidden;
+}

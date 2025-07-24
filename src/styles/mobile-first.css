@@ -1,0 +1,332 @@
+
+/* Mobile-First Navigation and Touch Optimizations */
+
+/* Touch target minimum size enforcement - Updated for accessibility */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+  cursor: pointer;
+}
+
+/* 3D Canvas responsive constraints */
+.responsive-canvas {
+  width: 100%;
+  height: 100%;
+  max-height: 90vh;
+}
+
+@media (min-width: 1024px) {
+  .responsive-canvas {
+    max-height: 100vh;
+  }
+}
+
+/* Enhanced Mobile Snap Scrolling */
+@media (max-width: 768px) {
+  /* Snap scrolling container */
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  
+  /* Improved scrolling momentum */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Hide desktop navigation */
+  .desktop-only {
+    display: none !important;
+  }
+  
+  /* Increase spacing for mobile */
+  .mobile-spacing {
+    padding: 1rem;
+  }
+  
+  /* Mobile-optimized buttons */
+  .mobile-btn {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    touch-action: manipulation;
+  }
+
+  /* Prevent 3D elements from covering UI */
+  .safe-zone-bottom {
+    padding-bottom: 6rem;
+  }
+
+  /* Responsive canvas sizing */
+  .canvas-container {
+    height: 70vh;
+    max-height: 70vh;
+  }
+  
+  /* Mobile text sizing - Improved Typography */
+  .mobile-text {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  
+  .mobile-heading {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+  
+  .mobile-subheading {
+    font-size: 1rem;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+  
+  /* Mobile overlay for sidebars */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+
+  /* Mobile Create Page Optimizations */
+  .mobile-create-hero {
+    padding-top: calc(var(--navbar-height) + 1rem);
+    padding-bottom: 2rem;
+  }
+
+  .mobile-studio-section {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Mobile Studio Taskbar */
+  .mobile-taskbar {
+    background: rgba(var(--crd-darker-rgb), 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(var(--crd-mediumGray-rgb), 0.2);
+  }
+
+  /* Auto-hide taskbar animation */
+  .taskbar-hidden {
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .taskbar-visible {
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  /* Safe area handling for mobile taskbar */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Tablet breakpoint optimizations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Tablet navigation adjustments */
+  .tablet-nav {
+    gap: 0.5rem;
+  }
+  
+  .tablet-nav .nav-text {
+    display: none;
+  }
+  
+  .tablet-nav .nav-icon {
+    display: block;
+  }
+
+  /* Tablet canvas sizing */
+  .canvas-container {
+    height: 80vh;
+    max-height: 80vh;
+  }
+
+  /* Tablet safe zones */
+  .safe-zone-bottom {
+    padding-bottom: 4rem;
+  }
+}
+
+/* Desktop breakpoint optimizations */
+@media (min-width: 1024px) {
+  /* Full navigation on desktop */
+  .desktop-nav {
+    gap: 1.5rem;
+  }
+  
+  .desktop-nav .nav-text {
+    display: inline;
+  }
+
+  /* Desktop canvas sizing */
+  .canvas-container {
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  /* Remove mobile safe zones on desktop */
+  .safe-zone-bottom {
+    padding-bottom: 0;
+  }
+
+  /* Desktop-specific layout adjustments */
+  .cosmic-controls-desktop {
+    display: none; /* Remove cosmic controls from desktop too */
+  }
+
+  /* Desktop 3D Card Dynamic Positioning */
+  .desktop-3d-card {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transition: top 0.5s ease-out;
+  }
+}
+
+/* Progressive enhancement for hover states */
+@media (hover: hover) and (pointer: fine) {
+  .hover-enhance:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Enhanced navigation link hover effects */
+  .nav-link-hover:hover {
+    background-color: rgba(var(--crd-mediumGray-rgb), 0.2);
+    border-left: 3px solid hsl(var(--crd-blue));
+    padding-left: 0.75rem;
+    transform: translateX(2px);
+  }
+  
+  /* Subtle accent color highlight on navigation hover */
+  .nav-accent-hover:hover {
+    color: hsl(var(--crd-blue-light));
+    background: linear-gradient(90deg, transparent, rgba(var(--crd-blue-rgb), 0.1), transparent);
+  }
+  
+  /* CTA button outline glow effect */
+  .btn-outline-glow:hover {
+    box-shadow: 0 0 0 2px rgba(var(--crd-blue-rgb), 0.3);
+    border-color: hsl(var(--crd-blue-light));
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Respect reduced motion for taskbar animations */
+  .taskbar-hidden,
+  .taskbar-visible {
+    transition: none !important;
+  }
+  
+  /* Disable snap scrolling for reduced motion */
+  .snap-container {
+    scroll-snap-type: none;
+  }
+}
+
+/* Prevent scrollbars in main viewport */
+.main-viewport {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Responsive positioning utilities */
+.responsive-absolute {
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .responsive-absolute {
+    position: relative;
+  }
+}
+
+/* Layout grid for responsive design */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Enhanced touch targets for mobile */
+@media (max-width: 768px) {
+  button, a, [role="button"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Prevent zoom on form inputs */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Smooth scrolling for mobile section transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile Create Page specific animations */
+@keyframes mobile-card-teaser {
+  0% { transform: rotate(12deg) scale(0.9); opacity: 0.7; }
+  50% { transform: rotate(15deg) scale(1); opacity: 1; }
+  100% { transform: rotate(12deg) scale(0.9); opacity: 0.7; }
+}
+
+.mobile-card-teaser {
+  animation: mobile-card-teaser 3s ease-in-out infinite;
+}
+
+/* Enhanced scroll indicator */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.scroll-indicator {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* Progress indicator animations */
+@keyframes progress-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.progress-indicator {
+  animation: progress-pulse 2s ease-in-out infinite;
+}

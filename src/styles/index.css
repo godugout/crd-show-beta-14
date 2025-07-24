@@ -1,0 +1,199 @@
+
+/* Main entry point for all CSS files */
+@import './reset.css';
+@import './variables.css';
+@import './z-index-system.css';  /* Standardized z-index hierarchy */
+@import './animations.css';  /* All keyframes here */
+@import './utilities.css';
+@import './components.css';
+
+/* Legacy imports - will be refactored */
+@import './base.css';
+@import './theme.css';
+@import './custom.css';
+@import './card-effects.css';
+@import './glass-morphism.css';
+@import './mobile-first.css';
+
+/* New responsive enhancements */
+@import './responsive-enhancements.css';
+
+/* Critical utilities for proper theming */
+@layer utilities {
+  /* Button text color utilities */
+  .btn-text-dark {
+    color: hsl(220 13% 9%) !important;
+  }
+  
+  .btn-text-light {
+    color: hsl(0 0% 99%) !important;
+  }
+  
+  .btn-text-gray {
+    color: hsl(220 17% 56%) !important;
+  }
+  
+  /* CRD Color Utilities - All HSL */
+  .bg-crd-darkest { background-color: hsl(var(--crd-darkest)); }
+  .bg-crd-darker { background-color: hsl(var(--crd-darker)); }
+  .bg-crd-dark { background-color: hsl(var(--crd-dark)); }
+  .bg-crd-darkGray { background-color: hsl(var(--crd-darkGray)); }
+  .bg-crd-mediumGray { background-color: hsl(var(--crd-mediumGray)); }
+  .bg-crd-lightGray { background-color: hsl(var(--crd-lightGray)); }
+  .bg-crd-white { background-color: hsl(var(--crd-white)); }
+  .bg-crd-blue { background-color: hsl(var(--crd-blue)); }
+  .bg-crd-purple { background-color: hsl(var(--crd-purple)); }
+  .bg-crd-orange { background-color: hsl(var(--crd-orange)); }
+  .bg-crd-green { background-color: hsl(var(--crd-green)); }
+
+  .text-crd-darkest { color: hsl(var(--crd-darkest)); }
+  .text-crd-darker { color: hsl(var(--crd-darker)); }
+  .text-crd-dark { color: hsl(var(--crd-dark)); }
+  .text-crd-darkGray { color: hsl(var(--crd-darkGray)); }
+  .text-crd-mediumGray { color: hsl(var(--crd-mediumGray)); }
+  .text-crd-lightGray { color: hsl(var(--crd-lightGray)); }
+  .text-crd-white { color: hsl(var(--crd-white)); }
+  .text-crd-blue { color: hsl(var(--crd-blue)); }
+  .text-crd-purple { color: hsl(var(--crd-purple)); }
+  .text-crd-orange { color: hsl(var(--crd-orange)); }
+  .text-crd-green { color: hsl(var(--crd-green)); }
+
+  .border-crd-darkest { border-color: hsl(var(--crd-darkest)); }
+  .border-crd-darker { border-color: hsl(var(--crd-darker)); }
+  .border-crd-dark { border-color: hsl(var(--crd-dark)); }
+  .border-crd-darkGray { border-color: hsl(var(--crd-darkGray)); }
+  .border-crd-mediumGray { border-color: hsl(var(--crd-mediumGray)); }
+  .border-crd-lightGray { border-color: hsl(var(--crd-lightGray)); }
+  .border-crd-white { border-color: hsl(var(--crd-white)); }
+  .border-crd-blue { border-color: hsl(var(--crd-blue)); }
+  .border-crd-purple { color: hsl(var(--crd-purple)); }
+  .border-crd-orange { border-color: hsl(var(--crd-orange)); }
+  .border-crd-green { border-color: hsl(var(--crd-green)); }
+
+  /* Editor Color Utilities */
+  .bg-editor-dark { background-color: hsl(var(--editor-dark)); }
+  .bg-editor-darker { background-color: hsl(var(--editor-darker)); }
+  .bg-editor-tool { background-color: hsl(var(--editor-tool)); }
+  .bg-editor-canvas { background-color: hsl(var(--editor-canvas)); }
+  .border-editor-border { border-color: hsl(var(--editor-border)); }
+  
+  /* Logo sparkle filters */
+  .sparkles-yellow-filter {
+    filter: hue-rotate(45deg) saturate(130%) brightness(120%) contrast(110%);
+    transition: filter 0.3s ease;
+  }
+  
+  .sparkles-yellow-filter-green {
+    filter: hue-rotate(60deg) saturate(140%) brightness(115%) contrast(105%);
+    transition: filter 0.3s ease;
+  }
+  
+  .sparkles-yellow-filter-teal {
+    filter: hue-rotate(80deg) saturate(150%) brightness(125%) contrast(110%);
+    transition: filter 0.3s ease;
+  }
+  
+  /* Space Odyssey Gradient Classes */
+  .bg-space-odyssey {
+    background: var(--gradient-space-odyssey);
+  }
+  
+  .bg-space-to-purple {
+    background: var(--gradient-space-to-purple);
+  }
+
+  /* Engagement Glow Classes */
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+    transition: var(--glow-animation-fast);
+  }
+  
+  .glow-secondary {
+    box-shadow: var(--glow-secondary);
+    transition: var(--glow-animation-fast);
+  }
+  
+  .glow-tutorial {
+    box-shadow: var(--glow-tutorial);
+    transition: var(--glow-animation-fast);
+  }
+  
+  .glow-pulse {
+    animation: var(--glow-animation-pulse);
+  }
+  
+  .glow-pulse.glow-primary {
+    animation: glow-pulse-primary 1s ease-in-out infinite alternate;
+  }
+  
+  .glow-pulse.glow-tutorial {
+    animation: glow-pulse-tutorial 1s ease-in-out infinite alternate;
+  }
+}
+  
+/* Glow Pulse Keyframes */
+@keyframes glow-pulse-primary {
+  0% { box-shadow: 0 0 5px hsl(var(--crd-green) / 0.4); }
+  100% { box-shadow: var(--glow-primary); }
+}
+
+@keyframes glow-pulse-tutorial {
+  0% { box-shadow: 0 0 8px hsl(var(--crd-accent-cards) / 0.3); }
+  100% { box-shadow: var(--glow-tutorial); }
+}
+
+  /* Animated tagline fonts */
+  .font-comic {
+    font-family: 'Comic Sans MS', cursive;
+  }
+  
+  .font-playful {
+    font-family: 'Caveat', cursive;
+  }
+  
+  .font-bouncy {
+    font-family: 'Fredoka One', cursive;
+  }
+  
+  .font-fun {
+    font-family: 'Chewy', cursive;
+  }
+
+/* Engagement Glow Classes */
+.glow-primary {
+  box-shadow: 0 0 20px hsl(var(--crd-green) / 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 30px hsl(var(--crd-accent-cards) / 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-tutorial {
+  box-shadow: 0 0 25px hsl(var(--crd-accent-cards) / 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-pulse {
+  animation: all 1s ease-in-out infinite alternate;
+}
+
+.glow-pulse.glow-primary {
+  animation: glow-pulse-primary 1s ease-in-out infinite alternate;
+}
+
+.glow-pulse.glow-tutorial {
+  animation: glow-pulse-tutorial 1s ease-in-out infinite alternate;
+}
+
+/* Glow Pulse Keyframes */
+@keyframes glow-pulse-primary {
+  0% { box-shadow: 0 0 5px hsl(var(--crd-green) / 0.4); }
+  100% { box-shadow: 0 0 20px hsl(var(--crd-green) / 0.8); }
+}
+
+@keyframes glow-pulse-tutorial {
+  0% { box-shadow: 0 0 8px hsl(var(--crd-accent-cards) / 0.3); }
+  100% { box-shadow: 0 0 25px hsl(var(--crd-accent-cards) / 0.7); }
+}

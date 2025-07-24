@@ -1,0 +1,154 @@
+
+/* Enhanced Responsive System Styles */
+
+/* Multi-section scroll improvements */
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Device-specific optimizations */
+[data-device-type="mobile"] {
+  /* Mobile-specific styles */
+  .canvas-container {
+    height: 70vh;
+    max-height: 70vh;
+  }
+}
+
+[data-device-type="tablet"] {
+  /* Tablet-specific styles */
+  .canvas-container {
+    height: 80vh;
+    max-height: 80vh;
+  }
+}
+
+[data-device-type="desktop"] {
+  /* Desktop-specific styles */
+  .canvas-container {
+    height: 100vh;
+    max-height: 100vh;
+  }
+}
+
+[data-device-type="large-desktop"] {
+  /* Large desktop-specific styles */
+  .canvas-container {
+    height: 100vh;
+    max-height: 100vh;
+  }
+}
+
+/* Overlay mode styles */
+[data-overlay-mode="true"] {
+  .hero-content {
+    position: relative;
+    z-index: 10;
+  }
+  
+  .background-3d {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+}
+
+/* Short screen adaptations */
+@media (max-height: 700px) {
+  .short-screen-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Reduce vertical spacing on short screens */
+  .short-screen-hero {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .short-screen-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.2;
+  }
+  
+  .short-screen-hero .mb-6 {
+    margin-bottom: 1rem;
+  }
+  
+  .short-screen-hero .mb-4 {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* Fluid typography system */
+.fluid-text-xs { font-size: clamp(0.75rem, 1vw, 0.875rem); }
+.fluid-text-sm { font-size: clamp(0.875rem, 1.5vw, 1rem); }
+.fluid-text-base { font-size: clamp(1rem, 2vw, 1.125rem); }
+.fluid-text-lg { font-size: clamp(1.125rem, 2.5vw, 1.25rem); }
+.fluid-text-xl { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+.fluid-text-2xl { font-size: clamp(1.5rem, 4vw, 2rem); }
+.fluid-text-3xl { font-size: clamp(1.875rem, 5vw, 2.5rem); }
+.fluid-text-4xl { font-size: clamp(2.25rem, 6vw, 3rem); }
+.fluid-text-5xl { font-size: clamp(3rem, 8vw, 4rem); }
+.fluid-text-6xl { font-size: clamp(3.75rem, 10vw, 5rem); }
+
+/* Adaptive spacing system */
+.adaptive-padding {
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.adaptive-margin {
+  margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth scroll enhancements */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .smooth-scroll {
+    scroll-behavior: auto;
+  }
+  
+  .animate-bounce {
+    animation: none;
+  }
+  
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Touch improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimized {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

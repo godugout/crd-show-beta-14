@@ -1,0 +1,162 @@
+/* Glass Morphism Effects for CRD Design System */
+
+/* Light Glass */
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 300ms ease-out;
+}
+
+.glass-light:hover {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Medium Glass */
+.glass-medium {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 300ms ease-out;
+}
+
+.glass-medium:hover {
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Heavy Glass */
+.glass-heavy {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 300ms ease-out;
+}
+
+.glass-heavy:hover {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Enhanced Shadow/Elevation System */
+.shadow-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-elevated {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-heavy {
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-glow-blue {
+  box-shadow: 0 0 20px rgba(55, 114, 255, 0.3);
+}
+
+.shadow-glow-orange {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+}
+
+.shadow-glow-green {
+  box-shadow: 0 0 20px rgba(69, 178, 107, 0.3);
+}
+
+.shadow-glow-purple {
+  box-shadow: 0 0 20px rgba(151, 87, 215, 0.3);
+}
+
+/* Mobile-specific utilities */
+.mobile-nav-height {
+  height: 4rem; /* 64px */
+}
+
+.mobile-avatar-sm {
+  width: 2rem; /* 32px */
+  height: 2rem;
+}
+
+.mobile-avatar-md {
+  width: 3rem; /* 48px */
+  height: 3rem;
+}
+
+.mobile-avatar-lg {
+  width: 5rem; /* 80px */
+  height: 5rem;
+}
+
+.mobile-input {
+  height: 3rem; /* 48px */
+  background: #23262F;
+  border: 1px solid #353945;
+  border-radius: 0.5rem;
+  transition: all 200ms ease-out;
+}
+
+.mobile-input:focus {
+  border: 2px solid #3772FF;
+  outline: none;
+}
+
+.mobile-toggle {
+  height: 1.5rem; /* 24px */
+  border-radius: 0.75rem; /* 12px */
+}
+
+/* Hover animations */
+.hover-scale {
+  transition: transform 200ms ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-lift {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.button-press:active {
+  transform: scale(0.98);
+  transition: transform 150ms ease-out;
+}
+
+/* Easing curves utility classes */
+.ease-bounce {
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ease-fast {
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.ease-standard {
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
+.ease-slow {
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+}
+
+.ease-complex {
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
+}

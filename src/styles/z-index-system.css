@@ -1,0 +1,151 @@
+/* ===============================================
+   CARDSHOW Z-INDEX SYSTEM - STANDARDIZED LAYER HIERARCHY
+   =============================================== */
+
+/* Define consistent z-index layers to prevent conflicts */
+:root {
+  /* Base layers (0-100) */
+  --z-background: 0;
+  --z-content: 10;
+  --z-elevated: 20;
+  --z-fixed: 30;
+  
+  /* UI Elements (100-500) */
+  --z-ui-base: 100;
+  --z-ui-elevated: 200;
+  --z-ui-interactive: 300;
+  --z-ui-overlay: 400;
+  --z-ui-critical: 500;
+  
+  /* Navigation & Controls (500-800) */
+  --z-nav-base: 500;
+  --z-nav-controls: 600;
+  --z-nav-active: 700;
+  --z-nav-priority: 800;
+  
+  /* Overlays & Modals (800-1200) */
+  --z-overlay-base: 800;
+  --z-overlay-content: 900;
+  --z-overlay-controls: 1000;
+  --z-overlay-critical: 1100;
+  --z-overlay-emergency: 1200;
+  
+  /* Debug & Development (9000+) */
+  --z-debug-base: 9000;
+  --z-debug-overlay: 9500;
+  --z-debug-critical: 9999;
+}
+
+/* ===============================================
+   Z-INDEX UTILITY CLASSES
+   =============================================== */
+
+@layer utilities {
+  /* Background layers */
+  .z-background { z-index: var(--z-background); }
+  .z-content { z-index: var(--z-content); }
+  .z-elevated { z-index: var(--z-elevated); }
+  .z-fixed { z-index: var(--z-fixed); }
+  
+  /* UI Element layers */
+  .z-ui-base { z-index: var(--z-ui-base); }
+  .z-ui-elevated { z-index: var(--z-ui-elevated); }
+  .z-ui-interactive { z-index: var(--z-ui-interactive); }
+  .z-ui-overlay { z-index: var(--z-ui-overlay); }
+  .z-ui-critical { z-index: var(--z-ui-critical); }
+  
+  /* Navigation & Control layers */
+  .z-nav-base { z-index: var(--z-nav-base); }
+  .z-nav-controls { z-index: var(--z-nav-controls); }
+  .z-nav-active { z-index: var(--z-nav-active); }
+  .z-nav-priority { z-index: var(--z-nav-priority); }
+  
+  /* Overlay & Modal layers */
+  .z-overlay-base { z-index: var(--z-overlay-base); }
+  .z-overlay-content { z-index: var(--z-overlay-content); }
+  .z-overlay-controls { z-index: var(--z-overlay-controls); }
+  .z-overlay-critical { z-index: var(--z-overlay-critical); }
+  .z-overlay-emergency { z-index: var(--z-overlay-emergency); }
+  
+  /* Debug layers */
+  .z-debug-base { z-index: var(--z-debug-base); }
+  .z-debug-overlay { z-index: var(--z-debug-overlay); }
+  .z-debug-critical { z-index: var(--z-debug-critical); }
+}
+
+/* ===============================================
+   COMPONENT-SPECIFIC Z-INDEX FIXES
+   =============================================== */
+
+/* 3D Canvas - Base layer for all 3D content */
+.canvas-3d {
+  z-index: var(--z-elevated);
+}
+
+/* Navigation compass and controls */
+.galactic-compass {
+  z-index: var(--z-nav-priority);
+}
+
+/* Tutorial and modal overlays */
+.tutorial-overlay,
+.alignment-tutorial {
+  z-index: var(--z-overlay-content);
+}
+
+/* Performance monitors and debug tools */
+.performance-monitor,
+.debug-overlay {
+  z-index: var(--z-debug-base);
+}
+
+/* Critical UI indicators */
+.viewing-conditions-indicator {
+  z-index: var(--z-debug-critical);
+}
+
+/* Dropdown menus and tooltips */
+.dropdown-menu,
+.tooltip-content,
+.popover-content {
+  z-index: var(--z-ui-overlay);
+}
+
+/* Modal dialogs */
+.dialog-content,
+.sheet-content {
+  z-index: var(--z-overlay-content);
+}
+
+/* Alert dialogs (highest priority) */
+.alert-dialog-content {
+  z-index: var(--z-overlay-emergency);
+}
+
+/* Fixed footers and sticky elements */
+.sticky-footer,
+.mobile-taskbar {
+  z-index: var(--z-nav-base);
+}
+
+/* Interactive effects and hyperspace */
+.hyperspace-effect,
+.space-effect {
+  z-index: var(--z-fixed);
+}
+
+/* Alignment system overlay */
+.alignment-system {
+  z-index: var(--z-ui-interactive);
+}
+
+/* Interactive dropzones */
+.interactive-dropzone {
+  z-index: var(--z-ui-elevated);
+}
+
+/* Status messages and notifications */
+.status-message,
+.toast-notification {
+  z-index: var(--z-nav-active);
+}

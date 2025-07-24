@@ -1,0 +1,109 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CRD Theme System */
+@layer components {
+  /* Home team light mode - Light background for better logo visibility */
+  .navbar-home-team {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.95) 0%, 
+      rgba(248, 250, 252, 0.92) 50%, 
+      rgba(255, 255, 255, 0.97) 100%
+    ) !important;
+    border-color: rgba(203, 213, 225, 0.4) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  }
+  
+  /* Home team mode text colors */
+  .navbar-home-team .text-themed-primary {
+    color: hsl(220, 14%, 20%) !important;
+  }
+  
+  .navbar-home-team .text-themed-secondary {
+    color: hsl(220, 9%, 46%) !important;
+  }
+  
+  .navbar-home-team .text-themed-active {
+    color: hsl(var(--theme-accent)) !important;
+  }
+  
+  /* Home team mode hover states */
+  .navbar-home-team .hover-themed:hover {
+    background-color: rgba(71, 85, 105, 0.1) !important;
+    color: hsl(220, 14%, 20%) !important;
+  }
+  
+  /* Home team mode subdued text */
+  .navbar-home-team .text-themed-active-subdued {
+    color: hsl(var(--theme-accent) / 0.75) !important;
+  }
+  
+  /* Text theming */
+  .text-themed-primary {
+    color: hsl(var(--crd-white));
+  }
+  
+  .text-themed-secondary {
+    color: hsl(var(--crd-lightGray));
+  }
+  
+  .text-themed-active {
+    color: hsl(var(--theme-accent));
+  }
+  
+  .text-themed-active-subdued {
+    color: hsl(var(--theme-accent) / 0.75);
+  }
+  
+  /* Interactive theming */
+  .hover-themed {
+    @apply transition-all duration-200 hover:bg-crd-mediumGray/20 hover:text-white;
+  }
+  
+  /* Button theming */
+  .btn-themed-primary {
+    background: linear-gradient(135deg, hsl(var(--crd-blue)), hsl(var(--crd-purple)));
+    @apply text-white font-bold px-6 py-3 rounded-full border-2 border-transparent;
+    box-shadow: 0 0 0 1px hsl(var(--crd-blue) / 0.2);
+  }
+  
+  .btn-themed-primary:hover {
+    box-shadow: 0 0 0 2px hsl(var(--crd-blue) / 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-themed-ghost {
+    @apply bg-transparent text-crd-lightGray hover:bg-crd-mediumGray/20 hover:text-white border border-crd-mediumGray/30 rounded-lg;
+  }
+  
+  /* Card theming */
+  .card-themed {
+    @apply bg-crd-darkGray border border-crd-mediumGray/30 rounded-lg;
+  }
+  
+  /* Focus theming */
+  .focus-themed {
+    @apply focus:outline-none focus:ring-2 focus:ring-crd-blue/50 focus:ring-offset-2 focus:ring-offset-crd-darkest;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .gradient-text-themed {
+    background: linear-gradient(135deg, hsl(var(--crd-blue)), hsl(var(--crd-purple)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Dropdown specific styles */
+  .dropdown-themed {
+    background: hsl(var(--background) / 0.95);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.3);
+    @apply shadow-xl rounded-xl;
+  }
+}

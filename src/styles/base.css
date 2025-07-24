@@ -1,0 +1,150 @@
+
+@tailwind base;
+
+:root {
+  /* Layout Variables */
+  --navbar-height: 4rem; /* 64px */
+  --hero-min-height: 60vh;
+  --hero-max-height: 90vh;
+  
+  /* Shadcn UI Variables - All HSL format */
+  --background: 217 19% 16%; /* #23262F */
+  --foreground: 0 0% 99%; /* #FCFCFD */
+  --card: 217 19% 16%; /* #23262F */
+  --card-foreground: 0 0% 99%; /* #FCFCFD */
+  --popover: 217 19% 16%; /* #23262F */
+  --popover-foreground: 0 0% 99%; /* #FCFCFD */
+  --primary: 219 88% 62%; /* #3772FF */
+  --primary-foreground: 0 0% 99%; /* #FCFCFD */
+  --secondary: 217 19% 27%; /* #353945 */
+  --secondary-foreground: 0 0% 99%; /* #FCFCFD */
+  --muted: 217 19% 27%; /* #353945 */
+  --muted-foreground: 220 17% 56%; /* #777E90 */
+  --accent: 219 88% 62%; /* #3772FF */
+  --accent-foreground: 0 0% 99%; /* #FCFCFD */
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 19% 27%; /* #353945 */
+  --input: 217 19% 27%; /* #353945 */
+  --ring: 219 88% 62%; /* #3772FF */
+  --radius: 0.5rem;
+
+  /* CRD Theme Variables - All HSL format */
+  --crd-blue: 219 88% 62%;
+  --crd-blue-light: 219 88% 70%;
+  --crd-blue-dark: 219 88% 50%;
+  --crd-purple: 260 70% 65%;
+  --crd-purple-light: 260 80% 75%;
+  --crd-purple-dark: 260 70% 55%;
+  --crd-orange: 18 85% 60%;
+  --crd-green: 142 51% 50%;
+  
+  /* Neutral Colors - All HSL format */
+  --crd-darkest: 220 13% 9%;
+  --crd-darker: 220 13% 15%;
+  --crd-dark: 220 13% 18%;
+  --crd-darkGray: 217 19% 16%;
+  --crd-mediumGray: 217 19% 27%;
+  --crd-lightGray: 220 17% 56%;
+  --crd-white: 0 0% 99%;
+  
+  /* Editor Colors - All HSL format */
+  --editor-dark: 0 0% 10%;
+  --editor-darker: 0 0% 7%;
+  --editor-tool: 0 0% 16%;
+  --editor-border: 0 0% 20%;
+  --editor-canvas: 0 0% 17%;
+
+  /* Theme System Variables - Updated by logo/theme selection */
+  --theme-navbar-bg: var(--crd-blue);
+  --theme-navbar-border: var(--crd-purple);
+  --theme-accent: var(--crd-blue);
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 33% 18%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 18%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 33% 18%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 18%;
+  --input: 217 33% 18%;
+  --ring: 224 76% 48%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-crd-darkest text-crd-white;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Mobile-first typography scale */
+  h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4;
+  }
+  
+  h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3;
+  }
+  
+  h3 {
+    @apply text-lg sm:text-xl lg:text-2xl font-bold mb-2;
+  }
+  
+  /* Mobile-first touch targets */
+  button {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  a {
+    @apply min-h-[44px] flex items-center;
+  }
+  
+  /* Improve tap highlighting on mobile */
+  button,
+  a,
+  [role="button"] {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    touch-action: manipulation;
+  }
+  
+  /* Mobile-first container padding */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Improved focus styles */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-blue-500;
+  }
+  
+  /* Mobile scrolling optimization */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+}

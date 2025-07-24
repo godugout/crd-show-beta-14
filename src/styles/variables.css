@@ -1,0 +1,161 @@
+/* CSS Custom Properties / Variables */
+:root {
+  /* Color System */
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --radius: 0.5rem;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+
+  /* CRD Theme Colors - Complete Set */
+  --crd-black: 0 0% 4%;
+  --crd-white: 0 0% 98%;
+  --crd-gray: 0 0% 20%;
+  --crd-light-gray: 0 0% 85%;
+  --crd-blue: 210 100% 56%;
+  --crd-green: 142 76% 36%;
+  --crd-orange: 25 95% 53%;
+  --crd-red: 0 84% 60%;
+  --crd-yellow: 48 96% 53%;
+  --crd-purple: 262 83% 58%;
+  --crd-pink: 316 73% 69%;
+  --crd-teal: 173 58% 39%;
+  
+  /* CRD Design System Colors - Matching base.css */
+  --crd-darkest: 220 13% 9%;     /* From base.css */
+  --crd-darker: 220 13% 15%;     /* From base.css */
+  --crd-dark: 220 13% 18%;       /* From base.css */
+  --crd-darkGray: 217 19% 16%;   /* From base.css */
+  --crd-mediumGray: 217 19% 27%; /* From base.css */
+  --crd-lightGray: 220 17% 56%;  /* From base.css */
+  --crd-white: 0 0% 99%;         /* From base.css */
+  --crd-gold: 51 100% 50%;       /* #FFD700 */
+
+  /* Spacing System */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
+  --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary) / 0.8));
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent) / 0.8));
+  
+  /* Space Odyssey Gradients */
+  --gradient-space-odyssey: linear-gradient(180deg, 
+    hsl(0 0% 0%) 0%, 
+    hsl(0 0% 2%) 25%, 
+    hsl(220 13% 9%) 50%, 
+    hsl(220 15% 12%) 75%, 
+    hsl(262 83% 8%) 90%, 
+    hsl(262 83% 15%) 100%
+  );
+  --gradient-space-to-purple: linear-gradient(180deg, 
+    hsl(220 13% 9%) 0%, 
+    hsl(262 83% 8%) 70%, 
+    hsl(262 83% 15%) 100%
+  );
+
+  /* Animation System */
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.3s ease-out;
+  --transition-slow: 0.5s ease-out;
+  --transition-ultra-fast: 0.08s ease-out;
+  --transition-ultra-slow: 0.8s ease-out;
+  
+  /* Easing Functions */
+  --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+  --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --easing-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --easing-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Animation Durations */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  --duration-shimmer: 2000ms;
+  --duration-carousel: 120s;
+  --duration-pulse: 2s;
+  --duration-glow: 1.5s;
+  --duration-glitch: 300ms;
+  --duration-sparkle: 1.2s;
+  
+  /* Animation Timing */
+  --delay-stagger: 0.05s;
+  --delay-cascade: 0.1s;
+  --delay-sequence: 0.15s;
+  
+  /* Effect Intensities */
+  --intensity-subtle: 0.1;
+  --intensity-low: 0.3;
+  --intensity-medium: 0.5;
+  --intensity-high: 0.7;
+  --intensity-extreme: 0.9;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+}

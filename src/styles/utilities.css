@@ -1,0 +1,299 @@
+
+@tailwind utilities;
+
+/* Duplicate keyframes removed - now consolidated in animations.css */
+
+.animate-fade-out {
+  animation: particle-animation 1.5s ease-out forwards;
+  --x: calc(random() * 60px - 30px);
+  --y: calc(random() * -70px - 20px);
+}
+
+/* Hero Text Effects */
+.paper-scraps {
+  position: relative;
+  background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 25%, #f8f9fa 50%, #ffffff 75%, #f1f3f4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    1px 1px 0px rgba(248, 249, 250, 0.8),
+    2px 2px 0px rgba(206, 212, 218, 0.6),
+    3px 3px 0px rgba(173, 181, 189, 0.4);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transform: rotate(-0.5deg);
+  display: inline-block;
+}
+
+.paper-scraps::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -4px;
+  right: -4px;
+  bottom: -2px;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 15%),
+    radial-gradient(circle at 40% 40%, rgba(248, 249, 250, 0.1) 0%, transparent 10%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cardboard-text {
+  position: relative;
+  color: #d2b48c;
+  background: linear-gradient(135deg, #deb887 0%, #cd853f 50%, #a0522d 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    2px 2px 0px rgba(160, 82, 45, 0.3),
+    4px 4px 0px rgba(139, 69, 19, 0.2),
+    6px 6px 0px rgba(101, 67, 33, 0.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  display: inline-block;
+}
+
+.cardboard-text::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: 
+    radial-gradient(circle at 90% 10%, rgba(222, 184, 135, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 20% 90%, rgba(205, 133, 63, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 60% 60%, rgba(160, 82, 45, 0.08) 0%, transparent 15%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Gradient text effect for hero labels - Dynamic theme colors */
+.gradient-text-green-blue-purple {
+  background: linear-gradient(135deg, hsl(var(--crd-green)), hsl(var(--crd-blue)), hsl(var(--crd-purple)));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease infinite;
+}
+
+/* Dynamic theme gradients matching animation tiles */
+.gradient-text-craft {
+  background: linear-gradient(135deg, #ff1744, #00e676, #2196f3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease infinite;
+  transition: background 0.5s ease;
+}
+
+.gradient-text-collect {
+  background: linear-gradient(135deg, #daa520, #8b4513, #cd853f);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease infinite;
+  transition: background 0.5s ease;
+}
+
+.gradient-text-connect {
+  background: linear-gradient(135deg, #ff1493, #00ffff, #39ff14);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease infinite;
+  transition: background 0.5s ease;
+}
+
+/* Scroll Snap Container */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Scroll Resistance Section */
+.scroll-resistance {
+  scroll-snap-stop: always;
+}
+
+/* Enhanced Scroll Indicator Animations */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes scroll-dot {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(6px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 2s ease-in-out infinite;
+}
+
+/* Button text color utilities to ensure proper contrast */
+@layer utilities {
+  .btn-text-dark {
+    color: #121212 !important;
+  }
+  
+  .btn-text-light {
+    color: #FCFCFD !important;
+  }
+  
+  .btn-text-gray {
+    color: #777E90 !important;
+  }
+  
+  /* Dynamic color utilities for secondary parameter labels */
+  .text-purple-400\/70 {
+    color: rgba(168, 85, 247, 0.7) !important;
+  }
+  
+  .text-yellow-400\/70 {
+    color: rgba(250, 204, 21, 0.7) !important;
+  }
+  
+  .text-blue-400\/70 {
+    color: rgba(96, 165, 250, 0.7) !important;
+  }
+  
+  .text-gray-400\/70 {
+    color: rgba(156, 163, 175, 0.7) !important;
+  }
+  
+  .text-green-400\/70 {
+    color: rgba(74, 222, 128, 0.7) !important;
+  }
+  
+  .text-orange-400\/70 {
+    color: rgba(251, 146, 60, 0.7) !important;
+  }
+  
+  .text-cyan-400\/70 {
+    color: rgba(34, 211, 238, 0.7) !important;
+  }
+  
+  .text-amber-400\/70 {
+    color: rgba(251, 191, 36, 0.7) !important;
+  }
+  }
+  
+  /* Radial gradient utility */
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+/* Performance animations - shimmer moved to animations.css */
+
+/* Duplicate keyframes removed - now consolidated in animations.css */
+
+/* Safe Area utilities for mobile */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 1rem);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left, 1rem);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right, 1rem);
+}
+
+/* Stars Background for Hero Section */
+.stars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(2px 2px at 20px 30px, hsl(0 0% 100% / 0.4), transparent),
+              radial-gradient(2px 2px at 40px 70px, hsl(0 0% 100% / 0.3), transparent),
+              radial-gradient(1px 1px at 90px 40px, hsl(0 0% 100% / 0.5), transparent),
+              radial-gradient(1px 1px at 130px 80px, hsl(0 0% 100% / 0.3), transparent),
+              radial-gradient(2px 2px at 160px 30px, hsl(0 0% 100% / 0.4), transparent),
+              radial-gradient(1px 1px at 200px 90px, hsl(0 0% 100% / 0.2), transparent),
+              radial-gradient(1px 1px at 240px 60px, hsl(0 0% 100% / 0.6), transparent),
+              radial-gradient(2px 2px at 280px 20px, hsl(0 0% 100% / 0.3), transparent),
+              radial-gradient(1px 1px at 320px 100px, hsl(0 0% 100% / 0.4), transparent);
+  background-size: 350px 120px;
+  background-repeat: repeat;
+  animation: twinkle 20s linear infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Height-based responsive hero text behavior */
+.hero-text-responsive {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Start moving text off screen earlier when 3D case approaches CTA buttons (800px) */
+@media (max-height: 800px) {
+  .hero-text-responsive {
+    transform: translateY(-30px);
+    opacity: 0.7;
+  }
+}
+
+/* Continue separation as case gets closer to buttons (750px) */
+@media (max-height: 750px) {
+  .hero-text-responsive {
+    transform: translateY(-50px);
+    opacity: 0.4;
+  }
+}
+
+/* Further separation when case overlaps buttons (700px) */
+@media (max-height: 700px) {
+  .hero-text-responsive {
+    transform: translateY(-80px);
+    opacity: 0.1;
+  }
+}
+
+/* Complete separation for smaller screens */
+@media (max-height: 650px) {
+  .hero-text-responsive {
+    transform: translateY(-120px);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* For extremely short screens, completely hide the hero text */
+@media (max-height: 500px) {
+  .hero-text-responsive {
+    transform: translateY(-150px);
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+  }
+}

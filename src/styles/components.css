@@ -1,0 +1,274 @@
+@tailwind components;
+
+/* CRD Design System Components */
+@layer components {
+  /* Container & Layout */
+  .crd-container {
+    @apply container mx-auto p-6 max-w-7xl;
+  }
+  
+  .crd-section {
+    @apply mb-10;
+  }
+  
+  .crd-header {
+    @apply text-4xl font-bold text-crd-white mb-8;
+  }
+  
+  .crd-accent {
+    @apply text-crd-orange;
+  }
+
+  /* Filter Controls */
+  .crd-filter-group {
+    @apply flex rounded-md overflow-hidden;
+  }
+  
+  .crd-filter-button {
+    @apply bg-transparent text-crd-lightGray border-crd-mediumGray px-3 py-2 hover:text-crd-white transition-all;
+  }
+  
+  .crd-filter-button-active {
+    @apply bg-crd-blue text-crd-white;
+  }
+
+  /* View Mode Toggles */
+  .crd-view-toggle {
+    @apply bg-crd-dark border-crd-mediumGray transition-all p-2 rounded;
+  }
+  
+  .crd-view-toggle-active {
+    @apply text-crd-blue;
+  }
+  
+  .crd-view-toggle-inactive {
+    @apply text-crd-lightGray;
+  }
+  
+  /* Tags and Badges */
+  .crd-tag {
+    @apply bg-crd-mediumGray text-crd-lightGray text-xs py-1 px-3 rounded-full;
+  }
+  
+  .crd-price-tag {
+    @apply bg-crd-darkGray/80 text-crd-green text-sm font-semibold py-1 px-3 rounded-full;
+  }
+  
+  .crd-bid-tag {
+    @apply bg-crd-darkGray/80 text-crd-orange text-sm py-1 px-3 rounded-full;
+  }
+
+  /* Focus ring utilities for CRD design system */
+  .focus\:ring-crd-blue:focus {
+    @apply ring-1 ring-crd-blue;
+  }
+  
+  .focus\:border-crd-blue:focus {
+    @apply border-crd-blue;
+  }
+
+  /* Glass Button - Modern glass morphism effect for secondary CTAs */
+  .crd-glass-button {
+    @apply relative overflow-hidden text-white font-semibold shadow-lg transition-all duration-200;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .crd-glass-button:hover {
+    @apply transform scale-105;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .crd-glass-button:active {
+    @apply transform scale-[0.98];
+  }
+
+  /* Official CRD Create Button - Updated with standardized slow animation timing */
+  .crd-create-button {
+    @apply relative overflow-hidden text-white font-bold shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(25, 95%, 55%), hsl(142, 70%, 45%), hsl(200, 75%, 55%));
+    background-size: 200% 200%;
+    animation: liquid-gradient 18s ease-in-out infinite;
+    will-change: background-position;
+  }
+
+  .crd-create-button:hover {
+    @apply shadow-xl transform scale-[1.02];
+    background: linear-gradient(135deg, hsl(25, 100%, 60%), hsl(142, 75%, 50%), hsl(200, 80%, 60%));
+    background-size: 250% 250%;
+    animation: liquid-gradient 12s ease-in-out infinite;
+  }
+
+  .crd-create-button:active {
+    @apply transform scale-[0.98];
+  }
+
+  /* Official CRD Collective Button - Community/Creator CTA */
+  .crd-collective-button {
+    @apply relative overflow-hidden text-white font-bold shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(0, 85%, 65%), hsl(25, 95%, 55%), hsl(45, 90%, 60%));
+    background-size: 200% 200%;
+    animation: liquid-gradient 18s ease-in-out infinite;
+    will-change: background-position;
+  }
+
+  .crd-collective-button:hover {
+    @apply shadow-xl transform scale-[1.02];
+    background: linear-gradient(135deg, hsl(0, 90%, 70%), hsl(25, 100%, 60%), hsl(45, 95%, 65%));
+    background-size: 250% 250%;
+    animation: liquid-gradient 12s ease-in-out infinite;
+  }
+
+  .crd-collective-button:active {
+    @apply transform scale-[0.98];
+  }
+
+  /* Official CRD Collect Button - Discovery/Collecting CTA */
+  .crd-collect-button {
+    @apply relative overflow-hidden text-white font-bold shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(200, 75%, 55%), hsl(219, 70%, 60%), hsl(260, 65%, 65%));
+    background-size: 200% 200%;
+    animation: liquid-gradient 18s ease-in-out infinite;
+    will-change: background-position;
+  }
+
+  .crd-collect-button:hover {
+    @apply shadow-xl transform scale-[1.02];
+    background: linear-gradient(135deg, hsl(200, 80%, 60%), hsl(219, 75%, 65%), hsl(260, 70%, 70%));
+    background-size: 250% 250%;
+    animation: liquid-gradient 12s ease-in-out infinite;
+  }
+
+  .crd-collect-button:active {
+    @apply transform scale-[0.98];
+  }
+
+  /* Legacy support - maps to official create button */
+  .liquid-gradient-cta {
+    @apply crd-create-button;
+  }
+
+  /* Updated Green-Blue-Purple Gradient System */
+  @keyframes liquid-gradient-green-blue-purple {
+    0% { 
+      background-position: 0% 50%; 
+    }
+    50% { 
+      background-position: 100% 50%; 
+    }
+    100% { 
+      background-position: 0% 50%; 
+    }
+  }
+
+  /* Main green-blue-purple liquid gradient with slower default animation */
+  .liquid-gradient-blue-purple {
+    @apply relative overflow-hidden shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(142, 70%, 45%), hsl(180, 75%, 50%), hsl(200, 80%, 55%), hsl(219, 70%, 60%), hsl(260, 40%, 65%));
+    background-size: 300% 300%;
+    animation: liquid-gradient-green-blue-purple 18s ease-in-out infinite;
+  }
+
+  .liquid-gradient-blue-purple:hover {
+    @apply shadow-xl;
+    background: linear-gradient(135deg, hsl(142, 75%, 50%), hsl(180, 80%, 55%), hsl(200, 85%, 60%), hsl(219, 75%, 65%), hsl(260, 45%, 70%));
+    background-size: 350% 350%;
+    animation: liquid-gradient-green-blue-purple 5s ease-in-out infinite;
+  }
+
+  /* Subtle green-blue-purple gradient for cards */
+  .gradient-blue-purple-subtle {
+    background: linear-gradient(135deg, hsl(142, 60%, 45%), hsl(180, 70%, 50%), hsl(200, 70%, 55%), hsl(219, 60%, 60%));
+  }
+
+  /* Active state gradient */
+  .gradient-blue-purple-active {
+    @apply shadow-md;
+    background: linear-gradient(135deg, hsl(142, 70%, 50%), hsl(180, 75%, 55%), hsl(200, 80%, 60%), hsl(219, 70%, 65%));
+    animation: liquid-gradient-green-blue-purple 6s ease-in-out infinite;
+  }
+
+  /* Glow effect for modern cards */
+  .card-glow-blue-purple {
+    box-shadow: 0 0 20px hsla(200, 70%, 60%, 0.3), 0 0 40px hsla(142, 60%, 50%, 0.2);
+  }
+
+  .card-glow-blue-purple:hover {
+    box-shadow: 0 0 30px hsla(200, 80%, 65%, 0.4), 0 0 60px hsla(142, 70%, 55%, 0.3);
+  }
+
+  /* Modern border gradient */
+  .border-gradient-blue-purple {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--tw-gradient-from), var(--tw-gradient-to)) padding-box,
+                linear-gradient(135deg, hsl(142, 70%, 50%), hsl(200, 75%, 60%), hsl(219, 65%, 65%)) border-box;
+  }
+
+  /* Mobile-first responsive utilities */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+  
+  .mobile-section {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+  }
+  
+  .mobile-button {
+    @apply min-h-[48px] px-4 sm:px-6 py-3 text-base font-medium rounded-lg transition-all duration-200;
+  }
+  
+  .mobile-touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Mobile-first typography helpers */
+  .mobile-heading-1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold;
+  }
+  
+  .mobile-heading-2 {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+  }
+  
+  .mobile-body {
+    @apply text-base sm:text-lg leading-relaxed;
+  }
+  
+  /* Mobile-first card styles */
+  .mobile-card {
+    @apply bg-themed-card-bg border border-themed-card-border rounded-lg sm:rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105;
+  }
+  
+  /* Mobile navigation styles */
+  .mobile-nav-link {
+    @apply block w-full py-3 px-4 text-base font-semibold rounded-lg transition-all duration-200 min-h-[44px] flex items-center;
+  }
+  
+  /* Mobile-first spacing utilities */
+  .mobile-spacing-xs {
+    @apply p-2 sm:p-3;
+  }
+  
+  .mobile-spacing-sm {
+    @apply p-3 sm:p-4;
+  }
+  
+  .mobile-spacing-md {
+    @apply p-4 sm:p-6;
+  }
+  
+  .mobile-spacing-lg {
+    @apply p-6 sm:p-8;
+  }
+}
