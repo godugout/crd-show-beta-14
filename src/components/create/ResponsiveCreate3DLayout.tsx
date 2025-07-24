@@ -94,7 +94,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Orange Sun Light Source - Bottom Right */}
       <div 
-        className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none"
+        className="absolute bottom-0 right-0 w-[800px] h-[800px] pointer-events-none"
         style={{
           background: `radial-gradient(
             circle at 85% 85%,
@@ -105,38 +105,10 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
             rgba(255, 80, 0, 0.04) 70%,
             transparent 85%
           )`,
-          transform: 'translate(25%, 25%)',
+          transform: 'translate(40%, 40%)',
           zIndex: 60
         }}
       />
-
-      {/* Sun Rays */}
-      <div 
-        className="absolute bottom-0 right-0 w-full h-full pointer-events-none overflow-hidden"
-        style={{ zIndex: 58 }}
-      >
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bottom-0 right-0 origin-bottom-right"
-            style={{
-              width: '400px',
-              height: '8px',
-              background: `linear-gradient(
-                to left,
-                rgba(255, 165, 0, 0.2) 0%,
-                rgba(255, 140, 0, 0.15) 20%,
-                rgba(255, 120, 0, 0.1) 40%,
-                rgba(255, 100, 0, 0.05) 60%,
-                transparent 80%
-              )`,
-              transform: `rotate(${-45 + i * 15}deg)`,
-              transformOrigin: '100% 100%',
-              filter: 'blur(4px)'
-            }}
-          />
-        ))}
-      </div>
 
       {/* Surface Reflection - Subtle orange glow on the "slab" */}
       <div 
