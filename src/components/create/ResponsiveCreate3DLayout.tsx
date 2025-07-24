@@ -106,7 +106,7 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
             transparent 85%
           )`,
           transform: 'translate(40%, 40%)',
-          zIndex: 99;
+          zIndex: 99,
         }}
       />
 
