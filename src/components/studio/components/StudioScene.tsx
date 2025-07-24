@@ -12,13 +12,14 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
   backgroundImage,
   convergencePoint,
   showGrid = true
-}) => {
-  // Load background texture if provided
-  const backgroundTexture = backgroundImage ? useTexture(backgroundImage) : null;
+ }) => {
+  // Use space-themed background image instead of provided one
+  const spaceBackgroundUrl = 'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=2000&q=80';
+  const backgroundTexture = useTexture(spaceBackgroundUrl);
 
   // Create background plane
   const backgroundPlane = useMemo(() => {
-    if (!backgroundTexture) return null;
+    // Always create background with space theme
 
     // Scale and position the background
     const aspectRatio = backgroundTexture.image.width / backgroundTexture.image.height;
