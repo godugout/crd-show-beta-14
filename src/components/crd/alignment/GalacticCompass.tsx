@@ -120,6 +120,12 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
               </button>
             )}
 
+            {/* Space Environment Button */}
+            <EnvironmentSwitcher
+              currentEnvironment={spaceEnvironment}
+              onEnvironmentChange={onSpaceEnvironmentChange || (() => console.log('No environment change handler'))}
+            />
+
             {/* Tutorial Button */}
             {onShowTutorial && (
               <button
@@ -159,7 +165,28 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
         style={{ opacity: scrollOpacity }}
       >
         <div className="flex flex-col items-end gap-3">
-          {/* Removed pause button - now handled by CRDViewer above compass */}
+          {/* Control Buttons - Pause/Play and Refresh above compass */}
+          <div className="flex flex-col items-end gap-3">
+            {/* Pause/Play Button */}
+            {onTogglePause && (
+              <button
+                onClick={onTogglePause}
+            className="group text-white/40 hover:text-[#3772FF] p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center border"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.12) 100%)',
+                  borderColor: 'rgba(255, 255, 255, 0.15)',
+                  backdropFilter: 'blur(12px) saturate(180%)'
+                }}
+                title={isPaused ? "Resume" : "Pause"}
+              >
+                {isPaused ? (
+                  <Play className="w-4 h-4 transition-transform group-hover:scale-110" />
+                ) : (
+                  <Pause className="w-4 h-4 transition-transform group-hover:scale-110" />
+                )}
+              </button>
+            )}
+          </div>
           
           {/* Compass and data below buttons */}
           <div className="flex flex-col items-end gap-3">
