@@ -16,6 +16,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 
 interface Transaction {
   id: string;
@@ -61,6 +62,7 @@ const TransactionsDashboard = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'transactions' | 'earnings' | 'payouts'>('transactions');
+  const { currentPalette } = useTeamTheme();
 
   const fetchTransactions = async () => {
     try {
@@ -222,15 +224,20 @@ const TransactionsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-crd-black flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         {/* Premium Header */}
         <div className="flex justify-between items-center mb-8 animate-fade-in">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
-              🪙 CRD <span className="text-transparent bg-clip-text bg-gradient-to-r from-crd-yellow to-crd-orange">Wallet</span>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              🪙 CRD <span 
+                className="text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${currentPalette?.colors.accent || 'hsl(var(--accent))'}, ${currentPalette?.colors.primary || 'hsl(var(--primary))'})`
+                }}
+              >Wallet</span>
             </h1>
-            <p className="text-crd-text-dim">Manage your payments, earnings, and payouts</p>
+            <p className="text-muted-foreground">Manage your payments, earnings, and payouts</p>
           </div>
           <button 
             onClick={handleRefreshData} 
@@ -250,15 +257,15 @@ const TransactionsDashboard = () => {
               value: `$${stats.totalEarnings.toFixed(2)}`,
               description: "All-time creator earnings",
               icon: DollarSign,
-              color: "crd-green",
+              color: currentPalette?.colors.accent || 'hsl(var(--accent))',
               delay: "0s"
             },
             {
-              title: "Pending Earnings",
+              title: "Pending Earnings", 
               value: `$${stats.pendingEarnings.toFixed(2)}`,
               description: "Awaiting payout",
               icon: TrendingUp,
-              color: "crd-yellow",
+              color: currentPalette?.colors.secondary || 'hsl(var(--secondary))',
               delay: "0.1s"
             },
             {
@@ -266,31 +273,37 @@ const TransactionsDashboard = () => {
               value: `$${stats.totalPayouts.toFixed(2)}`,
               description: "Successfully paid out",
               icon: CreditCard,
-              color: "crd-blue",
+              color: currentPalette?.colors.primary || 'hsl(var(--primary))',
               delay: "0.2s"
             },
             {
               title: "Transactions",
               value: stats.transactionCount.toString(),
-              description: "Total transactions",
+              description: "Total transactions", 
               icon: Calendar,
-              color: "crd-orange",
+              color: currentPalette?.colors.accent || 'hsl(var(--accent))',
               delay: "0.3s"
             }
           ].map((stat) => (
             <div 
               key={stat.title}
-              className="bg-crd-surface border border-crd-border rounded-lg p-6 hover-scale animate-fade-in"
+              className="bg-card border border-border rounded-lg p-6 hover-scale animate-fade-in"
               style={{ animationDelay: stat.delay }}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-medium text-crd-text-dim">{stat.title}</h3>
-                <div className={`p-2 bg-${stat.color}/20 rounded-lg`}>
-                  <stat.icon className={`h-5 w-5 text-${stat.color}`} />
+                <h3 className="text-sm font-medium text-muted-foreground">{stat.title}</h3>
+                <div 
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: `${stat.color}20` }}
+                >
+                  <stat.icon 
+                    className="h-5 w-5"
+                    style={{ color: stat.color }}
+                  />
                 </div>
               </div>
-              <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-              <p className="text-xs text-crd-text-dim">{stat.description}</p>
+              <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
+              <p className="text-xs text-muted-foreground">{stat.description}</p>
             </div>
           ))}
         </div>
@@ -307,10 +320,13 @@ const TransactionsDashboard = () => {
               className={`
                 px-6 py-3 rounded-lg font-medium transition-all duration-200 hover-scale
                 ${activeTab === tab.key 
-                  ? 'bg-crd-orange text-crd-black' 
-                  : 'bg-crd-surface text-crd-text-dim hover:text-white border border-crd-border'
+                  ? 'text-primary-foreground' 
+                  : 'bg-card text-muted-foreground hover:text-foreground border border-border'
                 }
               `}
+              style={activeTab === tab.key ? {
+                background: currentPalette?.colors.primary || 'hsl(var(--primary))'
+              } : {}}
               onClick={() => setActiveTab(tab.key as any)}
             >
               {tab.label}
@@ -319,9 +335,9 @@ const TransactionsDashboard = () => {
         </div>
 
         {/* Premium Content Card */}
-        <div className="bg-crd-surface border border-crd-border rounded-lg animate-fade-in" style={{ animationDelay: '0.5s' }}>
-          <div className="flex items-center justify-between p-6 border-b border-crd-border">
-            <h2 className="text-xl font-bold text-white">
+        <div className="bg-card border border-border rounded-lg animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <h2 className="text-xl font-bold text-foreground">
               {activeTab === 'transactions' && 'Recent Transactions'}
               {activeTab === 'earnings' && 'Creator Earnings'}
               {activeTab === 'payouts' && 'Payout History'}
@@ -337,24 +353,24 @@ const TransactionsDashboard = () => {
                 {transactions.map((transaction, index) => (
                   <div 
                     key={transaction.id} 
-                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover-scale"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="text-crd-green">
+                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
                         {getStatusIcon(transaction.status)}
                       </div>
                       <div>
-                        <p className="font-medium text-white">
+                        <p className="font-medium text-foreground">
                           {transaction.marketplace_listings?.card?.title || 'Marketplace Transaction'}
                         </p>
-                        <p className="text-sm text-crd-text-dim">
+                        <p className="text-sm text-muted-foreground">
                           {formatDistanceToNow(new Date(transaction.created_at), { addSuffix: true })}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-white token-amount">${transaction.amount.toFixed(2)}</p>
+                      <p className="font-bold text-foreground token-amount">${transaction.amount.toFixed(2)}</p>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(transaction.status)}`}>
                         {transaction.status}
                       </span>
@@ -369,23 +385,23 @@ const TransactionsDashboard = () => {
                 {earnings.map((earning, index) => (
                   <div 
                     key={earning.id} 
-                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover-scale"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="text-crd-green">
+                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
                         {getStatusIcon(earning.status)}
                       </div>
                       <div>
-                        <p className="font-medium text-white">Creator Earning</p>
-                        <p className="text-sm text-crd-text-dim">
+                        <p className="font-medium text-foreground">Creator Earning</p>
+                        <p className="text-sm text-muted-foreground">
                           {formatDistanceToNow(new Date(earning.transaction_date), { addSuffix: true })}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-white token-amount">${earning.net_amount.toFixed(2)}</p>
-                      <p className="text-sm text-crd-text-dim">
+                      <p className="font-bold text-foreground token-amount">${earning.net_amount.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">
                         Gross: ${(earning.gross_amount || earning.amount || 0).toFixed(2)} - Fee: ${earning.platform_fee.toFixed(2)}
                       </p>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(earning.status)}`}>
@@ -402,16 +418,16 @@ const TransactionsDashboard = () => {
                 {payouts.map((payout, index) => (
                   <div 
                     key={payout.id} 
-                    className="flex items-center justify-between p-4 bg-crd-surface-light border border-crd-border rounded-lg hover-scale"
+                    className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover-scale"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="text-crd-green">
+                      <div style={{ color: currentPalette?.colors.accent || 'hsl(var(--accent))' }}>
                         {getStatusIcon(payout.status)}
                       </div>
                       <div>
-                        <p className="font-medium text-white">Payout</p>
-                        <p className="text-sm text-crd-text-dim">
+                        <p className="font-medium text-foreground">Payout</p>
+                        <p className="text-sm text-muted-foreground">
                           Created: {formatDistanceToNow(new Date(payout.created_at), { addSuffix: true })}
                           {payout.processed_at && (
                             <span> • Processed: {formatDistanceToNow(new Date(payout.processed_at), { addSuffix: true })}</span>
@@ -420,7 +436,7 @@ const TransactionsDashboard = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-white token-amount">${payout.amount.toFixed(2)}</p>
+                      <p className="font-bold text-foreground token-amount">${payout.amount.toFixed(2)}</p>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(payout.status)}`}>
                         {payout.status}
                       </span>
