@@ -31,7 +31,7 @@ export const CameraPermissions: React.FC<CameraPermissionsProps> = ({
   if (isActive) return null;
 
   return (
-    <div className="fixed top-4 right-4 bg-black/80 backdrop-blur-sm border border-white/10 rounded-lg p-4 max-w-sm z-50">
+    <div className="fixed top-4 right-4 bg-black/90 backdrop-blur-sm border border-white/20 rounded-lg p-4 max-w-sm z-overlay-controls shadow-2xl">
       <div className="flex items-center gap-2 mb-3">
         <Camera className="w-5 h-5 text-blue-400" />
         <h3 className="text-white font-medium">Camera Access</h3>
