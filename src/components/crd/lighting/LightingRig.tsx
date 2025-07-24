@@ -20,8 +20,11 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Studio Lighting (Default/Current)
   const StudioLights = () => (
     <>
-      {/* HDR Environment */}
-      <Environment preset="night" />
+      {/* Space Environment */}
+      <Environment 
+        files="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=2000&q=80"
+        background
+      />
       
       {/* Key Light */}
       <directionalLight
