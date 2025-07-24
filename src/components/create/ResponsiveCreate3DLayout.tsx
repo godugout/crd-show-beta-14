@@ -112,13 +112,17 @@ export const ResponsiveCreate3DLayout: React.FC<ResponsiveCreate3DLayoutProps> =
 
       {/* Surface Reflection - Subtle orange glow on the "slab" */}
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="absolute bottom-0 left-1/2 pointer-events-none"
         style={{
+          width: '60%',
+          height: '30%',
+          transform: 'translateX(-50%)',
           background: `radial-gradient(
-            ellipse 40% 20% at 70% 60%,
-            rgba(255, 165, 0, 0.12) 0%,
-            rgba(255, 140, 0, 0.08) 30%,
-            transparent 60%
+            ellipse 80% 40% at center top,
+            rgba(255, 165, 0, 0.15) 0%,
+            rgba(255, 140, 0, 0.10) 40%,
+            rgba(255, 120, 0, 0.05) 70%,
+            transparent 100%
           )`,
           zIndex: 59
         }}
