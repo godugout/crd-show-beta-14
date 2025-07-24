@@ -346,10 +346,11 @@ export const StudioCardManager: React.FC<StudioCardManagerProps> = ({
         {lightingSetup}
 
         {/* Environment */}
-        <Environment preset="night" />
+        <Environment preset="studio" />
 
         {/* Studio Scene Background */}
         <StudioScene 
+          backgroundImage={backgroundImage}
           convergencePoint={convergencePoint}
           showGrid={showGrid}
         />
