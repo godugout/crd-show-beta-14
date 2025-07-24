@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+import { useCameraTexture } from '@/hooks/useCameraTexture';
 
 interface StudioSceneProps {
   backgroundImage?: string;
@@ -13,6 +14,9 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
   convergencePoint,
   showGrid = true
  }) => {
+  // Camera texture for the slab surface
+  const { texture: cameraTexture, isActive: cameraActive, error: cameraError } = useCameraTexture();
+  
   // Use space-themed background image instead of provided one
   const spaceBackgroundUrl = 'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=2000&q=80';
   const backgroundTexture = useTexture(spaceBackgroundUrl);
@@ -34,19 +38,20 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
     );
   }, [backgroundTexture]);
 
-  // Create ground plane
+  // Create ground plane with camera texture
   const groundPlane = useMemo(() => (
     <mesh position={[0, -20, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[200, 200]} />
       <meshStandardMaterial
-        color={0x1a1a1a}
-        roughness={0.8}
+        map={cameraActive && cameraTexture ? cameraTexture : null}
+        color={cameraActive && cameraTexture ? 0xffffff : 0x1a1a1a}
+        roughness={0.2}
         metalness={0.1}
-        transparent
-        opacity={0.3}
+        transparent={!cameraActive}
+        opacity={cameraActive ? 1.0 : 0.3}
       />
     </mesh>
-  ), []);
+  ), [cameraTexture, cameraActive]);
 
   // Create grid helper
   const gridHelper = useMemo(() => {
@@ -109,6 +114,9 @@ export const StudioScene: React.FC<StudioSceneProps> = ({
 
       {/* Convergence point indicator */}
       {process.env.NODE_ENV === 'development' && convergenceIndicator}
+
+      {/* Camera status - logged to console */}
+      {cameraError && console.error('Camera Error:', cameraError)}
 
       {/* Ambient particles or atmosphere effects could go here */}
     </>
