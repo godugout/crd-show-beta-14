@@ -21,7 +21,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   const StudioLights = () => (
     <>
       {/* HDR Environment */}
-      <Environment preset="studio" />
+      <Environment preset="night" />
       
       {/* Key Light */}
       <directionalLight
