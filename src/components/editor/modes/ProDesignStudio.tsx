@@ -4,10 +4,11 @@ import { Canvas } from '@/components/editor/canvas/Canvas';
 import { ProDesignToolbar } from './ProDesignToolbar';
 import { LayerManagementPanel } from './LayerManagementPanel';
 import { AdvancedPropertiesPanel } from './AdvancedPropertiesPanel';
-import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Save, Eye } from 'lucide-react';
 import type { CardData } from '@/hooks/useCardEditor';
+import { getGridThemeColorHex } from '@/components/editor/crd/utils/themeUtils';
+import type { GridType } from '@/hooks/useGridPreferences';
 
 interface ProDesignStudioProps {
   cardData: CardData;
@@ -15,6 +16,8 @@ interface ProDesignStudioProps {
   onBack: () => void;
   className?: string;
   hideNavbar?: boolean;
+  gridType?: GridType;
+  showGrid?: boolean;
 }
 
 export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
@@ -22,9 +25,10 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
   onComplete,
   onBack,
   className = "",
-  hideNavbar = true
+  hideNavbar = true,
+  gridType = 'standard',
+  showGrid = true
 }) => {
-  const { currentPalette } = useTeamTheme();
   const [currentCard, setCurrentCard] = useState(cardData);
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -224,11 +228,13 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
         {/* Right Sidebar - Properties */}
         <div 
           className="w-80 border-l-2" 
-          style={{ borderLeftColor: currentPalette?.colors.primary || '#fbbf24' }}
+          style={{ borderLeftColor: getGridThemeColorHex(showGrid ? gridType : null) }}
         >
           <AdvancedPropertiesPanel
             selectedElement={selectedElement}
             cardData={currentCard}
+            gridType={gridType}
+            showGrid={showGrid}
             onPropertyChange={(elementId, property, value) => {
               console.log('Property change:', elementId, property, value);
               // Update card data with new property values

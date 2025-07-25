@@ -258,6 +258,8 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
         onComplete={handleProModeComplete}
         onBack={exitProMode}
         className="h-screen"
+        gridType={gridType}
+        showGrid={showGrid}
       />
     );
   }

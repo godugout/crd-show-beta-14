@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
@@ -23,21 +22,25 @@ import {
   Underline
 } from 'lucide-react';
 import type { CardData } from '@/hooks/useCardEditor';
+import { getGridThemeColorHex } from '@/components/editor/crd/utils/themeUtils';
+import type { GridType } from '@/hooks/useGridPreferences';
 
 interface AdvancedPropertiesPanelProps {
   selectedElement: string | null;
   cardData: CardData;
+  gridType?: GridType;
+  showGrid?: boolean;
   onPropertyChange: (elementId: string, property: string, value: any) => void;
 }
 
 export const AdvancedPropertiesPanel: React.FC<AdvancedPropertiesPanelProps> = ({
   selectedElement,
   cardData,
+  gridType = 'standard',
+  showGrid = true,
   onPropertyChange
 }) => {
-  const { currentPalette } = useTeamTheme();
-  
-  const themeColor = currentPalette?.colors.primary || '#fbbf24';
+  const themeColor = getGridThemeColorHex(showGrid ? gridType : null);
   
   if (!selectedElement) {
     return (
@@ -70,8 +73,8 @@ export const AdvancedPropertiesPanel: React.FC<AdvancedPropertiesPanelProps> = (
     <ScrollArea 
       className="h-full border-l-2" 
       style={{ 
-        background: `linear-gradient(135deg, ${currentPalette?.colors.primary}10, ${currentPalette?.colors.secondary}10)`,
-        borderLeftColor: currentPalette?.colors.primary || '#fbbf24'
+        background: `linear-gradient(135deg, ${themeColor}10, ${themeColor}20)`,
+        borderLeftColor: themeColor
       }}
     >
       <div className="p-4 space-y-6">
