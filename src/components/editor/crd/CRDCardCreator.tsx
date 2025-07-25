@@ -268,28 +268,30 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
       {/* Content with higher z-index */}
       <div className="relative z-10 h-full flex flex-col">
         {/* Header */}
-        <div className="flex-shrink-0 h-20 px-6 border-b border-crd-mediumGray/20 bg-crd-darker/50 flex flex-col">
-          {/* Top Row: CRDMKR Logo, Centered Title with Icon, Action Buttons */}
-          <div className="relative flex items-center justify-between h-12 py-2">
-            {/* Left: CRDMKR Logo */}
+        <div className="flex-shrink-0 h-20 px-6 border-b border-crd-mediumGray/20 bg-crd-darker/50">
+          {/* 3-column grid layout */}
+          <div className="grid grid-cols-3 gap-4 h-full">
+            {/* Left Column: CRDMKR Logo (spans 2 rows) */}
             <div className="flex items-center">
               <CRDGradientLogo className="h-8" />
             </div>
             
-            {/* Center: Blue Icon + Title (Absolutely positioned for true centering) */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2">
-              <Layers className="w-6 h-6 text-crd-blue" />
-              <input 
-                type="text"
-                value={cardData.title}
-                onChange={(e) => updateCardData({ title: e.target.value })}
-                className="text-2xl font-bold text-crd-white bg-transparent border-none outline-none focus:bg-crd-darker/30 focus:px-1 focus:py-1 focus:rounded transition-all text-center max-w-md px-1"
-                placeholder="Enter CRD name..."
-              />
+            {/* Middle Column: Title */}
+            <div className="flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <Layers className="w-6 h-6 text-crd-blue" />
+                <input 
+                  type="text"
+                  value={cardData.title}
+                  onChange={(e) => updateCardData({ title: e.target.value })}
+                  className="text-2xl font-bold text-crd-white bg-transparent border-none outline-none focus:bg-crd-darker/30 focus:px-1 focus:py-1 focus:rounded transition-all text-center max-w-md px-1"
+                  placeholder="Enter CRD name..."
+                />
+              </div>
             </div>
             
-            {/* Right: Action Buttons */}
-            <div className="flex items-center gap-3">
+            {/* Right Column: Action Buttons (spans 2 rows) */}
+            <div className="flex items-center justify-end gap-3">
               <ProModeToggle
                 isProMode={proModeState.isProMode}
                 onToggle={toggleProMode}
@@ -313,22 +315,28 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                 Export
               </CRDButton>
             </div>
-          </div>
-          
-          {/* Bottom Row: Centered Tags */}
-          <div className="flex items-center justify-center gap-2 h-8 text-xs text-crd-lightGray">
-            <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
-              v{cardData.version}
+            
+            {/* Empty cell for left column second row */}
+            <div></div>
+            
+            {/* Middle Column: Tags */}
+            <div className="flex items-center justify-center gap-2 text-xs text-crd-lightGray">
+              <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
+                v{cardData.version}
+              </div>
+              <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
+                {cardData.rarity.charAt(0).toUpperCase() + cardData.rarity.slice(1)}
+              </div>
+              <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
+                Print Ready
+              </div>
+              <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
+                CRD-{cardData.id.slice(-4)}
+              </div>
             </div>
-            <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
-              {cardData.rarity.charAt(0).toUpperCase() + cardData.rarity.slice(1)}
-            </div>
-            <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
-              Print Ready
-            </div>
-            <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
-              CRD-{cardData.id.slice(-4)}
-            </div>
+            
+            {/* Empty cell for right column second row */}
+            <div></div>
           </div>
         </div>
 
