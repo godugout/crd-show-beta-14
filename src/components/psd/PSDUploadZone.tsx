@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { parsePSD, type PSDLayer } from '@/components/editor/crd/import/CRDPSDProcessor';
-import { uploadPSDToStorage } from '@/services/psd/psdStorage';
+import { crdDataService } from '@/services/crdDataService';
 
 interface PSDUploadZoneProps {
   onPSDParsed: (fileName: string, layers: PSDLayer[]) => void;

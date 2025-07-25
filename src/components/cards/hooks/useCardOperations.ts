@@ -2,6 +2,7 @@
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { detectCardsInImages } from '@/services/cardDetection';
+import { crdDataService } from '@/services/crdDataService';
 import type { 
   UploadedImage, 
   CreatedCard, 
@@ -77,10 +78,8 @@ export const useCardOperations = (): UseCardOperationsReturn => {
           createdAt: new Date()
         };
 
-        // Save to localStorage as a simple persistence layer
-        const existingCards = JSON.parse(localStorage.getItem('cardshow_created_cards') || '[]');
-        existingCards.push(createdCard);
-        localStorage.setItem('cardshow_created_cards', JSON.stringify(existingCards));
+        // Save using unified data service
+        await crdDataService.saveCard(createdCard.id, createdCard);
 
         newCreatedCards.push(createdCard);
 

@@ -21,9 +21,10 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
 
   // Load session state on component mount
   useEffect(() => {
-    const savedSession = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (savedSession) {
-      try {
+    const restoreSession = async () => {
+      const savedSession = await crdDataService.getSession(SESSION_STORAGE_KEY);
+      if (savedSession) {
+        try {
         const sessionState: SessionState = JSON.parse(savedSession);
         console.log('Restoring session state:', sessionState);
         
@@ -40,10 +41,12 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
       } catch (error) {
         console.error('Failed to restore session:', error);
         clearSession();
+        }
+      } else {
+        setSessionId(`session-${Date.now()}`);
       }
-    } else {
-      setSessionId(`session-${Date.now()}`);
-    }
+    };
+    restoreSession();
   }, []);
 
   // Save session state whenever it changes
