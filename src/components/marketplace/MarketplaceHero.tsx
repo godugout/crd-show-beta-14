@@ -2,6 +2,7 @@ import React from 'react';
 import { Search, TrendingUp, Users, ShoppingBag, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { TokenDisplay } from '@/components/marketplace/TokenDisplay';
+import heroBackground from '@/assets/marketplace-hero-bg.jpg';
 
 interface MarketplaceHeroProps {
   searchQuery: string;

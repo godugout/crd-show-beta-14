@@ -163,7 +163,18 @@
 
   /* Marketplace Gradients */
   .bg-marketplace-hero {
-    background: var(--gradient-crd-marketplace);
+    background: 
+      linear-gradient(
+        135deg, 
+        rgba(15, 23, 42, 0.85) 0%, 
+        rgba(30, 41, 59, 0.80) 25%,
+        rgba(51, 65, 85, 0.75) 50%,
+        rgba(15, 23, 42, 0.85) 100%
+      ),
+      url('/src/assets/marketplace-hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
 
   .bg-premium-glow {
