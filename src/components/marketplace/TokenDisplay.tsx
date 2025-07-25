@@ -39,11 +39,8 @@ export const TokenDisplay: React.FC<TokenDisplayProps> = ({
             className="bg-crd-surface/90 border-accent/30 text-crd-text hover:bg-accent/10 hover:border-accent/50 
                      transition-all duration-200 px-3 py-2 flex items-center gap-2"
           >
-            <Coins className="w-4 h-4 text-accent" />
-            <span className="text-crd-text font-medium text-sm">
-              {balance.toLocaleString()}
-            </span>
-            <Plus className="w-3 h-3 text-accent ml-1" />
+            <Coins className="w-4 h-4 text-yellow-500" />
+            <Plus className="w-3 h-3 text-accent" />
           </CRDButton>
         ) : (
           <div className="flex items-center gap-2 px-3 py-2 bg-crd-surface/90 border border-accent/30 rounded-lg">
