@@ -218,7 +218,7 @@ const App = () => {
                     element={
                       <RouteErrorBoundary>
                         <Suspense fallback={<AdminLoading />}>
-                          <DNALabLanding />
+                          <DNALabDashboard />
                         </Suspense>
                       </RouteErrorBoundary>
                     } 
