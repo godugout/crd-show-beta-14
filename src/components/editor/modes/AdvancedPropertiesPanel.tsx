@@ -36,9 +36,12 @@ export const AdvancedPropertiesPanel: React.FC<AdvancedPropertiesPanelProps> = (
   onPropertyChange
 }) => {
   const { currentPalette } = useTeamTheme();
+  
+  const themeColor = currentPalette?.colors.primary || '#fbbf24';
+  
   if (!selectedElement) {
     return (
-      <div className="p-4 text-center text-muted-foreground">
+      <div className="p-4 text-center text-muted-foreground border-l-2" style={{ borderLeftColor: themeColor }}>
         <p>Select an element to edit properties</p>
       </div>
     );

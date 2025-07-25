@@ -23,7 +23,7 @@ const CreateCRD = () => {
 
   return (
     <CRDEditorProvider>
-      <div className="group flex flex-col min-h-screen bg-crd-darkest">
+      <div className="flex flex-col min-h-screen bg-crd-darkest">
         {/* Main Content - Takes remaining space */}
         <div className="flex-1 relative">
           <ErrorBoundary>
@@ -38,8 +38,24 @@ const CreateCRD = () => {
         {/* Footer */}
         <CreateFooter />
         
-        {/* Bottom edge hover trigger for footer */}
-        <div className="fixed bottom-0 left-0 right-0 h-16 z-[99] pointer-events-none group-hover:pointer-events-auto" />
+        {/* Bottom hover trigger area for footer */}
+        <div 
+          className="fixed bottom-0 left-0 right-0 h-12 z-[99]"
+          onMouseEnter={() => {
+            const footer = document.querySelector('footer');
+            if (footer) {
+              footer.style.transform = 'translateY(0)';
+              footer.style.opacity = '1';
+            }
+          }}
+          onMouseLeave={() => {
+            const footer = document.querySelector('footer');
+            if (footer) {
+              footer.style.transform = 'translateY(100%)';
+              footer.style.opacity = '0';
+            }
+          }}
+        />
       </div>
     </CRDEditorProvider>
   );

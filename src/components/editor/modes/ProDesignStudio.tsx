@@ -4,6 +4,7 @@ import { Canvas } from '@/components/editor/canvas/Canvas';
 import { ProDesignToolbar } from './ProDesignToolbar';
 import { LayerManagementPanel } from './LayerManagementPanel';
 import { AdvancedPropertiesPanel } from './AdvancedPropertiesPanel';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Save, Eye } from 'lucide-react';
 import type { CardData } from '@/hooks/useCardEditor';
@@ -23,6 +24,7 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
   className = "",
   hideNavbar = true
 }) => {
+  const { currentPalette } = useTeamTheme();
   const [currentCard, setCurrentCard] = useState(cardData);
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -220,7 +222,10 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
         </div>
 
         {/* Right Sidebar - Properties */}
-        <div className="w-80 border-l border-border">
+        <div 
+          className="w-80 border-l-2" 
+          style={{ borderLeftColor: currentPalette?.colors.primary || '#fbbf24' }}
+        >
           <AdvancedPropertiesPanel
             selectedElement={selectedElement}
             cardData={currentCard}
