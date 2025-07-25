@@ -14,6 +14,7 @@ import { RouteErrorBoundary } from '@/components/routing/RouteErrorBoundary';
 import { LoadingState } from '@/components/common/LoadingState';
 import { GlobalSecretEffectsProvider } from '@/contexts/GlobalSecretEffectsContext';
 import { GlobalSecretMenu } from '@/components/global/GlobalSecretMenu';
+import { NotificationProvider } from '@/components/common/NotificationCenter';
 
 // Critical pages loaded immediately for better UX
 import Index from '@/pages/Index';
@@ -86,8 +87,9 @@ const App = () => {
     <ErrorBoundary>
       <ProductionOptimizer />
       <AuthProvider>
-        <GlobalSecretEffectsProvider>
-          <FlightAnimationProvider>
+        <NotificationProvider>
+          <GlobalSecretEffectsProvider>
+            <FlightAnimationProvider>
             <Router>
               <div className="min-h-screen bg-crd-darkest flex flex-col">
                 <Navbar />
@@ -395,8 +397,9 @@ const App = () => {
               <GlobalSecretMenu />
               </div>
             </Router>
-          </FlightAnimationProvider>
-        </GlobalSecretEffectsProvider>
+            </FlightAnimationProvider>
+          </GlobalSecretEffectsProvider>
+        </NotificationProvider>
       </AuthProvider>
     </ErrorBoundary>
   );
