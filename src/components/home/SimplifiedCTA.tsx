@@ -80,6 +80,16 @@ export const SimplifiedCTA: React.FC = () => {
               Create a CRD
             </CRDButton>
           </Link>
+          {!user && (
+            <Link to="/cards/create">
+              <CRDButton 
+                variant="secondary" 
+                size="xl"
+              >
+                Simple Card Creator
+              </CRDButton>
+            </Link>
+          )}
         </div>
 
         {/* Feature Highlights */}

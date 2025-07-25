@@ -34,6 +34,8 @@ const Marketplace = lazy(() => import('@/pages/Marketplace'));
 const ListingDetail = lazy(() => import('@/pages/ListingDetail'));
 const Pricing = lazy(() => import('@/pages/Pricing'));
 const TransactionsDashboard = lazy(() => import('@/pages/TransactionsDashboard'));
+const UserGallery = lazy(() => import('@/pages/UserGallery'));
+const SimpleCardCreate = lazy(() => import('@/pages/SimpleCardCreate'));
 
 // Development/testing pages - low priority for lazy loading
 const UploadTestPage = lazy(() => import('@/pages/UploadTestPage'));
@@ -287,6 +289,26 @@ const App = () => {
                       <RouteErrorBoundary>
                         <Suspense fallback={<RouteLoading />}>
                           <TransactionsDashboard />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/user/gallery" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <UserGallery />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/cards/create" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <SimpleCardCreate />
                         </Suspense>
                       </RouteErrorBoundary>
                     } 
