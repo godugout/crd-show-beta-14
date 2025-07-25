@@ -67,7 +67,7 @@ export const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({
         <div className={`w-full h-full bg-crd-darker backdrop-blur-md shadow-2xl flex flex-col transition-all duration-300 ${
           side === 'left' 
             ? `border-r-2 ${themeClasses.borderThird}` 
-            : `border border-crd-mediumGray/50 border-l-2 ${themeClasses.borderThird}`
+            : `border-l-2 ${themeClasses.borderThird}`
         }`}>
           {/* Toggle Button Header */}
           <div className="flex-shrink-0 h-12 flex items-center justify-between px-4 border-b border-crd-mediumGray/30">
