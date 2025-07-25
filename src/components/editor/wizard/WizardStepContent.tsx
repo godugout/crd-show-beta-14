@@ -5,15 +5,22 @@ import { TemplateSelectionStep } from './TemplateSelectionStep';
 import { CardDetailsStep } from './CardDetailsStep';
 import { PublishingOptionsStep } from './PublishingOptionsStep';
 import { EffectsTab } from '../sidebar/EffectsTab';
+import { ProModeToggle } from '../modes/ProModeToggle';
+import { ProDesignStudio } from '../modes/ProDesignStudio';
 import type { WizardState, WizardHandlers } from './types';
 import type { CardData, DesignTemplate } from '@/hooks/useCardEditor';
 
 interface WizardStepContentProps {
   currentStep: number;
-  wizardState: WizardState;
+  wizardState: WizardState & { isProMode?: boolean };
   cardData: CardData;
   templates: DesignTemplate[];
-  handlers: WizardHandlers & { onBulkUpload?: () => void };
+  handlers: WizardHandlers & { 
+    onBulkUpload?: () => void;
+    onProModeToggle?: (enabled: boolean) => void;
+    onProModeComplete?: (cardData: CardData) => void;
+    onProModeBack?: () => void;
+  };
   cardEditor: ReturnType<typeof import('@/hooks/useCardEditor').useCardEditor>;
 }
 
@@ -25,6 +32,17 @@ export const WizardStepContent = ({
   handlers,
   cardEditor
 }: WizardStepContentProps) => {
+  // Check if Pro Mode is active
+  if (wizardState.isProMode) {
+    return (
+      <ProDesignStudio
+        cardData={cardData}
+        onComplete={handlers.onProModeComplete || (() => {})}
+        onBack={handlers.onProModeBack || (() => {})}
+      />
+    );
+  }
+
   switch (currentStep) {
     case 1:
       // Upload & Frames - Combined step
@@ -55,10 +73,16 @@ export const WizardStepContent = ({
         </div>
       );
     case 2:
-      // Effects & Lighting
+      // Effects & Lighting with Pro Mode Toggle
       return (
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-6 text-center">Effects & Lighting</h3>
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-semibold text-white">Effects & Lighting</h3>
+            <ProModeToggle
+              isProMode={false}
+              onToggle={handlers.onProModeToggle || (() => {})}
+            />
+          </div>
           <EffectsTab 
             searchQuery=""
             onEffectsComplete={() => {}}
