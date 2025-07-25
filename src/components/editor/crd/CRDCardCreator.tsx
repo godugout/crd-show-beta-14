@@ -277,7 +277,7 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
             </div>
             
             {/* Middle Column: Title */}
-            <div className="flex items-center justify-center">
+            <div className="flex items-end justify-center">
               <div className="flex items-center gap-2">
                 <Layers className="w-6 h-6 text-crd-blue" />
                 <input 
