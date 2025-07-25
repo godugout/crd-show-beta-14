@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const huggingFaceToken = Deno.env.get('HUGGING_FACE_ACCESS_TOKEN');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -16,79 +16,64 @@ serve(async (req) => {
   try {
     const { imageUrl, existingData } = await req.json();
 
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    if (!huggingFaceToken) {
+      throw new Error('Hugging Face API token not configured');
     }
 
     console.log('🔍 Starting AI-powered card analysis...');
 
-    // Analyze the image using GPT-4 Vision
-    const analysisResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Use Hugging Face's free LLaVA model for image analysis
+    const analysisResponse = await fetch('https://api-inference.huggingface.co/models/llava-hf/llava-1.5-7b-hf', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${huggingFaceToken}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `You are an expert card analyst. Analyze trading cards, sports cards, gaming cards, etc. and provide detailed information. Return a JSON object with the following structure:
-            {
-              "title": "Suggested card title",
-              "description": "Detailed card description (2-3 sentences)",
-              "tags": ["tag1", "tag2", "tag3"],
-              "rarity": "common|uncommon|rare|epic|legendary",
-              "estimatedValue": 0.00,
-              "confidence": 0.95,
-              "playerName": "Player name if sports card",
-              "teamName": "Team name if sports card", 
-              "year": "Year if identifiable",
-              "manufacturer": "Card manufacturer if visible",
-              "condition": "mint|excellent|good|fair|poor",
-              "specialFeatures": ["feature1", "feature2"],
-              "cardType": "sports|gaming|collectible|custom",
-              "suggestions": {
-                "title": "Alternative title suggestion",
-                "description": "Alternative description",
-                "improvementTips": ["tip1", "tip2"]
-              }
-            }`
-          },
-          {
-            role: 'user',
-            content: [
-              {
-                type: 'text',
-                text: `Analyze this card image and provide comprehensive details. Consider existing data: ${JSON.stringify(existingData || {})}`
-              },
-              {
-                type: 'image_url',
-                image_url: {
-                  url: imageUrl,
-                  detail: 'high'
-                }
-              }
-            ]
-          }
-        ],
-        max_tokens: 1000,
-        temperature: 0.3
+        inputs: {
+          image: imageUrl,
+          text: `Analyze this trading card image and provide comprehensive details. Return a JSON object with this structure:
+{
+  "title": "Suggested card title",
+  "description": "Detailed card description (2-3 sentences)",
+  "tags": ["tag1", "tag2", "tag3"],
+  "rarity": "common|uncommon|rare|epic|legendary",
+  "estimatedValue": 0.00,
+  "confidence": 0.95,
+  "playerName": "Player name if sports card",
+  "teamName": "Team name if sports card", 
+  "year": "Year if identifiable",
+  "manufacturer": "Card manufacturer if visible",
+  "condition": "mint|excellent|good|fair|poor",
+  "specialFeatures": ["feature1", "feature2"],
+  "cardType": "sports|gaming|collectible|custom",
+  "suggestions": {
+    "title": "Alternative title suggestion",
+    "description": "Alternative description",
+    "improvementTips": ["tip1", "tip2"]
+  }
+}
+
+Consider existing data: ${JSON.stringify(existingData || {})}`
+        },
+        parameters: {
+          max_new_tokens: 500,
+          temperature: 0.3
+        }
       }),
     });
 
     if (!analysisResponse.ok) {
-      throw new Error(`OpenAI API error: ${analysisResponse.status}`);
+      throw new Error(`Hugging Face API error: ${analysisResponse.status}`);
     }
 
     const analysisData = await analysisResponse.json();
     let analysis;
 
     try {
-      // Extract JSON from the response
-      const content = analysisData.choices[0].message.content;
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      // Try to extract JSON from the response
+      const responseText = Array.isArray(analysisData) ? analysisData[0]?.generated_text : analysisData.generated_text;
+      const jsonMatch = responseText?.match(/\{[\s\S]*\}/);
       
       if (jsonMatch) {
         analysis = JSON.parse(jsonMatch[0]);
@@ -97,15 +82,18 @@ serve(async (req) => {
       }
     } catch (parseError) {
       console.error('Failed to parse AI response:', parseError);
-      // Fallback with basic analysis
+      // Fallback with basic analysis based on existing data
+      const cardTypes = ['sports', 'gaming', 'collectible', 'custom'];
+      const rarities = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
+      
       analysis = {
         title: existingData?.title || "Trading Card",
         description: "A collectible trading card with unique design and artwork.",
-        tags: ["collectible", "trading card"],
-        rarity: "common",
+        tags: existingData?.tags || ["collectible", "trading card"],
+        rarity: existingData?.rarity || "common",
         estimatedValue: 5.00,
         confidence: 0.70,
-        cardType: "collectible",
+        cardType: existingData?.cardType || "collectible",
         specialFeatures: [],
         suggestions: {
           title: "Enhanced Trading Card",
