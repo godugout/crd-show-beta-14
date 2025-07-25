@@ -18,6 +18,8 @@ interface TradingCardProps {
   endTime?: string; // For auctions
   isLiked?: boolean;
   onClick?: () => void;
+  showBuyButton?: boolean;
+  onBuyClick?: (e: React.MouseEvent) => void;
 }
 
 const RARITY_COLORS = {
@@ -38,7 +40,9 @@ export const TradingCard: React.FC<TradingCardProps> = ({
   views,
   endTime,
   isLiked = false,
-  onClick
+  onClick,
+  showBuyButton = false,
+  onBuyClick
 }) => {
   const getRarityClass = () => {
     switch (rarity) {
