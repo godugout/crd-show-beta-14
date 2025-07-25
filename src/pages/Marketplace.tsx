@@ -93,7 +93,8 @@ const Marketplace = () => {
           <div className="flex items-center gap-4">
             <Button 
               onClick={() => setShowCreateListing(true)}
-              className="btn-primary flex items-center gap-2"
+              className="bg-crd-orange hover:bg-crd-green text-crd-black font-semibold px-6 py-3 rounded-lg
+                       transition-all duration-200 hover:shadow-lg hover:shadow-crd-orange/20 flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Create Listing
@@ -103,7 +104,8 @@ const Marketplace = () => {
             <Button
               variant="outline"
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden bg-crd-surface border-crd-border text-crd-text"
+              className="lg:hidden bg-crd-surface/90 border-crd-border hover:border-crd-orange/50 
+                       text-crd-text hover:bg-crd-orange/10 transition-all duration-200"
             >
               <SlidersHorizontal className="w-4 h-4" />
             </Button>
@@ -111,12 +113,16 @@ const Marketplace = () => {
 
           {/* View Mode Toggle */}
           <div className="flex items-center gap-2 ml-auto">
-            <div className="flex bg-crd-surface border border-crd-border rounded-lg p-1">
+            <div className="flex bg-crd-surface/90 border border-crd-border rounded-lg p-1 backdrop-blur-sm">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewMode('grid')}
-                className={`${viewMode === 'grid' ? 'bg-crd-orange text-crd-black' : 'text-crd-text-dim'}`}
+                className={`transition-all duration-200 ${
+                  viewMode === 'grid' 
+                    ? 'bg-crd-orange text-crd-black shadow-lg' 
+                    : 'text-crd-text-dim hover:text-crd-text hover:bg-crd-orange/10'
+                }`}
               >
                 <Grid className="w-4 h-4" />
               </Button>
@@ -124,7 +130,11 @@ const Marketplace = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewMode('list')}
-                className={`${viewMode === 'list' ? 'bg-crd-orange text-crd-black' : 'text-crd-text-dim'}`}
+                className={`transition-all duration-200 ${
+                  viewMode === 'list' 
+                    ? 'bg-crd-orange text-crd-black shadow-lg' 
+                    : 'text-crd-text-dim hover:text-crd-text hover:bg-crd-orange/10'
+                }`}
               >
                 <List className="w-4 h-4" />
               </Button>
@@ -221,7 +231,8 @@ const Marketplace = () => {
                     listingType: [],
                     categories: []
                   })}
-                  className="btn-secondary"
+                  className="bg-crd-orange hover:bg-crd-green text-crd-black font-semibold px-6 py-3 rounded-lg
+                           transition-all duration-200 hover:shadow-lg hover:shadow-crd-orange/20"
                 >
                   Clear all filters
                 </Button>
