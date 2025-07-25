@@ -270,7 +270,7 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
         {/* Header */}
         <div className="flex-shrink-0 h-20 px-6 border-b border-crd-mediumGray/20 bg-crd-darker/50 flex flex-col">
           {/* Top Row: CRDMKR Logo, Centered Title with Icon, Action Buttons */}
-          <div className="relative flex items-center justify-between h-12">
+          <div className="relative flex items-center justify-between h-12 py-2">
             {/* Left: CRDMKR Logo */}
             <div className="flex items-center">
               <CRDGradientLogo className="h-8" />
