@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AdminRoute } from '@/features/admin/components/AdminRoute';
+import { AccessCodeAuth } from '@/components/auth/AccessCodeAuth';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -189,7 +189,7 @@ export default function DNALabDashboard() {
   ];
 
   return (
-    <AdminRoute>
+    <AccessCodeAuth>
       <div className="min-h-screen bg-gradient-to-br from-crd-darkest via-purple-900/10 to-blue-900/10">
         {/* Header */}
         <div className="border-b border-crd-blue/20 bg-crd-darkest/80 backdrop-blur-sm">
@@ -389,6 +389,6 @@ export default function DNALabDashboard() {
           </div>
         </div>
       </div>
-    </AdminRoute>
+    </AccessCodeAuth>
   );
 }
