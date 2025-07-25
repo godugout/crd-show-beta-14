@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useCardEditor } from '@/hooks/useCardEditor';
 import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
-import { localCardStorage } from '@/lib/localCardStorage';
+import { unifiedDataService } from '@/services/unifiedDataService';
 import { toast } from 'sonner';
 
 interface EditorHeaderProps {
@@ -105,9 +105,16 @@ export const EditorHeader = ({ cardEditor }: EditorHeaderProps) => {
   const isDirty = cardEditor?.isDirty || false;
   const isSaving = cardEditor?.isSaving || false;
   
-  // Check if card exists in local storage (simplified check)
-  const isLocalCard = cardEditor?.cardData.id ? 
-    !!localCardStorage.getCard(cardEditor.cardData.id) : false;
+  // Check if card exists in local storage (simplified check) 
+  const [isLocalCard, setIsLocalCard] = React.useState(false);
+  
+  React.useEffect(() => {
+    if (cardEditor?.cardData.id) {
+      unifiedDataService.getCard(cardEditor.cardData.id).then(card => {
+        setIsLocalCard(!!card);
+      });
+    }
+  }, [cardEditor?.cardData.id]);
 
   const getStatusDisplay = () => {
     if (isSaving) return 'Saving...';

@@ -5,7 +5,7 @@ import { EditorSidebar } from './EditorSidebar';
 import { EditorCanvas } from './EditorCanvas';
 import { RightSidebar } from './RightSidebar';
 import { useCardEditor } from '@/hooks/useCardEditor';
-import { localCardStorage } from '@/lib/localCardStorage';
+import { unifiedDataService } from '@/services/unifiedDataService';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Sparkles } from 'lucide-react';
 import { ImmersiveCardViewer } from '@/components/viewer/ImmersiveCardViewer';

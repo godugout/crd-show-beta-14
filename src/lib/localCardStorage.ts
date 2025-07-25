@@ -1,26 +1,26 @@
 
-import { localForage } from '@/lib/localforage';
-import { v4 as uuidv4 } from 'uuid';
-import type { CardData } from '@/types/card';
+import { unifiedDataService } from '@/services/unifiedDataService';
 import { CardStorageService } from '@/services/cardStorage';
+import type { CardData } from '@/types/card';
 
-// Simplified wrapper for backward compatibility
+// Hybrid backward compatibility wrapper that provides both sync and async methods
 export const localCardStorage = {
+  // Synchronous methods for backward compatibility (will be phased out)
   getAllCards(): CardData[] {
+    // Fallback to old CardStorageService for immediate synchronous access
     return CardStorageService.getAllCards();
   },
 
-  // Enhanced method to get all cards from all locations with detailed reporting
   getAllCardsFromAllLocations(): { 
     standardCards: CardData[], 
     userCards: CardData[], 
     allCards: CardData[],
     report: any
   } {
+    // Fallback to old service for immediate access
     const report = CardStorageService.getStorageReport();
     const standardCards = CardStorageService.getAllCards();
     
-    // Separate user-specific cards from standard cards
     const userCards = report.locations
       .filter(loc => loc.key.startsWith('cards_'))
       .flatMap(loc => loc.cards);
@@ -44,12 +44,23 @@ export const localCardStorage = {
       console.error('Failed to save card:', result.error);
       return card.id || '';
     }
+    
+    // Also save to unified service in background
+    unifiedDataService.saveCard(card).catch(error => {
+      console.warn('Background save to unified service failed:', error);
+    });
+    
     return card.id || '';
   },
 
-  // Consolidate all cards from different storage locations into standard storage
   consolidateAllStorage(): { consolidated: number, cleaned: string[] } {
     const result = CardStorageService.consolidateStorage();
+    
+    // Trigger migration to unified service in background
+    unifiedDataService.migrateFromOldStorage().catch(error => {
+      console.warn('Background migration failed:', error);
+    });
+    
     return {
       consolidated: result.moved,
       cleaned: result.errors
@@ -57,7 +68,6 @@ export const localCardStorage = {
   },
 
   markAsSynced(cardId: string): void {
-    // Implementation kept for compatibility but not needed with new system
     console.log(`Card ${cardId} marked as synced (legacy method)`);
   },
 
@@ -66,6 +76,11 @@ export const localCardStorage = {
     if (!result.success) {
       console.error('Failed to remove card:', result.error);
     }
+    
+    // Also remove from unified service in background
+    unifiedDataService.deleteCard(cardId).catch(error => {
+      console.warn('Background removal from unified service failed:', error);
+    });
   },
 
   clearAll(): void {
@@ -73,11 +88,47 @@ export const localCardStorage = {
     if (!result.success) {
       console.error('Failed to clear storage:', result.error);
     }
+    
+    // Also clear unified service in background
+    unifiedDataService.clear('cards').catch(error => {
+      console.warn('Background clear of unified service failed:', error);
+    });
   },
 
-  // Check if there are cards that haven't been synced to database
   getUnsyncedCards(): CardData[] {
-    // For now, assume all local cards are unsynced
     return CardStorageService.getAllCards();
+  },
+
+  // New async methods for modern usage
+  async getAllCardsAsync(): Promise<CardData[]> {
+    return unifiedDataService.getAllCards();
+  },
+
+  async getCardAsync(cardId: string): Promise<CardData | null> {
+    return unifiedDataService.getCard(cardId);
+  },
+
+  async saveCardAsync(card: CardData): Promise<string> {
+    const success = await unifiedDataService.saveCard(card);
+    if (!success) {
+      console.error('Failed to save card via unified service');
+      return card.id || '';
+    }
+    return card.id || '';
+  },
+
+  async removeCardAsync(cardId: string): Promise<void> {
+    const success = await unifiedDataService.deleteCard(cardId);
+    if (!success) {
+      console.error('Failed to remove card via unified service');
+    }
+  },
+
+  async migrateToUnified(): Promise<{ consolidated: number, cleaned: string[] }> {
+    const result = await unifiedDataService.migrateFromOldStorage();
+    return {
+      consolidated: result.migrated,
+      cleaned: result.cleaned
+    };
   }
 };

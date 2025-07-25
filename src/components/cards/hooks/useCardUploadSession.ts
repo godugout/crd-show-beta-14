@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { DetectedCard, CardDetectionResult } from '@/services/cardDetection';
-import { crdDataService } from '@/services/crdDataService';
+import { unifiedDataService } from '@/services/unifiedDataService';
 import type { 
   UploadedImage, 
   CreatedCard, 
@@ -23,7 +23,7 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
   // Load session state on component mount
   useEffect(() => {
     const restoreSession = async () => {
-      const savedSession = await crdDataService.getSession(SESSION_STORAGE_KEY);
+      const savedSession = await unifiedDataService.getSession(SESSION_STORAGE_KEY);
       if (savedSession) {
         try {
         const sessionState: SessionState = savedSession;
@@ -63,7 +63,7 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
           sessionId
         };
         
-        await crdDataService.saveSession(SESSION_STORAGE_KEY, sessionState);
+        await unifiedDataService.saveSession(SESSION_STORAGE_KEY, sessionState);
         console.log('Session state saved:', sessionState);
       };
       saveSession();
@@ -72,7 +72,7 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
 
   // Clear session and reset to initial state
   const clearSession = useCallback(async () => {
-    await crdDataService.deleteSession(SESSION_STORAGE_KEY);
+    await unifiedDataService.deleteSession(SESSION_STORAGE_KEY);
     setPhase('idle');
     setUploadedImages([]);
     setDetectionResults([]);

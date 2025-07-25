@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { detectCardsInImages } from '@/services/cardDetection';
-import { crdDataService } from '@/services/crdDataService';
+import { unifiedDataService } from '@/services/unifiedDataService';
 import type { 
   UploadedImage, 
   CreatedCard, 
@@ -101,7 +101,7 @@ export const useCardOperations = (): UseCardOperationsReturn => {
         };
 
         // Save using unified data service
-        await crdDataService.saveCard(cardDataForStorage.id, cardDataForStorage);
+        await unifiedDataService.saveCard(cardDataForStorage);
 
         newCreatedCards.push(createdCard);
 
