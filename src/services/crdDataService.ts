@@ -14,7 +14,7 @@ interface SyncResult {
 class CRDDataService {
   private db: IDBPDatabase<any> | null = null;
   private dbName = 'cardshow-data';
-  private dbVersion = 1;
+  private dbVersion = 2; // Increment version to force schema update
 
   // Initialize the database
   private async initDB(): Promise<IDBPDatabase<any>> {
@@ -334,8 +334,18 @@ class CRDDataService {
       const db = await this.initDB();
       const tx = db.transaction('cards', 'readonly');
       const store = tx.objectStore('cards');
-      const index = store.index('by-sync-status');
-      const unsyncedCards = await index.getAll(true); // needsSync = true
+      
+      // Check if the index exists before using it
+      let unsyncedCards: any[] = [];
+      try {
+        const index = store.index('by-sync-status');
+        unsyncedCards = await index.getAll(true); // needsSync = true
+      } catch (indexError) {
+        console.warn('⚠️ by-sync-status index not found, falling back to full scan');
+        // Fallback: get all cards and filter manually
+        const allCards = await store.getAll();
+        unsyncedCards = allCards.filter(record => record.needsSync === true);
+      }
 
       for (const record of unsyncedCards) {
         try {
@@ -660,13 +670,20 @@ class CRDDataService {
       health.indexedDB = true;
       health.totalCards = cards.length;
 
-      // Count unsynced cards
+      // Count unsynced cards with fallback
       const db = await this.initDB();
       const tx = db.transaction('cards', 'readonly');
       const store = tx.objectStore('cards');
-      const index = store.index('by-sync-status');
-      const unsyncedRecords = await index.getAll(true);
-      health.unsyncedCards = unsyncedRecords.length;
+      
+      try {
+        const index = store.index('by-sync-status');
+        const unsyncedRecords = await index.getAll(true);
+        health.unsyncedCards = unsyncedRecords.length;
+      } catch (indexError) {
+        // Fallback: count manually
+        const allRecords = await store.getAll();
+        health.unsyncedCards = allRecords.filter(record => record.needsSync === true).length;
+      }
     } catch (error) {
       console.error('❌ IndexedDB health check failed:', error);
     }
