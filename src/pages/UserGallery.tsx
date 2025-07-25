@@ -81,6 +81,19 @@ const UserGallery = () => {
         const localCards = await crdDataService.getAllCards();
         console.log('📊 Loaded local cards:', localCards);
         
+        // Trigger sync of any base64 images to storage for local cards
+        if (localCards.length > 0) {
+          const cardsWithBase64 = localCards.filter(card => 
+            card.image_url && card.image_url.startsWith('data:')
+          );
+          
+          if (cardsWithBase64.length > 0) {
+            console.log(`🖼️ Found ${cardsWithBase64.length} cards with base64 images, triggering sync...`);
+            // Trigger sync in background
+            crdDataService.syncAllUnsyncedCards().catch(console.error);
+          }
+        }
+        
         // Load from database (if available)
         let databaseCards: any[] = [];
         try {
@@ -96,11 +109,11 @@ const UserGallery = () => {
         const normalizedLocalCards = localCards.map(normalizeCardData);
         const normalizedDatabaseCards = databaseCards.map(normalizeCardData);
         
-        // Combine cards, preferring local for duplicates
-        const localCardIds = new Set(normalizedLocalCards.map(card => card.id));
+        // Combine cards, preferring database for duplicates (since they have proper image URLs)
+        const databaseCardIds = new Set(normalizedDatabaseCards.map(card => card.id));
         const combinedCards = [
-          ...normalizedLocalCards,
-          ...normalizedDatabaseCards.filter(card => !localCardIds.has(card.id))
+          ...normalizedDatabaseCards, // Database cards first (with proper image URLs)
+          ...normalizedLocalCards.filter(card => !databaseCardIds.has(card.id))
         ];
         
         // Filter cards for current user
