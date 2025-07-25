@@ -466,12 +466,12 @@ class PSDCacheService {
     }));
   }
 
-  async loadCachedLayers(jobId: string): Promise<PSDLayer[]> {
+  async loadCachedLayers(psdFileId: string): Promise<PSDLayer[]> {
     const { data, error } = await supabase
       .from('psd_layers')
       .select('*')
-      .eq('job_id', jobId)
-      .order('display_order');
+      .eq('psd_file_id', psdFileId)
+      .order('layer_index');
 
     if (error) {
       console.error('Failed to load cached layers:', error);

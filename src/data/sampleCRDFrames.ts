@@ -75,7 +75,6 @@ export const SAMPLE_CRD_FRAMES: CRDFrame[] = [
         }
       ]
     },
-    included_elements: ['primary-frame', 'catalog-header', 'card-footer'],
     is_public: true,
     price_cents: 0,
     rating_average: 4.7,
@@ -160,7 +159,6 @@ export const SAMPLE_CRD_FRAMES: CRDFrame[] = [
         }
       ]
     },
-    included_elements: ['fantasy-frame', 'fantasy-header', 'fantasy-footer'],
     is_public: true,
     price_cents: 200,
     rating_average: 4.9,
@@ -235,7 +233,6 @@ export const SAMPLE_CRD_FRAMES: CRDFrame[] = [
         }
       ]
     },
-    included_elements: ['background-gradient', 'crd-logo', 'catalog-bottom', 'series-bottom'],
     is_public: true,
     price_cents: 0,
     rating_average: 5.0,

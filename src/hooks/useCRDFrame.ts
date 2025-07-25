@@ -59,8 +59,7 @@ export const useCRDFrame = () => {
           rating_average: row.rating_average || 0,
           rating_count: row.rating_count || 0,
           download_count: row.download_count || 0,
-          tags: row.tags || [],
-          included_elements: row.included_elements || []
+          tags: row.tags || []
         };
       });
 
@@ -162,8 +161,7 @@ export const useCRDFrame = () => {
         rating_average: data.rating_average || 0,
         rating_count: data.rating_count || 0,
         download_count: data.download_count || 0,
-        tags: data.tags || [],
-        included_elements: data.included_elements || []
+        tags: data.tags || []
       };
 
       setFrames(prev => [mappedFrame, ...prev]);
@@ -216,8 +214,7 @@ export const useCRDFrame = () => {
         rating_average: data.rating_average || 0,
         rating_count: data.rating_count || 0,
         download_count: data.download_count || 0,
-        tags: data.tags || [],
-        included_elements: data.included_elements || []
+        tags: data.tags || []
       };
 
       setFrames(prev => prev.map(frame => 
@@ -266,8 +263,7 @@ export const useCRDFrame = () => {
         rating_average: data.rating_average || 0,
         rating_count: data.rating_count || 0,
         download_count: data.download_count || 0,
-        tags: data.tags || [],
-        included_elements: data.included_elements || []
+        tags: data.tags || []
       };
       
       return mappedFrame;

@@ -1,6 +1,13 @@
 /**
- * Beta Stability Monitor - Tracks the health of core user journeys
- * Provides real-time feedback on system stability and user flow success rates
+ * Beta Stability Monitor - Development-only tool for tracking system health
+ * 
+ * What it does:
+ * - Monitors core system components (auth, database, localStorage, etc.)
+ * - Tracks user journey progress and completion rates
+ * - Provides real-time health checks for debugging
+ * - Shows performance metrics for card creation flows
+ * 
+ * Only visible in development mode and can be dismissed permanently.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -8,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
+import { CheckCircle, AlertTriangle, XCircle, RefreshCw, X } from 'lucide-react';
 import { useCoreUserJourney } from '@/hooks/useCoreUserJourney';
 
 interface SystemHealth {
@@ -46,6 +53,15 @@ export const BetaStabilityMonitor: React.FC = () => {
   });
 
   const [isMonitoring, setIsMonitoring] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(() => {
+    // Check if monitor was previously dismissed
+    return localStorage.getItem('betaStabilityMonitor-dismissed') === 'true';
+  });
+
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    localStorage.setItem('betaStabilityMonitor-dismissed', 'true');
+  };
 
   // System health checks
   const checkSystemHealth = async () => {
@@ -126,8 +142,8 @@ export const BetaStabilityMonitor: React.FC = () => {
   const successRate = metrics.totalAttempts > 0 ? 
     ((metrics.successfulCompletions / metrics.totalAttempts) * 100) : 100;
 
-  if (process.env.NODE_ENV !== 'development') {
-    return null; // Only show in development
+  if (process.env.NODE_ENV !== 'development' || isDismissed) {
+    return null; // Only show in development and when not dismissed
   }
 
   return (
@@ -150,6 +166,15 @@ export const BetaStabilityMonitor: React.FC = () => {
                 className="h-6 w-6 p-0"
               >
                 <RefreshCw className={`w-3 h-3 ${isMonitoring ? 'animate-spin' : ''}`} />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleDismiss}
+                className="h-6 w-6 p-0 hover:bg-red-500/20"
+                title="Dismiss monitor"
+              >
+                <X className="w-3 h-3" />
               </Button>
             </div>
           </CardTitle>

@@ -3,11 +3,10 @@ export interface CRDFrame {
   id: string;
   name: string;
   category: string;
-  version: string;
+  version?: string;
   description?: string;
   preview_image_url?: string;
   frame_config: CRDFrameConfig;
-  included_elements: string[];
   is_public: boolean;
   price_cents: number;
   rating_average: number;
