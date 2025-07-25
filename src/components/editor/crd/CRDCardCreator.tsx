@@ -307,11 +307,11 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                 className="mr-2"
               />
               
-              <CRDButton onClick={handleSave} variant="secondary" size="sm" className="h-8 text-xs rounded-md">
+              <CRDButton onClick={handleSave} variant="secondary" className="h-7 text-xs px-3 py-1">
                 <Save className="w-3 h-3 mr-1" />
                 Save
               </CRDButton>
-              <CRDButton onClick={handlePreview} variant="primary" size="sm" className="h-8 text-xs rounded-md">
+              <CRDButton onClick={handlePreview} variant="primary" className="h-7 text-xs px-3 py-1">
                 <Download className="w-3 h-3 mr-1" />
                 Export
               </CRDButton>
