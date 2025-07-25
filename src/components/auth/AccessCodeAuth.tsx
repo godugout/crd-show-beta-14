@@ -9,7 +9,7 @@ interface AccessCodeAuthProps {
   accessCode?: string;
 }
 
-const DEFAULT_ACCESS_CODE = "DNA2024LAB";
+const DEFAULT_ACCESS_CODE = "HELIX2024";
 
 export const AccessCodeAuth: React.FC<AccessCodeAuthProps> = ({ 
   children, 
