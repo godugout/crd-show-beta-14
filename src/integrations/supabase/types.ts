@@ -2002,58 +2002,52 @@ export type Database = {
       }
       crd_frames: {
         Row: {
-          category: string | null
-          created_at: string | null
+          category: string
+          created_at: string
           creator_id: string | null
           description: string | null
           download_count: number | null
           frame_config: Json
           id: string
-          included_elements: string[] | null
           is_public: boolean | null
           name: string
-          preview_image_url: string | null
           price_cents: number | null
           rating_average: number | null
           rating_count: number | null
           tags: string[] | null
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
-          category?: string | null
-          created_at?: string | null
-          creator_id?: string | null
-          description?: string | null
-          download_count?: number | null
-          frame_config: Json
-          id?: string
-          included_elements?: string[] | null
-          is_public?: boolean | null
-          name: string
-          preview_image_url?: string | null
-          price_cents?: number | null
-          rating_average?: number | null
-          rating_count?: number | null
-          tags?: string[] | null
-          updated_at?: string | null
-        }
-        Update: {
-          category?: string | null
-          created_at?: string | null
+          category: string
+          created_at?: string
           creator_id?: string | null
           description?: string | null
           download_count?: number | null
           frame_config?: Json
           id?: string
-          included_elements?: string[] | null
           is_public?: boolean | null
-          name?: string
-          preview_image_url?: string | null
+          name: string
           price_cents?: number | null
           rating_average?: number | null
           rating_count?: number | null
           tags?: string[] | null
-          updated_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          creator_id?: string | null
+          description?: string | null
+          download_count?: number | null
+          frame_config?: Json
+          id?: string
+          is_public?: boolean | null
+          name?: string
+          price_cents?: number | null
+          rating_average?: number | null
+          rating_count?: number | null
+          tags?: string[] | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -3746,13 +3740,6 @@ export type Database = {
             referencedRelation: "crd_elements"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "element_downloads_frame_id_fkey"
-            columns: ["frame_id"]
-            isOneToOne: false
-            referencedRelation: "crd_frames"
-            referencedColumns: ["id"]
-          },
         ]
       }
       enterprise_organizations: {
@@ -5252,6 +5239,51 @@ export type Database = {
           },
         ]
       }
+      psd_files: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          file_size: number
+          height: number
+          id: string
+          layer_count: number
+          metadata: Json | null
+          name: string
+          original_url: string
+          updated_at: string
+          uploaded_at: string
+          width: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          file_size?: number
+          height: number
+          id?: string
+          layer_count?: number
+          metadata?: Json | null
+          name: string
+          original_url: string
+          updated_at?: string
+          uploaded_at?: string
+          width: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          file_size?: number
+          height?: number
+          id?: string
+          layer_count?: number
+          metadata?: Json | null
+          name?: string
+          original_url?: string
+          updated_at?: string
+          uploaded_at?: string
+          width?: number
+        }
+        Relationships: []
+      }
       psd_generated_frames: {
         Row: {
           auto_generated: boolean | null
@@ -5298,66 +5330,68 @@ export type Database = {
       }
       psd_layers: {
         Row: {
-          bounds: Json
-          cached_image_url: string | null
-          content: Json | null
-          created_at: string | null
+          blend_mode: string | null
+          created_at: string
+          height: number
           id: string
+          image_url: string
           is_visible: boolean | null
-          job_id: string | null
-          last_modified_at: string | null
-          layer_hash: string | null
-          layer_name: string
-          layer_order: number | null
+          layer_index: number
           layer_type: string
-          parent_layer_id: string | null
-          style_properties: Json | null
+          metadata: Json | null
+          name: string
+          opacity: number | null
+          position_x: number | null
+          position_y: number | null
+          psd_file_id: string
+          thumbnail_url: string | null
+          updated_at: string
+          width: number
         }
         Insert: {
-          bounds: Json
-          cached_image_url?: string | null
-          content?: Json | null
-          created_at?: string | null
+          blend_mode?: string | null
+          created_at?: string
+          height: number
           id?: string
+          image_url: string
           is_visible?: boolean | null
-          job_id?: string | null
-          last_modified_at?: string | null
-          layer_hash?: string | null
-          layer_name: string
-          layer_order?: number | null
-          layer_type: string
-          parent_layer_id?: string | null
-          style_properties?: Json | null
+          layer_index: number
+          layer_type?: string
+          metadata?: Json | null
+          name: string
+          opacity?: number | null
+          position_x?: number | null
+          position_y?: number | null
+          psd_file_id: string
+          thumbnail_url?: string | null
+          updated_at?: string
+          width: number
         }
         Update: {
-          bounds?: Json
-          cached_image_url?: string | null
-          content?: Json | null
-          created_at?: string | null
+          blend_mode?: string | null
+          created_at?: string
+          height?: number
           id?: string
+          image_url?: string
           is_visible?: boolean | null
-          job_id?: string | null
-          last_modified_at?: string | null
-          layer_hash?: string | null
-          layer_name?: string
-          layer_order?: number | null
+          layer_index?: number
           layer_type?: string
-          parent_layer_id?: string | null
-          style_properties?: Json | null
+          metadata?: Json | null
+          name?: string
+          opacity?: number | null
+          position_x?: number | null
+          position_y?: number | null
+          psd_file_id?: string
+          thumbnail_url?: string | null
+          updated_at?: string
+          width?: number
         }
         Relationships: [
           {
-            foreignKeyName: "psd_layers_job_id_fkey"
-            columns: ["job_id"]
+            foreignKeyName: "psd_layers_psd_file_id_fkey"
+            columns: ["psd_file_id"]
             isOneToOne: false
-            referencedRelation: "crdmkr_processing_jobs"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "psd_layers_parent_layer_id_fkey"
-            columns: ["parent_layer_id"]
-            isOneToOne: false
-            referencedRelation: "psd_layers"
+            referencedRelation: "psd_files"
             referencedColumns: ["id"]
           },
         ]
@@ -6825,6 +6859,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_card_projects: {
+        Row: {
+          created_at: string
+          id: string
+          is_template: boolean | null
+          last_modified: string
+          project_data: Json
+          project_name: string
+          project_type: string
+          template_category: string | null
+          thumbnail_url: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_template?: boolean | null
+          last_modified?: string
+          project_data?: Json
+          project_name: string
+          project_type?: string
+          template_category?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_template?: boolean | null
+          last_modified?: string
+          project_data?: Json
+          project_name?: string
+          project_type?: string
+          template_category?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_challenge_progress: {
         Row: {
