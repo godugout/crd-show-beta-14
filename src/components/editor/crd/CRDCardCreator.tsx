@@ -18,6 +18,10 @@ import { RightSidebarCollapsedContent } from './sidebar/RightSidebarCollapsed';
 import { PSDModeRightSidebar } from './sidebar/PSDModeRightSidebar';
 import { PSDFabricCanvas } from './canvas/PSDFabricCanvas';
 import { PSDLayer } from '@/components/editor/crd/import/CRDPSDProcessor';
+import { ProModeToggle } from '@/components/editor/modes/ProModeToggle';
+import { ProDesignStudio } from '@/components/editor/modes/ProDesignStudio';
+import { useProModeState } from '@/hooks/useProModeState';
+import type { CardData } from '@/hooks/useCardEditor';
 interface CRDCardCreatorProps {
   initialCard?: Partial<InteractiveCardData>;
   onSave: (card: InteractiveCardData) => void;
@@ -70,6 +74,9 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
   const [visibleLayers, setVisibleLayers] = useState<Set<string>>(new Set());
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [layerOpacity, setLayerOpacity] = useState<Map<string, number>>(new Map());
+
+  // Pro Mode State
+  const { proModeState, toggleProMode, exitProMode, enterProMode } = useProModeState();
   
   // Mobile detection and responsive behavior
   const [isMobile, setIsMobile] = useState(false);
@@ -189,6 +196,67 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
     console.log('Generating card from PSD layers:', Array.from(visibleLayers));
     // Generate a card based on current PSD layer setup
   }, [visibleLayers]);
+
+  // Convert InteractiveCardData to CardData for Pro Mode
+  const convertToCardData = useCallback((interactiveCard: InteractiveCardData): CardData => {
+    return {
+      id: interactiveCard.id,
+      title: interactiveCard.title,
+      description: interactiveCard.description || '',
+      rarity: interactiveCard.rarity as any,
+      creator_id: interactiveCard.creator_id,
+      image_url: interactiveCard.assets.images[0]?.url || '',
+      tags: [],
+      visibility: 'private' as const,
+      creator_attribution: {
+        creator_name: '',
+        creator_id: interactiveCard.creator_id,
+        collaboration_type: 'solo'
+      },
+      publishing_options: {
+        marketplace_listing: false,
+        crd_catalog_inclusion: true,
+        print_available: true
+      },
+      design_metadata: {
+        ...interactiveCard,
+        card_type: 'crd',
+        print_optimized: true
+      }
+    };
+  }, []);
+
+  const handleProModeComplete = useCallback((proCardData: CardData) => {
+    // Convert back to InteractiveCardData format
+    const interactiveCard: InteractiveCardData = {
+      id: proCardData.id,
+      title: proCardData.title,
+      description: proCardData.description,
+      rarity: proCardData.rarity as any,
+      creator_id: proCardData.creator_id,
+      created_at: cardData.created_at,
+      updated_at: new Date().toISOString(),
+      assets: cardData.assets,
+      version: cardData.version + 1
+    };
+    
+    setCardData(interactiveCard);
+    exitProMode();
+    console.log('✅ Pro Mode design completed and applied');
+  }, [cardData, exitProMode]);
+
+  // If Pro Mode is active, show Pro Design Studio
+  if (proModeState.isProModeActive) {
+    return (
+      <ProDesignStudio
+        cardData={convertToCardData(cardData)}
+        onComplete={handleProModeComplete}
+        onBack={exitProMode}
+        className="h-screen"
+      />
+    );
+  }
+
   return (
     <div className="h-screen w-full flex flex-col relative pt-16">
       
@@ -228,6 +296,12 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                   Print
                 </button>
               </div>
+              
+              <ProModeToggle
+                isProMode={proModeState.isProMode}
+                onToggle={toggleProMode}
+                className="mr-2"
+              />
               
               <CRDButton onClick={handleSave} variant="secondary" size="sm">
                 <Save className="w-4 h-4 mr-2" />
