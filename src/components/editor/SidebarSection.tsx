@@ -1,6 +1,7 @@
 
 import React, { ReactNode, useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 
 interface SidebarSectionProps {
   title: string;
@@ -10,6 +11,7 @@ interface SidebarSectionProps {
 
 export const SidebarSection = ({ title, children, defaultOpen = true }: SidebarSectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const { currentPalette } = useTeamTheme();
 
   return (
     <div className="border-b border-editor-border">
@@ -19,8 +21,8 @@ export const SidebarSection = ({ title, children, defaultOpen = true }: SidebarS
       >
         <span className="text-white font-semibold">{title}</span>
         {isOpen ? 
-          <ChevronDown className="w-4 h-4 text-gray-400" /> : 
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <ChevronDown className="w-4 h-4" style={{ color: currentPalette?.colors.primary || '#fbbf24' }} /> : 
+          <ChevronRight className="w-4 h-4" style={{ color: currentPalette?.colors.primary || '#fbbf24' }} />
         }
       </button>
       {isOpen && (

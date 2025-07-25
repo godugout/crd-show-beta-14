@@ -64,7 +64,13 @@ export const AdvancedPropertiesPanel: React.FC<AdvancedPropertiesPanelProps> = (
   };
 
   return (
-    <ScrollArea className="h-full" style={{ background: `linear-gradient(135deg, ${currentPalette?.colors.primary}10, ${currentPalette?.colors.secondary}10)` }}>
+    <ScrollArea 
+      className="h-full border-l-2" 
+      style={{ 
+        background: `linear-gradient(135deg, ${currentPalette?.colors.primary}10, ${currentPalette?.colors.secondary}10)`,
+        borderLeftColor: currentPalette?.colors.primary || '#fbbf24'
+      }}
+    >
       <div className="p-4 space-y-6">
         <div>
           <h3 className="text-sm font-medium mb-3">Element Properties</h3>

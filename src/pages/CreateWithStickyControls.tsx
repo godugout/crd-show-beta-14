@@ -49,7 +49,7 @@ const CreateWithStickyControls = () => {
   console.log('🔍 DEBUG: CreateWithStickyControls rendering', { spaceEnvironment });
 
   return (
-    <div className="fixed inset-0 bg-crd-darkest overflow-hidden flex flex-col">
+    <div className="fixed inset-0 bg-crd-darkest overflow-hidden flex flex-col group">
       {/* 3D Card Viewer - Takes remaining space */}
       <div className="flex-1 relative">
         <CRDViewer
@@ -76,8 +76,9 @@ const CreateWithStickyControls = () => {
         />
       </div>
 
-      {/* Sticky Footer Controls */}
-      <CRDStickyFooter
+      {/* Sticky Footer Controls - Auto-hide with opacity */}
+      <div className="opacity-30 hover:opacity-100 transition-opacity duration-300 group-hover:opacity-100">
+        <CRDStickyFooter
         animationMode={animationMode}
         animationIntensity={animationIntensity}
         onAnimationModeChange={setAnimationMode}
@@ -106,8 +107,9 @@ const CreateWithStickyControls = () => {
         onEnableUserTrackingChange={setEnableUserTracking}
         cardAngle={cardAngle}
         cameraDistance={cameraDistance}
-        animationProgress={animationIntensity}
-      />
+          animationProgress={animationIntensity}
+        />
+      </div>
     </div>
   );
 };
