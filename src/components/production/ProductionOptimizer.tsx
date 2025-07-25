@@ -128,14 +128,25 @@ export const ProductionOptimizer = () => {
       }
     }
 
-    // Service Worker registration
+    // Service Worker registration - only if sw.js exists
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-      navigator.serviceWorker.register('/sw.js')
+      // Check if service worker file exists before registering
+      fetch('/sw.js', { method: 'HEAD' })
+        .then((response) => {
+          if (response.ok) {
+            return navigator.serviceWorker.register('/sw.js');
+          } else {
+            console.info('Service worker not available - skipping registration');
+            return null;
+          }
+        })
         .then((registration) => {
-          console.log('SW registered:', registration);
+          if (registration) {
+            console.log('SW registered:', registration);
+          }
         })
         .catch((error) => {
-          console.log('SW registration failed:', error);
+          console.warn('SW registration failed:', error);
         });
     }
 
