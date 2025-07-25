@@ -445,6 +445,8 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
             collapsedContent={<RightSidebarCollapsedContent />}
             className=""
             style={{ '--sidebar-width': isMobile ? '300px' : '380px' } as React.CSSProperties}
+            gridType={gridType}
+            showGrid={showGrid}
           >
             {isPSDMode ? (
               <PSDModeRightSidebar
