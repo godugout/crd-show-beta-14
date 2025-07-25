@@ -1,68 +1,6 @@
-import { openDB, DBSchema, IDBPDatabase } from 'idb';
+import { openDB, type IDBPDatabase } from 'idb';
 import { supabase } from '@/integrations/supabase/client';
 import type { CardData } from '@/types/card';
-
-// Enhanced database schema definition
-interface CRDDataDB extends DBSchema {
-  cards: {
-    key: string;
-    value: {
-      id: string;
-      data: CardData;
-      createdAt: Date;
-      updatedAt: Date;
-      syncedAt?: Date;
-      needsSync: boolean;
-    };
-    indexes: {
-      'by-created': Date;
-      'by-updated': Date;
-      'by-sync-status': boolean;
-    };
-  };
-  sessions: {
-    key: string;
-    value: {
-      id: string;
-      data: {
-        sessionData: any;
-        psdData?: any;
-        uploadProgress?: number;
-        stepData?: Record<string, any>;
-      };
-      createdAt: Date;
-      updatedAt: Date;
-    };
-    indexes: {
-      'by-created': Date;
-      'by-updated': Date;
-    };
-  };
-  cache: {
-    key: string;
-    value: {
-      key: string;
-      data: any;
-      expiresAt?: Date;
-      createdAt: Date;
-    };
-    indexes: {
-      'by-expires': Date;
-      'by-created': Date;
-    };
-  };
-  user_preferences: {
-    key: string;
-    value: {
-      userId: string;
-      preferences: Record<string, any>;
-      updatedAt: Date;
-    };
-    indexes: {
-      'by-updated': Date;
-    };
-  };
-}
 
 type StoreNames = 'cards' | 'sessions' | 'cache' | 'user_preferences';
 
@@ -74,15 +12,15 @@ interface SyncResult {
 }
 
 class CRDDataService {
-  private db: IDBPDatabase<CRDDataDB> | null = null;
+  private db: IDBPDatabase<any> | null = null;
   private dbName = 'cardshow-data';
   private dbVersion = 1;
 
   // Initialize the database
-  private async initDB(): Promise<IDBPDatabase<CRDDataDB>> {
+  private async initDB(): Promise<IDBPDatabase<any>> {
     if (this.db) return this.db;
 
-    this.db = await openDB<CRDDataDB>(this.dbName, this.dbVersion, {
+    this.db = await openDB(this.dbName, this.dbVersion, {
       upgrade(db) {
         // Cards store for card data
         if (!db.objectStoreNames.contains('cards')) {

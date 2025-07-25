@@ -68,7 +68,29 @@ export const useCardOperations = (): UseCardOperationsReturn => {
       for (let i = 0; i < cardsToCreate.length; i++) {
         const card = cardsToCreate[i];
         
-        // Save card to persistent storage (simulated with localStorage for now)
+        // Create CardData object for data service
+        const cardDataForStorage = {
+          id: `created-${card.id}`,
+          title: `${card.metadata.cardType || 'Card'} ${i + 1}`,
+          description: '',
+          image_url: card.croppedImageUrl,
+          thumbnail_url: card.croppedImageUrl,
+          rarity: 'common' as const,
+          tags: [],
+          design_metadata: card.metadata,
+          visibility: 'private' as const,
+          is_public: false,
+          creator_attribution: {
+            collaboration_type: 'solo' as const
+          },
+          publishing_options: {
+            marketplace_listing: false,
+            crd_catalog_inclusion: false,
+            print_available: false
+          }
+        };
+
+        // Create CreatedCard object for UI state
         const createdCard = {
           id: `created-${card.id}`,
           title: `${card.metadata.cardType || 'Card'} ${i + 1}`,
@@ -79,7 +101,7 @@ export const useCardOperations = (): UseCardOperationsReturn => {
         };
 
         // Save using unified data service
-        await crdDataService.saveCard(createdCard.id, createdCard);
+        await crdDataService.saveCard(cardDataForStorage.id, cardDataForStorage);
 
         newCreatedCards.push(createdCard);
 

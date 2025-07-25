@@ -7,7 +7,7 @@ import { CardRepository } from '@/repositories/cardRepository';
 import { CollectionCore } from '@/repositories/collection/core';
 import { crdDataService } from './crdDataService';
 import { errorHandler, withErrorHandling, ErrorCodes } from '@/utils/errorHandling';
-import type { CardData } from '@/types/card';
+import type { CardData, CardRarity, CardVisibility } from '@/types/card';
 import type { User } from '@supabase/supabase-js';
 
 export interface UserJourneyStep {
@@ -141,8 +141,34 @@ class CoreUserJourneyService {
         is_public: completeCardData.is_public
       });
       
-      // Also save locally for offline access
-      await crdDataService.saveCard(savedCard.id, savedCard);
+      // Also save locally for offline access - convert to CardData format
+      const cardDataForLocal: CardData = {
+        id: savedCard.id,
+        title: savedCard.title,
+        description: savedCard.description || '',
+        rarity: savedCard.rarity as CardRarity,
+        tags: savedCard.tags || [],
+        image_url: savedCard.image_url,
+        thumbnail_url: savedCard.thumbnail_url,
+        design_metadata: (typeof savedCard.design_metadata === 'object' && savedCard.design_metadata !== null) 
+          ? savedCard.design_metadata as any 
+          : {},
+        visibility: savedCard.visibility as CardVisibility,
+        is_public: savedCard.is_public,
+        creator_id: savedCard.creator_id,
+        creator_attribution: {
+          creator_id: savedCard.creator_id,
+          collaboration_type: 'solo'
+        },
+        publishing_options: {
+          marketplace_listing: savedCard.marketplace_listing || false,
+          crd_catalog_inclusion: true,
+          print_available: false
+        },
+        series: savedCard.series || '',
+        created_at: savedCard.created_at
+      };
+      await crdDataService.saveCard(savedCard.id, cardDataForLocal);
 
       return savedCard.id;
     }, 'createCard');
