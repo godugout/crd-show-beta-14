@@ -381,17 +381,35 @@ export const EnhancedHero: React.FC = () => {
               </p>
             </div>
             
-            <Hero3
-              caption=""
-              heading=""
-              bodyText=""
-              ctaText=""
-              ctaLink=""
-              showFeaturedCards={true}
-              featuredCards={showcaseCards}
-              onCardClick={handleCardStudioOpen}
-              shouldStartAnimation={!isLabelVisible}
-            />
+            {/* Simple fallback grid instead of complex Hero3 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+              {showcaseCards.slice(0, 8).map((card, index) => (
+                <div 
+                  key={`showcase-${card.id || index}`}
+                  className="bg-crd-dark rounded-xl overflow-hidden border border-crd-mediumGray/20 hover:border-crd-blue/30 transition-all duration-300 cursor-pointer group"
+                  onClick={() => handleCardStudioOpen(card)}
+                >
+                  <div className="aspect-[3/4] relative">
+                    {card.image_url || card.thumbnail_url ? (
+                      <img 
+                        src={card.image_url || card.thumbnail_url} 
+                        alt={card.title || 'Card'}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-crd-mediumGray/20 to-crd-darkGray flex items-center justify-center">
+                        <div className="text-4xl opacity-50">🎨</div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-white font-semibold truncate">{card.title || 'Untitled'}</h3>
+                    <p className="text-crd-lightGray text-sm">Creator: {card.creator_id || 'Unknown'}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
