@@ -270,7 +270,7 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
         {/* Header */}
         <div className="flex-shrink-0 h-20 px-6 border-b border-crd-mediumGray/20 bg-crd-darker/50">
           {/* 3-column grid layout with 2 rows */}
-          <div className="grid grid-cols-3 grid-rows-2 gap-4 h-full">
+          <div className="grid grid-cols-3 grid-rows-2 gap-x-4 gap-y-1 h-full">
             {/* Left Column: CRDMKR Logo (spans 2 rows) */}
             <div className="row-span-2 flex items-center">
               <CRDGradientLogo className="h-8" />
