@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { getGridThemeClasses } from '../utils/themeUtils';
 interface CRDToolbarProps {
   zoom: number;
   onZoomIn: () => void;
@@ -59,8 +60,10 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
   onMouseEnter,
   onMouseLeave
 }) => {
+  const themeClasses = getGridThemeClasses(showGrid ? gridType : null);
+  
   return <div
-    className={className || "absolute top-16 left-1/2 transform -translate-x-1/2 z-30 bg-crd-darker/80 backdrop-blur-sm border border-crd-mediumGray/30 rounded-lg shadow-lg"}
+    className={className || `absolute top-16 left-1/2 transform -translate-x-1/2 z-30 bg-crd-darker/80 backdrop-blur-sm border ${themeClasses.borderThird} rounded-lg shadow-lg`}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
@@ -78,8 +81,8 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
                        const Icon = currentOption?.icon || X;
                        return (
                          <>
-                           <Icon className={`w-4 h-4 text-green-400`} />
-                           <ChevronDown className="w-3 h-3 absolute -bottom-0.5 -right-0.5 text-green-400" />
+                            <Icon className={`w-4 h-4 ${currentOption?.color || 'text-gray-400'}`} />
+                            <ChevronDown className={`w-3 h-3 absolute -bottom-0.5 -right-0.5 ${currentOption?.color || 'text-gray-400'}`} />
                          </>
                        );
                      })()}
@@ -109,8 +112,8 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
                 </DropdownMenuContent>
               </DropdownMenu>
               
-               <CRDButton variant="outline" size="sm" onClick={onRulersToggle} className={`h-8 w-8 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${showRulers ? 'border-green-400/50' : ''}`} title="Toggle Rulers">
-                 <Ruler className={`w-4 h-4 ${showRulers ? 'text-green-400' : 'text-green-400'}`} />
+               <CRDButton variant="outline" size="sm" onClick={onRulersToggle} className={`h-8 w-8 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${showRulers ? themeClasses.borderHalf : ''}`} title="Toggle Rulers">
+                 <Ruler className={`w-4 h-4 ${showRulers ? themeClasses.text : themeClasses.text}`} />
                </CRDButton>
 
                <CRDButton 

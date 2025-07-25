@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getGridThemeClasses } from '../utils/themeUtils';
 
 interface CollapsibleSidebarProps {
   children: React.ReactNode;
@@ -9,6 +10,8 @@ interface CollapsibleSidebarProps {
   collapsedContent?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  gridType?: 'standard' | 'print' | 'golden' | 'isometric' | 'blueprint' | 'photography' | null;
+  showGrid?: boolean;
 }
 
 export const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({
@@ -18,8 +21,11 @@ export const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({
   side,
   collapsedContent,
   className = '',
-  style = {}
+  style = {},
+  gridType = null,
+  showGrid = false
 }) => {
+  const themeClasses = getGridThemeClasses(showGrid ? gridType : null);
   const sideStyles = side === 'left' 
     ? { left: 0 } 
     : { right: 0 };
@@ -59,7 +65,7 @@ export const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({
       {/* Expanded Panel */}
       {!isCollapsed && (
         <div className={`w-full h-full bg-crd-darker backdrop-blur-md border border-crd-mediumGray/50 shadow-2xl flex flex-col transition-all duration-300 ${
-          side === 'left' ? 'border-r-2 border-r-crd-blue/30' : 'border-l-2 border-l-crd-blue/30'
+          side === 'left' ? `border-r-2 ${themeClasses.borderThird}` : `border-l-2 ${themeClasses.borderThird}`
         }`}>
           {/* Toggle Button Header */}
           <div className="flex-shrink-0 h-12 flex items-center justify-between px-4 border-b border-crd-mediumGray/30">

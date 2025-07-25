@@ -59,6 +59,10 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
   const [playerStats, setPlayerStats] = useState<Record<string, string>>({});
   const [showGuides, setShowGuides] = useState(false);
   
+  // Grid state for theming
+  const [showGrid, setShowGrid] = useState(false);
+  const [gridType, setGridType] = useState<'standard' | 'print' | 'golden' | 'isometric' | 'blueprint' | 'photography'>('standard');
+  
   // Frame selection state
   const [selectedFrame, setSelectedFrame] = useState<any>(null);
   const [frameContent, setFrameContent] = useState<Record<string, any>>({});
@@ -303,12 +307,12 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                 className="mr-2"
               />
               
-              <CRDButton onClick={handleSave} variant="secondary" size="sm">
-                <Save className="w-4 h-4 mr-2" />
+              <CRDButton onClick={handleSave} variant="secondary" size="sm" className="h-8 text-xs rounded-md">
+                <Save className="w-3 h-3 mr-1" />
                 Save
               </CRDButton>
-              <CRDButton onClick={handlePreview} variant="primary" size="sm">
-                <Download className="w-4 h-4 mr-2" />
+              <CRDButton onClick={handlePreview} variant="primary" size="sm" className="h-8 text-xs rounded-md">
+                <Download className="w-3 h-3 mr-1" />
                 Export
               </CRDButton>
             </div>
@@ -359,6 +363,10 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                 isMobile={isMobile}
                 selectedFrame={selectedFrame}
                 frameContent={frameContent}
+                showGrid={showGrid}
+                gridType={gridType}
+                onGridToggle={() => setShowGrid(!showGrid)}
+                onGridTypeChange={setGridType}
                 onImageUpload={(files) => {
                   if (files.length > 0) {
                     const file = files[0];
@@ -379,6 +387,8 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
             collapsedContent={<LeftSidebarCollapsedContent activeTab={activeTab} />}
             className=""
             style={{ '--sidebar-width': isMobile ? '300px' : '380px' } as React.CSSProperties}
+            gridType={gridType}
+            showGrid={showGrid}
           >
             <LeftSidebarContent
               activeTab={activeTab}

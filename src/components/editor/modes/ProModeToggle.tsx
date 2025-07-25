@@ -15,11 +15,11 @@ export const ProModeToggle: React.FC<ProModeToggleProps> = ({
   className = ""
 }) => {
   return (
-    <div className={`flex items-center space-x-3 ${className}`}>
-      <div className="flex items-center space-x-2">
-        <Wand2 className="w-4 h-4 text-muted-foreground" />
-        <Label htmlFor="pro-mode" className="text-sm font-medium">
-          Standard Mode
+    <div className={`flex items-center space-x-2 ${className}`}>
+      <div className="flex items-center space-x-1">
+        <Wand2 className="w-3 h-3 text-muted-foreground" />
+        <Label htmlFor="pro-mode" className="text-xs font-medium">
+          Standard
         </Label>
       </div>
       
@@ -27,14 +27,14 @@ export const ProModeToggle: React.FC<ProModeToggleProps> = ({
         id="pro-mode"
         checked={isProMode}
         onCheckedChange={onToggle}
-        className="data-[state=checked]:bg-primary"
+        className="data-[state=checked]:bg-primary scale-75"
       />
       
-      <div className="flex items-center space-x-2">
-        <Label htmlFor="pro-mode" className="text-sm font-medium">
-          Pro Design Mode
+      <div className="flex items-center space-x-1">
+        <Label htmlFor="pro-mode" className="text-xs font-medium">
+          Pro
         </Label>
-        <Palette className="w-4 h-4 text-primary" />
+        <Palette className="w-3 h-3 text-primary" />
       </div>
     </div>
   );
