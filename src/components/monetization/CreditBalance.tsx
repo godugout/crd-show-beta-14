@@ -23,23 +23,17 @@ export const CreditBalance: React.FC<CreditBalanceProps> = ({
 
   return (
     <>
-      <div className={`flex items-center gap-3 ${className}`}>
-        {/* Credit Balance Display */}
-        <div className="flex items-center gap-2 px-3 py-2 bg-crd-mediumGray/20 rounded-lg">
-          <Coins className="w-4 h-4 text-crd-gold" />
-          <span className="text-crd-white font-medium text-sm">{balance.toLocaleString()}</span>
-        </div>
-
-        {/* Add Credits Button */}
+      <div className={`flex items-center ${className}`}>
+        {/* Compact Credits Button with Balance */}
         <CRDButton
           variant="outline"
           size="sm"
           onClick={handleAddCredits}
-          className="border-crd-gold/30 text-crd-gold hover:bg-crd-gold/10 min-h-[44px]"
+          className="border-crd-gold/30 text-crd-gold hover:bg-crd-gold/10 min-h-[44px] px-3 py-2 flex items-center gap-2"
         >
-          <Plus className="w-4 h-4 mr-1" />
-          <span className="hidden sm:inline">Add Credits</span>
-          <span className="sm:hidden">Add</span>
+          <Coins className="w-4 h-4 text-crd-gold" />
+          <span className="text-crd-white font-medium text-sm">{balance.toLocaleString()}</span>
+          <Plus className="w-3 h-3 text-crd-gold ml-1" />
         </CRDButton>
       </div>
 
