@@ -269,10 +269,10 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
       <div className="relative z-10 h-full flex flex-col">
         {/* Header */}
         <div className="flex-shrink-0 h-20 px-6 border-b border-crd-mediumGray/20 bg-crd-darker/50">
-          {/* 3-column grid layout */}
-          <div className="grid grid-cols-3 gap-4 h-full">
+          {/* 3-column grid layout with 2 rows */}
+          <div className="grid grid-cols-3 grid-rows-2 gap-4 h-full">
             {/* Left Column: CRDMKR Logo (spans 2 rows) */}
-            <div className="flex items-center">
+            <div className="row-span-2 flex items-center">
               <CRDGradientLogo className="h-8" />
             </div>
             
@@ -291,7 +291,7 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
             </div>
             
             {/* Right Column: Action Buttons (spans 2 rows) */}
-            <div className="flex items-center justify-end gap-3">
+            <div className="row-span-2 flex items-center justify-end gap-3">
               <ProModeToggle
                 isProMode={proModeState.isProMode}
                 onToggle={toggleProMode}
@@ -316,9 +316,6 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
               </CRDButton>
             </div>
             
-            {/* Empty cell for left column second row */}
-            <div></div>
-            
             {/* Middle Column: Tags */}
             <div className="flex items-center justify-center gap-2 text-xs text-crd-lightGray">
               <div className="bg-crd-mediumGray/20 px-2 py-1 rounded">
@@ -334,9 +331,6 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
                 CRD-{cardData.id.slice(-4)}
               </div>
             </div>
-            
-            {/* Empty cell for right column second row */}
-            <div></div>
           </div>
         </div>
 
