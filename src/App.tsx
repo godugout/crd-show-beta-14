@@ -339,6 +339,14 @@ const App = () => {
                   
                   {/* Auth pages - immediately loaded for better UX */}
                   <Route 
+                    path="/auth" 
+                    element={
+                      <RouteErrorBoundary>
+                        <SignIn />
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
                     path="/auth/signin" 
                     element={
                       <RouteErrorBoundary>

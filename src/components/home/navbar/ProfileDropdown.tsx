@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, CreditCard, Bookmark, Settings, LogOut } from "lucide-react";
+import { User, CreditCard, Bookmark, Settings, LogOut, Palette, Wallet } from "lucide-react";
 
 export const ProfileDropdown = () => {
   const { user, signOut } = useAuth();
@@ -47,30 +47,30 @@ export const ProfileDropdown = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/50" />
         <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
+          <Link to="/user/gallery" className="flex items-center">
+            <Palette className="mr-2 h-4 w-4" />
+            <span>My Gallery</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
+          <Link to="/dashboard/transactions" className="flex items-center">
+            <Wallet className="mr-2 h-4 w-4" />
+            <span>Wallet</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
           <Link to="/profile" className="flex items-center">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
-          <Link to="/cards" className="flex items-center">
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>My Cards</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
-          <Link to="/collections" className="flex items-center">
-            <Bookmark className="mr-2 h-4 w-4" />
-            <span>Collections</span>
+          <Link to="/settings" className="flex items-center">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Account Settings</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-border/50" />
-        <DropdownMenuItem asChild className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]">
-          <Link to="/settings" className="flex items-center">
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuItem 
           className="text-foreground hover:bg-accent/50 focus:bg-accent/50 cursor-pointer min-h-[44px]" 
           onClick={signOut}

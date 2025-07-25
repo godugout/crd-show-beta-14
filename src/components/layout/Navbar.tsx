@@ -7,6 +7,7 @@ import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { DNAHelixTrigger } from '@/components/auth/DNAHelixTrigger';
 import { AdminTrigger } from '@/components/admin/AdminTrigger';
 import { MobileNav } from '@/components/home/navbar/MobileNav';
+import { NavActions } from '@/components/home/navbar/NavActions';
 import { useFlightAnimation } from '@/contexts/FlightAnimationContext';
 
 // Simplified navbar background - prioritize custom header color over theme defaults
@@ -128,9 +129,9 @@ export const Navbar = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Desktop Navigation Links */}
+            {/* Core Navigation Links */}
             <div className={`
-              hidden md:flex items-center space-x-2 lg:space-x-6 transition-all duration-300
+              hidden md:flex items-center space-x-2 lg:space-x-4 transition-all duration-300
               ${scrollMetrics.isScrolling ? 'scale-[0.98]' : 'scale-100'}
             `}>
               <Link
@@ -180,74 +181,6 @@ export const Navbar = () => {
               </Link>
 
               <Link
-                to="/collections"
-                className={`
-                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
-                  min-h-[44px] min-w-[44px]
-                  transition-all duration-200 group
-                  ${isActive('/collections') 
-                    ? (isHomeTeamMode 
-                        ? 'text-slate-800 bg-slate-200/60' 
-                        : 'text-themed-active bg-themed-active/10'
-                      )
-                    : (isHomeTeamMode 
-                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
-                        : 'text-themed-secondary hover-themed'
-                      )
-                  }
-                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
-                `}
-              >
-                <span className="hidden lg:inline">Collections</span>
-              </Link>
-
-              <Link
-                to="/user/gallery"
-                className={`
-                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
-                  min-h-[44px] min-w-[44px]
-                  transition-all duration-200 group
-                  ${isActive('/user/gallery') 
-                    ? (isHomeTeamMode 
-                        ? 'text-slate-800 bg-slate-200/60' 
-                        : 'text-themed-active bg-themed-active/10'
-                      )
-                    : (isHomeTeamMode 
-                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
-                        : 'text-themed-secondary hover-themed'
-                      )
-                  }
-                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
-                `}
-              >
-                <Palette className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
-                <span className="hidden lg:inline">My Gallery</span>
-              </Link>
-
-              <Link
-                to="/studio/demo"
-                className={`
-                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
-                  min-h-[44px] min-w-[44px]
-                  transition-all duration-200 group
-                  ${location.pathname.startsWith('/studio') 
-                    ? (isHomeTeamMode 
-                        ? 'text-slate-800 bg-slate-200/60' 
-                        : 'text-themed-active bg-themed-active/10'
-                      )
-                    : (isHomeTeamMode 
-                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
-                        : 'text-themed-secondary hover-themed'
-                      )
-                  }
-                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
-                `}
-              >
-                <Palette className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
-                <span className="hidden lg:inline">Studio</span>
-              </Link>
-
-              <Link
                 to="/marketplace"
                 className={`
                   flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
@@ -270,56 +203,18 @@ export const Navbar = () => {
                 <span className="hidden lg:inline">Market</span>
               </Link>
 
-              <Link
-                to="/pricing"
-                className={`
-                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
-                  min-h-[44px] min-w-[44px]
-                  transition-all duration-200 group
-                  ${isActive('/pricing') 
-                    ? (isHomeTeamMode 
-                        ? 'text-slate-800 bg-slate-200/60' 
-                        : 'text-themed-active bg-themed-active/10'
-                      )
-                    : (isHomeTeamMode 
-                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
-                        : 'text-themed-secondary hover-themed'
-                      )
-                  }
-                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
-                `}
-              >
-                <CreditCard className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
-                <span className="hidden xl:inline">Pricing</span>
-              </Link>
-
-              <Link
-                to="/dashboard/transactions"
-                className={`
-                  flex items-center space-x-1 lg:space-x-2 px-2 lg:px-3 py-2 rounded-md text-sm font-medium
-                  min-h-[44px] min-w-[44px]
-                  transition-all duration-200 group
-                  ${location.pathname.startsWith('/dashboard') 
-                    ? (isHomeTeamMode 
-                        ? 'text-slate-800 bg-slate-200/60' 
-                        : 'text-themed-active bg-themed-active/10'
-                      )
-                    : (isHomeTeamMode 
-                        ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100' 
-                        : 'text-themed-secondary hover-themed'
-                      )
-                  }
-                  ${!prefersReducedMotion ? 'hover:scale-105 hover:shadow-sm' : ''}
-                `}
-              >
-                <DollarSign className={`w-4 h-4 transition-transform duration-200 ${!prefersReducedMotion ? 'group-hover:scale-110' : ''}`} />
-                <span className="hidden xl:inline">Wallet</span>
-              </Link>
-
               {/* DNA Helix Trigger */}
               <div className="hidden xl:block">
                 <DNAHelixTrigger />
               </div>
+            </div>
+
+            {/* Auth Actions */}
+            <div className={`
+              hidden md:flex items-center transition-all duration-300
+              ${scrollMetrics.isScrolling ? 'scale-[0.98]' : 'scale-100'}
+            `}>
+              <NavActions />
             </div>
           </div>
         </div>
