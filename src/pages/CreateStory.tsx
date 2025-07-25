@@ -12,7 +12,7 @@ const CreateStory = () => {
 
   const handleComplete = (cardData: CardData) => {
     console.log('Story card created successfully:', cardData);
-    navigate('/gallery');
+    navigate('/user/gallery');
   };
 
   const handleCancel = () => {

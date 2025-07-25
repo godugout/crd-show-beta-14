@@ -13,7 +13,7 @@ const CreateCRD = () => {
 
   const handleComplete = (cardData: CardData) => {
     console.log('CRD Collectible created successfully:', cardData);
-    navigate('/gallery');
+    navigate('/user/gallery');
   };
 
   const handleCancel = () => {

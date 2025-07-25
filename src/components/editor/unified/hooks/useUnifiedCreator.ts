@@ -35,7 +35,7 @@ export const useUnifiedCreator = ({
   const currentConfig = getConfigById(state.mode);
 
   const goToGallery = () => {
-    navigate('/gallery');
+    navigate('/user/gallery');
   };
 
   const switchMode = (newMode: CreationMode) => {

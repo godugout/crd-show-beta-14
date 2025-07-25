@@ -210,7 +210,7 @@ export const useUniversalCreator = ({
 
   const goToGallery = useCallback(() => {
     console.log('🏠 useUniversalCreator: Navigating to gallery');
-    navigate('/gallery');
+    navigate('/user/gallery');
   }, [navigate]);
 
   const startOver = useCallback(() => {
