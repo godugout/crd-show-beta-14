@@ -217,7 +217,10 @@ export const CardDetailsStep = ({
       </div>
 
       {aiAnalysisComplete && (
-        <AIAnalysisSummary cardData={cardData} />
+        <AIAnalysisSummary 
+          cardData={cardData} 
+          onFieldUpdate={onFieldUpdate}
+        />
       )}
     </div>
   );

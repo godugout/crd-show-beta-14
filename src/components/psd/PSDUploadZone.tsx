@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useNavigate } from 'react-router-dom';
 import { Upload, FileImage, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -18,6 +19,7 @@ export const PSDUploadZone: React.FC<PSDUploadZoneProps> = ({
   onError,
   className = ""
 }) => {
+  const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState<string>("");
@@ -51,7 +53,20 @@ export const PSDUploadZone: React.FC<PSDUploadZoneProps> = ({
       setCurrentStep("Finalizing...");
       setUploadProgress(100);
       
-      onPSDParsed(file.name.replace('.psd', ''), result.layers);
+      // Save PSD data and redirect to review page
+      const psdData = {
+        fileName: file.name.replace('.psd', ''),
+        layers: result.layers
+      };
+      
+      await crdDataService.saveSession('current_psd_upload', psdData);
+      
+      onPSDParsed(psdData.fileName, result.layers);
+      
+      // Redirect to PSD review page
+      navigate('/crdmkr/psd-review', { 
+        state: { psdData }
+      });
       
     } catch (error) {
       console.error('Error processing PSD:', error);

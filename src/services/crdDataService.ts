@@ -386,6 +386,29 @@ class CRDDataService {
     }
   }
 
+  /**
+   * Clear all data (useful for testing or complete resets)
+   */
+  async clearAll(): Promise<boolean> {
+    try {
+      console.log('🗑️ Clearing all CRD data stores');
+      
+      // Clear all stores
+      await Promise.all([
+        this.clear('cards'),
+        this.clear('sessions'),
+        this.clear('cache'),
+        this.clear('user_preferences')
+      ]);
+      
+      console.log('✅ All CRD data stores cleared');
+      return true;
+    } catch (error) {
+      console.error('❌ Error clearing all data:', error);
+      return false;
+    }
+  }
+
   // Database maintenance
   async cleanup(): Promise<void> {
     await this.clearExpiredCache();

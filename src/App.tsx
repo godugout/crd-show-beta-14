@@ -36,6 +36,7 @@ const Pricing = lazy(() => import('@/pages/Pricing'));
 const TransactionsDashboard = lazy(() => import('@/pages/TransactionsDashboard'));
 const UserGallery = lazy(() => import('@/pages/UserGallery'));
 const SimpleCardCreate = lazy(() => import('@/pages/SimpleCardCreate'));
+const CRDMKRPSDReviewPage = lazy(() => import('@/pages/CRDMKRPSDReviewPage'));
 
 // Development/testing pages - low priority for lazy loading
 const UploadTestPage = lazy(() => import('@/pages/UploadTestPage'));
@@ -309,6 +310,16 @@ const App = () => {
                       <RouteErrorBoundary>
                         <Suspense fallback={<RouteLoading />}>
                           <SimpleCardCreate />
+                        </Suspense>
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/crdmkr/psd-review" 
+                    element={
+                      <RouteErrorBoundary>
+                        <Suspense fallback={<RouteLoading />}>
+                          <CRDMKRPSDReviewPage />
                         </Suspense>
                       </RouteErrorBoundary>
                     } 
