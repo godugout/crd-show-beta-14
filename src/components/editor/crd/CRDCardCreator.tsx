@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useGridPreferences } from '@/hooks/useGridPreferences';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CRDButton } from '@/components/ui/design-system/Button';
@@ -60,9 +61,8 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
   const [playerStats, setPlayerStats] = useState<Record<string, string>>({});
   const [showGuides, setShowGuides] = useState(false);
   
-  // Grid state for theming
-  const [showGrid, setShowGrid] = useState(false);
-  const [gridType, setGridType] = useState<'standard' | 'print' | 'golden' | 'isometric' | 'blueprint' | 'photography'>('standard');
+  // Grid state from preferences hook
+  const { gridType, showGrid, setGridType, setShowGrid } = useGridPreferences();
   
   // Frame selection state
   const [selectedFrame, setSelectedFrame] = useState<any>(null);
