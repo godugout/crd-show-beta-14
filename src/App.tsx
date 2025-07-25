@@ -7,6 +7,7 @@ import { AuthProvider } from '@/features/auth/providers/AuthProvider';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ProductionOptimizer } from '@/components/production/ProductionOptimizer';
 import { DevLoginFloatingButton } from '@/components/auth/DevLoginFloatingButton';
+import { BetaStabilityMonitor } from '@/components/core/BetaStabilityMonitor';
 import { Navbar } from '@/components/layout/Navbar';
 import { FlightAnimationProvider } from '@/contexts/FlightAnimationContext';
 import { RouteErrorBoundary } from '@/components/routing/RouteErrorBoundary';
@@ -376,7 +377,13 @@ const App = () => {
                   }
                 }}
               />
-              <DevLoginFloatingButton />
+              {/* Dev tools for development only */}
+              {process.env.NODE_ENV === 'development' && (
+                <>
+                  <DevLoginFloatingButton />
+                  <BetaStabilityMonitor />
+                </>
+              )}
               <GlobalSecretMenu />
               </div>
             </Router>
