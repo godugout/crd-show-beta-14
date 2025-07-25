@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { DetectedCard, CardDetectionResult } from '@/services/cardDetection';
+import { crdDataService } from '@/services/crdDataService';
 import type { 
   UploadedImage, 
   CreatedCard, 
@@ -25,7 +26,7 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
       const savedSession = await crdDataService.getSession(SESSION_STORAGE_KEY);
       if (savedSession) {
         try {
-        const sessionState: SessionState = JSON.parse(savedSession);
+        const sessionState: SessionState = savedSession;
         console.log('Restoring session state:', sessionState);
         
         setPhase(sessionState.phase);
@@ -52,23 +53,26 @@ export const useCardUploadSession = (): UseCardUploadSessionReturn => {
   // Save session state whenever it changes
   useEffect(() => {
     if (sessionId) {
-      const sessionState: SessionState = {
-        phase,
-        uploadedImages,
-        detectionResults,
-        selectedCards: Array.from(selectedCards),
-        createdCards,
-        sessionId
+      const saveSession = async () => {
+        const sessionState: SessionState = {
+          phase,
+          uploadedImages,
+          detectionResults,
+          selectedCards: Array.from(selectedCards),
+          createdCards,
+          sessionId
+        };
+        
+        await crdDataService.saveSession(SESSION_STORAGE_KEY, sessionState);
+        console.log('Session state saved:', sessionState);
       };
-      
-      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionState));
-      console.log('Session state saved:', sessionState);
+      saveSession();
     }
   }, [phase, uploadedImages, detectionResults, selectedCards, createdCards, sessionId]);
 
   // Clear session and reset to initial state
-  const clearSession = useCallback(() => {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
+  const clearSession = useCallback(async () => {
+    await crdDataService.deleteSession(SESSION_STORAGE_KEY);
     setPhase('idle');
     setUploadedImages([]);
     setDetectionResults([]);
