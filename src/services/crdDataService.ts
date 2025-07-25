@@ -281,8 +281,23 @@ class CRDDataService {
   // Supabase sync methods
   async syncCardToSupabase(cardId: string, cardData: CardData): Promise<boolean> {
     try {
+      // Handle base64 image upload first
+      let finalCardData = { ...cardData };
+      
+      if (cardData.image_url && cardData.image_url.startsWith('data:')) {
+        console.log('🖼️ Uploading base64 image to Supabase Storage...');
+        const uploadedUrl = await this.uploadBase64ImageToStorage(cardData.image_url, cardId);
+        if (uploadedUrl) {
+          finalCardData.image_url = uploadedUrl;
+          finalCardData.thumbnail_url = uploadedUrl;
+          console.log('✅ Image uploaded to storage:', uploadedUrl);
+        } else {
+          console.warn('⚠️ Failed to upload image, keeping base64');
+        }
+      }
+      
       // Convert CardData to Supabase compatible format
-      const supabaseCard = this.convertCardDataToSupabaseFormat(cardData);
+      const supabaseCard = this.convertCardDataToSupabaseFormat(finalCardData);
       
       const { data, error } = await supabase
         .from('cards')
@@ -293,6 +308,11 @@ class CRDDataService {
       if (error) {
         console.error('❌ Failed to sync card to Supabase:', error);
         return false;
+      }
+
+      // Update local card with new image URL if it was uploaded
+      if (finalCardData.image_url !== cardData.image_url) {
+        await this.updateCardImageUrl(cardId, finalCardData.image_url);
       }
 
       // Mark as synced in IndexedDB
@@ -544,6 +564,67 @@ class CRDDataService {
       image_locked: false,
       crd_catalog_inclusion: true
     };
+  }
+
+  // Upload base64 image to Supabase Storage
+  private async uploadBase64ImageToStorage(base64Image: string, cardId: string): Promise<string | null> {
+    try {
+      // Convert base64 to blob
+      const base64Data = base64Image.split(',')[1];
+      const mimeType = base64Image.split(',')[0].split(':')[1].split(';')[0];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: mimeType });
+      
+      // Upload to Supabase Storage
+      const fileName = `card-${cardId}-${Date.now()}.png`;
+      const { data, error } = await supabase.storage
+        .from('card-images')
+        .upload(fileName, blob, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (error) {
+        console.error('❌ Failed to upload image to storage:', error);
+        return null;
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('card-images')
+        .getPublicUrl(fileName);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('❌ Error uploading base64 image:', error);
+      return null;
+    }
+  }
+
+  // Update card image URL in IndexedDB
+  private async updateCardImageUrl(cardId: string, newImageUrl: string): Promise<void> {
+    try {
+      const db = await this.initDB();
+      const tx = db.transaction('cards', 'readwrite');
+      const store = tx.objectStore('cards');
+      const record = await store.get(cardId);
+      
+      if (record) {
+        record.data.image_url = newImageUrl;
+        record.data.thumbnail_url = newImageUrl;
+        record.updatedAt = new Date();
+        await store.put(record);
+      }
+    } catch (error) {
+      console.error('❌ Error updating card image URL:', error);
+    }
   }
 
   // Bulk migration utility
