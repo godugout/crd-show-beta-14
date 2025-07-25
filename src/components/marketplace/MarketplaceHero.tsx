@@ -2,6 +2,7 @@ import React from 'react';
 import { Search, TrendingUp, Users, ShoppingBag, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { TokenDisplay } from '@/components/marketplace/TokenDisplay';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 import heroBackground from '@/assets/marketplace-hero-bg.jpg';
 
 interface MarketplaceHeroProps {
@@ -13,6 +14,8 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
   searchQuery,
   onSearchChange
 }) => {
+  const { currentPalette } = useTeamTheme();
+  
   // Mock stats - in real app these would come from props or API
   const stats = [
     { label: 'Active Listings', value: '1,247', icon: ShoppingBag },
@@ -54,8 +57,8 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="pl-12 h-14 text-lg bg-crd-surface/90 border-crd-border backdrop-blur-sm
-                         focus:border-crd-orange focus:ring-2 focus:ring-crd-orange/20
-                         hover:border-crd-orange/50 transition-all duration-200
+                         focus:border-primary focus:ring-2 focus:ring-primary/20
+                         hover:border-primary/50 transition-all duration-200
                          placeholder:text-crd-text-dim"
               />
             </div>
@@ -71,11 +74,11 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
             <div 
               key={stat.label}
               className="bg-crd-surface/80 backdrop-blur-sm border border-crd-border rounded-lg p-6 text-center
-                       hover:bg-crd-surface-light/80 hover:border-crd-orange/30 transition-all duration-200 animate-fade-in
-                       hover:shadow-lg hover:shadow-crd-orange/10"
+                       hover:bg-crd-surface-light/80 hover:border-primary/30 transition-all duration-200 animate-fade-in
+                       hover:shadow-lg hover:shadow-primary/10"
               style={{ animationDelay: `${300 + index * 100}ms` }}
             >
-              <stat.icon className={`w-8 h-8 mx-auto mb-3 ${index === 0 ? 'text-crd-orange' : index === 1 ? 'text-crd-green' : index === 2 ? 'text-crd-blue' : 'text-crd-yellow'}`} />
+              <stat.icon className={`w-8 h-8 mx-auto mb-3 ${index === 0 ? 'text-primary' : index === 1 ? 'text-secondary' : index === 2 ? 'text-accent' : 'text-primary'}`} />
               <div className="text-2xl font-bold text-crd-text mb-1">{stat.value}</div>
               <div className="text-small-body text-crd-text-dim">{stat.label}</div>
             </div>

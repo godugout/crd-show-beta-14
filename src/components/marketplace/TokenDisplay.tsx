@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Coins, Plus } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { useTokens } from '@/hooks/useTokens';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { ComingSoonModal } from '@/components/monetization/ComingSoonModal';
 
 interface TokenDisplayProps {
@@ -14,6 +15,7 @@ export const TokenDisplay: React.FC<TokenDisplayProps> = ({
   showPurchaseButton = true 
 }) => {
   const { tokenBalance, isLoading } = useTokens();
+  const { currentPalette } = useTeamTheme();
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
   const balance = tokenBalance?.token_balance || 0;
@@ -34,22 +36,22 @@ export const TokenDisplay: React.FC<TokenDisplayProps> = ({
           <CRDButton
             variant="outline"
             onClick={() => setShowPurchaseModal(true)}
-            className="bg-crd-surface/90 border-crd-yellow/30 text-crd-text hover:bg-crd-yellow/10 hover:border-crd-yellow/50 
+            className="bg-crd-surface/90 border-accent/30 text-crd-text hover:bg-accent/10 hover:border-accent/50 
                      transition-all duration-200 px-3 py-2 flex items-center gap-2"
           >
-            <Coins className="w-4 h-4 text-crd-yellow" />
+            <Coins className="w-4 h-4 text-accent" />
             <span className="text-crd-text font-medium text-sm">
               {balance.toLocaleString()}
             </span>
-            <Plus className="w-3 h-3 text-crd-yellow ml-1" />
+            <Plus className="w-3 h-3 text-accent ml-1" />
           </CRDButton>
         ) : (
-          <div className="flex items-center gap-2 px-3 py-2 bg-crd-surface/90 border border-crd-yellow/30 rounded-lg">
-            <Coins className="w-4 h-4 text-crd-yellow" />
+          <div className="flex items-center gap-2 px-3 py-2 bg-crd-surface/90 border border-accent/30 rounded-lg">
+            <Coins className="w-4 h-4 text-accent" />
             <span className="text-crd-text font-medium text-sm">
               {balance.toLocaleString()}
             </span>
-            <span className="text-crd-yellow text-xs">CRD</span>
+            <span className="text-accent text-xs">CRD</span>
           </div>
         )}
       </div>

@@ -6,6 +6,7 @@ import { TradingCard } from '@/components/marketplace/TradingCard';
 import { CreateListingModal } from '@/components/marketplace/CreateListingModal';
 import { BuyNowModal } from '@/components/marketplace/BuyNowModal';
 import { useMarketplaceData } from '@/hooks/useMarketplaceData';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
 import { Button } from '@/components/ui/button';
 import { Plus, Grid, List, SlidersHorizontal, ShoppingCart } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export interface MarketplaceFilters {
 }
 
 const Marketplace = () => {
+  const { currentPalette } = useTeamTheme();
   const [showCreateListing, setShowCreateListing] = useState(false);
   const [showBuyModal, setShowBuyModal] = useState(false);
   const [selectedListing, setSelectedListing] = useState<any>(null);
@@ -93,8 +95,8 @@ const Marketplace = () => {
           <div className="flex items-center gap-4">
             <Button 
               onClick={() => setShowCreateListing(true)}
-              className="bg-crd-orange hover:bg-crd-green text-crd-black font-semibold px-6 py-3 rounded-lg
-                       transition-all duration-200 hover:shadow-lg hover:shadow-crd-orange/20 flex items-center gap-2"
+              className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-6 py-3 rounded-lg
+                       transition-all duration-200 hover:shadow-lg hover:shadow-primary/20 flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Create Listing
@@ -104,8 +106,8 @@ const Marketplace = () => {
             <Button
               variant="outline"
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden bg-crd-surface/90 border-crd-border hover:border-crd-orange/50 
-                       text-crd-text hover:bg-crd-orange/10 transition-all duration-200"
+              className="lg:hidden bg-crd-surface/90 border-border hover:border-primary/50 
+                       text-crd-text hover:bg-primary/10 transition-all duration-200"
             >
               <SlidersHorizontal className="w-4 h-4" />
             </Button>
@@ -113,15 +115,15 @@ const Marketplace = () => {
 
           {/* View Mode Toggle */}
           <div className="flex items-center gap-2 ml-auto">
-            <div className="flex bg-crd-surface/90 border border-crd-border rounded-lg p-1 backdrop-blur-sm">
+            <div className="flex bg-crd-surface/90 border border-border rounded-lg p-1 backdrop-blur-sm">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewMode('grid')}
                 className={`transition-all duration-200 ${
                   viewMode === 'grid' 
-                    ? 'bg-crd-orange text-crd-black shadow-lg' 
-                    : 'text-crd-text-dim hover:text-crd-text hover:bg-crd-orange/10'
+                    ? 'bg-primary text-primary-foreground shadow-lg' 
+                    : 'text-crd-text-dim hover:text-crd-text hover:bg-primary/10'
                 }`}
               >
                 <Grid className="w-4 h-4" />
@@ -132,8 +134,8 @@ const Marketplace = () => {
                 onClick={() => setViewMode('list')}
                 className={`transition-all duration-200 ${
                   viewMode === 'list' 
-                    ? 'bg-crd-orange text-crd-black shadow-lg' 
-                    : 'text-crd-text-dim hover:text-crd-text hover:bg-crd-orange/10'
+                    ? 'bg-primary text-primary-foreground shadow-lg' 
+                    : 'text-crd-text-dim hover:text-crd-text hover:bg-primary/10'
                 }`}
               >
                 <List className="w-4 h-4" />
@@ -231,8 +233,8 @@ const Marketplace = () => {
                     listingType: [],
                     categories: []
                   })}
-                  className="bg-crd-orange hover:bg-crd-green text-crd-black font-semibold px-6 py-3 rounded-lg
-                           transition-all duration-200 hover:shadow-lg hover:shadow-crd-orange/20"
+                  className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-6 py-3 rounded-lg
+                           transition-all duration-200 hover:shadow-lg hover:shadow-primary/20"
                 >
                   Clear all filters
                 </Button>
