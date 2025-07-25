@@ -13,13 +13,15 @@ interface ProDesignStudioProps {
   onComplete: (cardData: CardData) => void;
   onBack: () => void;
   className?: string;
+  hideNavbar?: boolean;
 }
 
 export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
   cardData,
   onComplete,
   onBack,
-  className = ""
+  className = "",
+  hideNavbar = true
 }) => {
   const [currentCard, setCurrentCard] = useState(cardData);
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
@@ -32,6 +34,53 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
     { id: 'image', name: 'Main Image', visible: true, locked: false, type: 'image' },
     { id: 'text', name: 'Text Layer', visible: true, locked: false, type: 'text' }
   ]);
+
+  // Hide/show navbar effect with improved detection
+  useEffect(() => {
+    const selectors = [
+      '[data-navbar]',
+      'nav',
+      '.navbar',
+      '[class*="navbar"]',
+      '[class*="Navbar"]',
+      'header[class*="nav"]'
+    ];
+    
+    let navbar: HTMLElement | null = null;
+    
+    // Try multiple selectors to find the navbar
+    for (const selector of selectors) {
+      navbar = document.querySelector(selector) as HTMLElement;
+      if (navbar) break;
+    }
+    
+    if (hideNavbar && navbar) {
+      // Store original display value
+      const originalDisplay = navbar.style.display || '';
+      navbar.setAttribute('data-pro-mode-original-display', originalDisplay);
+      navbar.style.display = 'none';
+      console.log('🎨 Pro Mode: Navbar hidden');
+    }
+
+    // Cleanup: restore navbar when component unmounts
+    return () => {
+      if (navbar) {
+        const originalDisplay = navbar.getAttribute('data-pro-mode-original-display') || '';
+        navbar.style.display = originalDisplay;
+        navbar.removeAttribute('data-pro-mode-original-display');
+        console.log('🎨 Pro Mode: Navbar restored');
+      }
+    };
+  }, [hideNavbar]);
+
+  // Add CSS class to body to manage overflow and positioning
+  useEffect(() => {
+    document.body.classList.add('pro-mode-active');
+    
+    return () => {
+      document.body.classList.remove('pro-mode-active');
+    };
+  }, []);
 
   const handleSave = () => {
     console.log('💾 Saving Pro Design card');
@@ -72,7 +121,7 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
 
   if (isPreviewMode) {
     return (
-      <div className="fixed inset-0 bg-black/90 z-50">
+      <div className="fixed inset-0 bg-black/90 z-[9999]">
         <div className="absolute top-4 right-4 space-x-2">
           <Button
             variant="outline"
@@ -102,7 +151,7 @@ export const ProDesignStudio: React.FC<ProDesignStudioProps> = ({
   }
 
   return (
-    <div className={`h-screen bg-background flex flex-col ${className}`}>
+    <div className={`fixed inset-0 bg-background flex flex-col z-[9998] ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center space-x-4">

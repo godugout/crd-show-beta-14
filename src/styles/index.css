@@ -99,6 +99,26 @@
     border-color: hsl(var(--crd-green));
   }
 
+  /* Pro Mode Specific Styles */
+  .pro-mode-active {
+    overflow: hidden; /* Prevent scrolling when Pro Mode is active */
+  }
+
+  /* Ensure Pro Mode takes full viewport when navbar is hidden */
+  .pro-mode-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
+  }
+
+  /* Fallback navbar positioning when it needs to be shown */
+  .pro-mode-with-navbar {
+    top: var(--navbar-height, 64px);
+  }
+
   /* Trading Card Component */
   .trading-card {
     aspect-ratio: 2.5 / 3.5;
