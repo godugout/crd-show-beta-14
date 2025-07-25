@@ -166,10 +166,11 @@
     background: 
       linear-gradient(
         135deg, 
-        rgba(15, 23, 42, 0.85) 0%, 
-        rgba(30, 41, 59, 0.80) 25%,
-        rgba(51, 65, 85, 0.75) 50%,
-        rgba(15, 23, 42, 0.85) 100%
+        hsl(var(--crd-black) / 0.90) 0%, 
+        hsl(var(--crd-orange) / 0.15) 25%,
+        hsl(var(--crd-blue) / 0.20) 50%,
+        hsl(var(--crd-green) / 0.15) 75%,
+        hsl(var(--crd-black) / 0.90) 100%
       ),
       url('/src/assets/marketplace-hero-bg.jpg');
     background-size: cover;

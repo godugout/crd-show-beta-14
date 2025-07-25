@@ -55,6 +55,7 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="pl-12 h-14 text-lg bg-crd-surface/90 border-crd-border backdrop-blur-sm
                          focus:border-crd-orange focus:ring-2 focus:ring-crd-orange/20
+                         hover:border-crd-orange/50 transition-all duration-200
                          placeholder:text-crd-text-dim"
               />
             </div>
@@ -70,10 +71,11 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
             <div 
               key={stat.label}
               className="bg-crd-surface/80 backdrop-blur-sm border border-crd-border rounded-lg p-6 text-center
-                       hover:bg-crd-surface-light/80 transition-all duration-200 animate-fade-in"
+                       hover:bg-crd-surface-light/80 hover:border-crd-orange/30 transition-all duration-200 animate-fade-in
+                       hover:shadow-lg hover:shadow-crd-orange/10"
               style={{ animationDelay: `${300 + index * 100}ms` }}
             >
-              <stat.icon className="w-8 h-8 text-crd-orange mx-auto mb-3" />
+              <stat.icon className={`w-8 h-8 mx-auto mb-3 ${index === 0 ? 'text-crd-orange' : index === 1 ? 'text-crd-green' : index === 2 ? 'text-crd-blue' : 'text-crd-yellow'}`} />
               <div className="text-2xl font-bold text-crd-text mb-1">{stat.value}</div>
               <div className="text-small-body text-crd-text-dim">{stat.label}</div>
             </div>
