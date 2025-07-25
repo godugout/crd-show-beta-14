@@ -28,5 +28,5 @@ ReactDOM.createRoot(rootElement).render(
         <App />
       </TooltipProvider>
     </QueryClientProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
