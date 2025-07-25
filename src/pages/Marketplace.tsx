@@ -4,9 +4,10 @@ import { PremiumFilters } from '@/components/marketplace/PremiumFilters';
 import { FeaturedCarousel } from '@/components/marketplace/FeaturedCarousel';
 import { TradingCard } from '@/components/marketplace/TradingCard';
 import { CreateListingModal } from '@/components/marketplace/CreateListingModal';
+import { BuyNowModal } from '@/components/marketplace/BuyNowModal';
 import { useMarketplaceData } from '@/hooks/useMarketplaceData';
 import { Button } from '@/components/ui/button';
-import { Plus, Grid, List, SlidersHorizontal } from 'lucide-react';
+import { Plus, Grid, List, SlidersHorizontal, ShoppingCart } from 'lucide-react';
 
 export interface MarketplaceFilters {
   searchQuery: string;
@@ -19,6 +20,8 @@ export interface MarketplaceFilters {
 
 const Marketplace = () => {
   const [showCreateListing, setShowCreateListing] = useState(false);
+  const [showBuyModal, setShowBuyModal] = useState(false);
+  const [selectedListing, setSelectedListing] = useState<any>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [filters, setFilters] = useState<MarketplaceFilters>({
@@ -60,8 +63,17 @@ const Marketplace = () => {
   };
 
   const handleCardClick = (cardId: string) => {
-    // Navigate to card detail page
-    console.log('Card clicked:', cardId);
+    const listing = listings.find(l => l.id === cardId);
+    if (listing) {
+      setSelectedListing({
+        id: listing.id,
+        title: listing.title || 'Untitled Card',
+        price: listing.price || 0,
+        image_url: listing.image_url,
+        creator_name: listing.creator_name || 'Unknown Creator'
+      });
+      setShowBuyModal(true);
+    }
   };
 
   const gridCols = viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1';
@@ -166,6 +178,11 @@ const Marketplace = () => {
                   favorites={0}
                   views={0}
                   onClick={() => handleCardClick(listing.id)}
+                  showBuyButton={true}
+                  onBuyClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(listing.id);
+                  }}
                 />
               ))}
             </div>
@@ -223,6 +240,21 @@ const Marketplace = () => {
           fetchListings();
         }}
       />
+
+      {/* Buy Now Modal */}
+      {selectedListing && (
+        <BuyNowModal
+          open={showBuyModal}
+          onClose={() => {
+            setShowBuyModal(false);
+            setSelectedListing(null);
+          }}
+          onSuccess={() => {
+            fetchListings();
+          }}
+          listing={selectedListing}
+        />
+      )}
     </div>
   );
 };

@@ -34,6 +34,7 @@ const Marketplace = lazy(() => import('@/pages/Marketplace'));
 const ListingDetail = lazy(() => import('@/pages/ListingDetail'));
 const Pricing = lazy(() => import('@/pages/Pricing'));
 const TransactionsDashboard = lazy(() => import('@/pages/TransactionsDashboard'));
+const CreatorDashboard = lazy(() => import('@/pages/CreatorDashboard'));
 const UserGallery = lazy(() => import('@/pages/UserGallery'));
 const SimpleCardCreate = lazy(() => import('@/pages/SimpleCardCreate'));
 const CRDMKRPSDReviewPage = lazy(() => import('@/pages/CRDMKRPSDReviewPage'));
@@ -284,16 +285,26 @@ const App = () => {
                       </RouteErrorBoundary>
                     } 
                   />
-                  <Route 
-                    path="/dashboard/transactions" 
-                    element={
-                      <RouteErrorBoundary>
-                        <Suspense fallback={<RouteLoading />}>
-                          <TransactionsDashboard />
-                        </Suspense>
-                      </RouteErrorBoundary>
-                    } 
-                  />
+                   <Route 
+                     path="/dashboard/transactions" 
+                     element={
+                       <RouteErrorBoundary>
+                         <Suspense fallback={<RouteLoading />}>
+                           <TransactionsDashboard />
+                         </Suspense>
+                       </RouteErrorBoundary>
+                     } 
+                   />
+                   <Route 
+                     path="/dashboard/creator" 
+                     element={
+                       <RouteErrorBoundary>
+                         <Suspense fallback={<RouteLoading />}>
+                           <CreatorDashboard />
+                         </Suspense>
+                       </RouteErrorBoundary>
+                     } 
+                   />
                   <Route 
                     path="/user/gallery" 
                     element={

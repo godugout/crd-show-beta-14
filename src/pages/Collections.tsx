@@ -1,13 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Star, TrendingUp, Clock } from 'lucide-react';
+import { ArrowRight, Users, Star, TrendingUp, Clock, Wand2, Plus } from 'lucide-react';
 import { Typography, CRDButton } from '@/components/ui/design-system';
 import { ThemedPage } from '@/components/ui/design-system/ThemedLayout';
 import { StandardHero } from '@/components/shared/StandardHero';
 import { PixelDigital } from '@/components/ui/PixelDigital';
+import { SmartCollectionModal } from '@/components/collections/SmartCollectionModal';
+import { Button } from '@/components/ui/button';
 
 const Collections: React.FC = () => {
+  const [showSmartCollectionModal, setShowSmartCollectionModal] = useState(false);
+
   return (
     <div className="min-h-screen bg-crd-darkest">
       {/* Hero Section */}
@@ -83,9 +87,20 @@ const Collections: React.FC = () => {
               Manage and organize your personal card collections
             </Typography>
           </div>
-          <CRDButton variant="outline">
-            Manage All
-          </CRDButton>
+          <div className="flex gap-3">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowSmartCollectionModal(true)}
+              className="flex items-center gap-2"
+            >
+              <Wand2 className="w-4 h-4" />
+              Smart Collection
+            </Button>
+            <CRDButton variant="outline">
+              <Plus className="w-4 h-4 mr-2" />
+              New Collection
+            </CRDButton>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -195,6 +210,15 @@ const Collections: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* Smart Collection Modal */}
+      <SmartCollectionModal
+        open={showSmartCollectionModal}
+        onClose={() => setShowSmartCollectionModal(false)}
+        onSuccess={() => {
+          // Refresh collections here
+        }}
+      />
     </div>
   );
 };
