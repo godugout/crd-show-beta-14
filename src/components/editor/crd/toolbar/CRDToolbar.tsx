@@ -75,7 +75,7 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
               <span className="text-xs text-crd-lightGray font-medium">View:</span>
               <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <CRDButton variant="outline" size="sm" className="h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20" title="Select Grid Type">
+                    <CRDButton variant="outline" size="sm" className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${themeClasses.borderHalf}`} title="Select Grid Type">
                      {(() => {
                        const currentOption = gridOptions.find(option => option.value === (showGrid ? gridType : null));
                        const Icon = currentOption?.icon || X;
@@ -112,21 +112,21 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
                 </DropdownMenuContent>
               </DropdownMenu>
               
-               <CRDButton variant="outline" size="sm" onClick={onRulersToggle} className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${showRulers ? themeClasses.borderHalf : ''}`} title="Toggle Rulers">
-                 <Ruler className={`w-4 h-4 ${showRulers ? themeClasses.text : themeClasses.text}`} />
+               <CRDButton variant="outline" size="sm" onClick={onRulersToggle} className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${showRulers ? themeClasses.borderHalf : themeClasses.borderThird}`} title="Toggle Rulers">
+                 <Ruler className={`w-4 h-4 ${showRulers ? themeClasses.text : 'text-white/40'}`} />
                </CRDButton>
 
                <CRDButton 
                   variant="outline" 
                   size="sm" 
                   onClick={onLockToggle} 
-                  className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${isLocked ? 'border-red-400/50' : 'border-blue-400/50'}`} 
+                  className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${isLocked ? 'border-red-400/50' : themeClasses.borderHalf}`} 
                   title={isLocked ? "Unlock card position" : "Lock card position"}
                 >
                  {isLocked ? (
                    <Lock className="w-4 h-4 text-red-400" />
                  ) : (
-                   <Unlock className="w-4 h-4 text-blue-400" />
+                   <Unlock className={`w-4 h-4 ${themeClasses.text}`} />
                  )}
                </CRDButton>
             </div>
@@ -136,20 +136,20 @@ export const CRDToolbar: React.FC<CRDToolbarProps> = ({
             {/* Zoom Controls */}
             <div className="flex items-center gap-2">
               <span className="text-xs text-crd-lightGray font-medium">Zoom:</span>
-              <CRDButton variant="ghost" size="sm" onClick={onZoomOut} disabled={zoom <= 25} className="h-6 w-6 p-0">
-                <ZoomOut className="w-3 h-3" />
+              <CRDButton variant="outline" size="sm" onClick={onZoomOut} disabled={zoom <= 25} className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${themeClasses.borderThird}`}>
+                <ZoomOut className={`w-3 h-3 ${themeClasses.text}`} />
               </CRDButton>
               
-              <div className="text-crd-white text-xs font-mono bg-crd-darkest px-2 py-1 rounded min-w-[40px] text-center h-6 flex items-center justify-center">
+              <div className={`text-white text-xs font-mono bg-white/5 backdrop-blur-sm border px-2 py-1 rounded min-w-[40px] text-center h-6 flex items-center justify-center ${themeClasses.borderThird}`}>
                 {Math.round(zoom)}%
               </div>
               
-              <CRDButton variant="ghost" size="sm" onClick={onZoomIn} disabled={zoom >= 300} className="h-6 w-6 p-0">
-                <ZoomIn className="w-3 h-3" />
+              <CRDButton variant="outline" size="sm" onClick={onZoomIn} disabled={zoom >= 300} className={`h-6 w-6 p-0 bg-white/5 backdrop-blur-sm border-white/20 ${themeClasses.borderThird}`}>
+                <ZoomIn className={`w-3 h-3 ${themeClasses.text}`} />
               </CRDButton>
               
-              <CRDButton variant="ghost" size="sm" onClick={onZoomReset} className="h-6 px-2 text-xs" title="Reset zoom (125%)">
-                <RotateCcw className="w-3 h-3 mr-1" />
+              <CRDButton variant="outline" size="sm" onClick={onZoomReset} className={`h-6 px-2 text-xs bg-white/5 backdrop-blur-sm border-white/20 ${themeClasses.borderThird}`} title="Reset zoom (125%)">
+                <RotateCcw className={`w-3 h-3 mr-1 ${themeClasses.text}`} />
                 Reset
               </CRDButton>
             </div>

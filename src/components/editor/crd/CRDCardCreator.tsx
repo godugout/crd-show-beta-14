@@ -22,6 +22,7 @@ import { ProModeToggle } from '@/components/editor/modes/ProModeToggle';
 import { ProDesignStudio } from '@/components/editor/modes/ProDesignStudio';
 import { useProModeState } from '@/hooks/useProModeState';
 import type { CardData } from '@/hooks/useCardEditor';
+import { getGridThemeClasses } from './utils/themeUtils';
 interface CRDCardCreatorProps {
   initialCard?: Partial<InteractiveCardData>;
   onSave: (card: InteractiveCardData) => void;
@@ -289,30 +290,26 @@ export const CRDCardCreator: React.FC<CRDCardCreatorProps> = ({
             
             {/* Right: Action Buttons */}
             <div className="flex items-center gap-3">
-              <div className="flex bg-crd-mediumGray/20 rounded-lg p-1">
-                <button onClick={() => setPreviewMode('edit')} className={`px-3 py-1 text-sm rounded transition-colors ${previewMode === 'edit' ? 'bg-crd-blue text-white' : 'text-crd-lightGray hover:text-crd-white'}`}>
-                  <Eye className="w-4 h-4" />
-                </button>
-                <button onClick={() => setPreviewMode('preview')} className={`px-3 py-1 text-sm rounded transition-colors ${previewMode === 'preview' ? 'bg-crd-blue text-white' : 'text-crd-lightGray hover:text-crd-white'}`}>
-                  Preview
-                </button>
-                <button onClick={() => setPreviewMode('print')} className={`px-3 py-1 text-sm rounded transition-colors ${previewMode === 'print' ? 'bg-crd-blue text-white' : 'text-crd-lightGray hover:text-crd-white'}`}>
-                  Print
-                </button>
-              </div>
-              
               <ProModeToggle
                 isProMode={proModeState.isProMode}
                 onToggle={toggleProMode}
                 className="mr-2"
               />
               
-              <CRDButton onClick={handleSave} variant="secondary" className="h-6 text-xs px-2 py-1">
-                <Save className="w-3 h-3 mr-1" />
+              <CRDButton 
+                onClick={handleSave} 
+                variant="outline" 
+                className={`h-6 text-xs px-2 py-1 bg-white/5 backdrop-blur-sm border-white/20 ${getGridThemeClasses(showGrid ? gridType : null).borderHalf}`}
+              >
+                <Save className={`w-3 h-3 mr-1 ${getGridThemeClasses(showGrid ? gridType : null).text}`} />
                 Save
               </CRDButton>
-              <CRDButton onClick={handlePreview} variant="primary" className="h-6 text-xs px-2 py-1">
-                <Download className="w-3 h-3 mr-1" />
+              <CRDButton 
+                onClick={handlePreview} 
+                variant="outline" 
+                className={`h-6 text-xs px-2 py-1 bg-white/5 backdrop-blur-sm border-white/20 ${getGridThemeClasses(showGrid ? gridType : null).borderHalf}`}
+              >
+                <Download className={`w-3 h-3 mr-1 ${getGridThemeClasses(showGrid ? gridType : null).text}`} />
                 Export
               </CRDButton>
             </div>
