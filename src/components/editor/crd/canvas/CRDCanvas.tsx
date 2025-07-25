@@ -91,9 +91,11 @@ export const CRDCanvas: React.FC<CRDCanvasProps> = ({
     setZoom(150); // Reset to optimal default
   }, []);
 
-  // Calculate card dimensions
+  // Calculate card dimensions with responsive sizing
   const cardAspectRatio = 2.5 / 3.5;
-  const baseCardWidth = 420; // Increased from 320
+  
+  // Use smaller base size when on mobile or both sidebars are open to fit better
+  const baseCardWidth = (isMobile || (!leftSidebarCollapsed && !rightSidebarCollapsed)) ? 280 : 420;
   const baseCardHeight = baseCardWidth / cardAspectRatio;
 
   const cardWidth = baseCardWidth * zoom / 100;
