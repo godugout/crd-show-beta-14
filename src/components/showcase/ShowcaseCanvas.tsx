@@ -7,6 +7,21 @@ import { ShowcaseErrorBoundary } from './ShowcaseErrorBoundary';
 import type { CardData } from '@/types/card';
 import type { SlabPresetConfig } from './SlabPresets';
 
+// Safe Environment component
+const SafeEnvironment: React.FC<{ preset?: string }> = ({ preset = "city" }) => {
+  try {
+    return <Environment preset={preset as any} background={false} />;
+  } catch (error) {
+    console.warn('Failed to load showcase environment, using fallback:', error);
+    return (
+      <>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+      </>
+    );
+  }
+};
+
 interface ShowcaseCanvasProps {
   card: CardData;
   slabConfig: SlabPresetConfig;
@@ -43,7 +58,7 @@ export const ShowcaseCanvas: React.FC<ShowcaseCanvasProps> = ({
           }}
         >
           {/* Enhanced Environment */}
-          <Environment preset="studio" />
+          <SafeEnvironment preset="studio" />
           
           {/* Enhanced Lighting Setup */}
           <ambientLight intensity={0.4} />

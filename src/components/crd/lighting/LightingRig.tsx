@@ -10,6 +10,28 @@ interface LightingRigProps {
   enableShadows?: boolean;
 }
 
+// Safe Environment component with error handling
+const SafeEnvironment: React.FC<{ preset: string }> = ({ preset }) => {
+  try {
+    return (
+      <Environment
+        preset={preset as any}
+        background={false}
+        blur={0.2}
+      />
+    );
+  } catch (error) {
+    console.warn('Failed to load environment, using fallback lighting:', error);
+    return (
+      <>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.3} />
+      </>
+    );
+  }
+};
+
 export const LightingRig: React.FC<LightingRigProps> = ({
   preset,
   pathTheme = 'neutral',
@@ -21,7 +43,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   const StudioLights = () => (
     <>
       {/* HDR Environment */}
-      <Environment preset="studio" />
+      <SafeEnvironment preset="studio" />
       
       {/* Key Light */}
       <directionalLight
@@ -53,7 +75,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Dramatic Lighting for showcase mode
   const DramaticLights = () => (
     <>
-      <Environment preset="night" />
+      <SafeEnvironment preset="night" />
       
       {/* Strong key light from above */}
       <directionalLight
@@ -86,7 +108,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Soft Lighting for gentle modes
   const SoftLights = () => (
     <>
-      <Environment preset="dawn" />
+      <SafeEnvironment preset="dawn" />
       
       {/* Soft key light */}
       <directionalLight
@@ -111,7 +133,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Future: Sports Arena Lighting
   const SportsArenaLights = () => (
     <>
-      <Environment preset="warehouse" />
+      <SafeEnvironment preset="warehouse" />
       
       {/* Stadium floodlights */}
       <directionalLight
@@ -148,7 +170,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Future: Sci-Fi Arcade Lighting  
   const SciFiArcadeLights = () => (
     <>
-      <Environment preset="night" />
+      <SafeEnvironment preset="night" />
       
       {/* Neon key light */}
       <directionalLight
@@ -181,7 +203,7 @@ export const LightingRig: React.FC<LightingRigProps> = ({
   // Future: Nature Preserve Lighting
   const NaturePreserveLights = () => (
     <>
-      <Environment preset="forest" />
+      <SafeEnvironment preset="forest" />
       
       {/* Sunlight through trees */}
       <directionalLight
