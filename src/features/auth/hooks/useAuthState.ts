@@ -22,14 +22,13 @@ export const useAuthState = () => {
       
       
       try {
-        // Check for dev mode first
+        // Check for dev mode first (only if explicitly enabled)
         if (devAuthService.isDevMode()) {
-          
+          console.log('🔧 Dev mode enabled - using dev auth');
           
           const storedDevAuth = devAuthService.getStoredDevSession();
           
           if (storedDevAuth.user && storedDevAuth.session) {
-            
             if (mounted) {
               setAuthState({
                 user: storedDevAuth.user,
@@ -40,11 +39,9 @@ export const useAuthState = () => {
             }
             return;
           } else {
-            // Auto-create dev session
-            
+            // Auto-create dev session only if explicitly requested
             const { user, session, error } = devAuthService.createDevUserSession();
             if (mounted && user && session) {
-              
               setAuthState({
                 user,
                 session,

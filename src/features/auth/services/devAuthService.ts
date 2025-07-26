@@ -6,21 +6,25 @@ export class DevAuthService {
   private readonly DEV_SESSION_KEY = 'dev_auth_session';
 
   isDevMode(): boolean {
+    // Check if dev mode is explicitly enabled via localStorage flag
+    const devModeEnabled = localStorage.getItem('ENABLE_DEV_AUTH') === 'true';
+    
+    // Only enable dev mode if explicitly requested AND in development environment
     const isDevEnv = process.env.NODE_ENV === 'development';
     const hostname = window.location.hostname;
     const isLocalhost = ['localhost', '127.0.0.1', '0.0.0.0'].includes(hostname) || hostname.startsWith('localhost');
-    const isLovablePreview = hostname.includes('.lovableproject.com');
     
     console.log('🔧 Dev mode check:', { 
       nodeEnv: process.env.NODE_ENV, 
       hostname, 
       isDevEnv, 
       isLocalhost,
-      isLovablePreview,
-      result: isDevEnv && (isLocalhost || isLovablePreview)
+      devModeEnabled,
+      result: devModeEnabled && isDevEnv && isLocalhost
     });
     
-    return isDevEnv && (isLocalhost || isLovablePreview);
+    // Only enable dev mode for localhost AND with explicit flag
+    return devModeEnabled && isDevEnv && isLocalhost;
   }
 
   getDiagnosticInfo(): string {

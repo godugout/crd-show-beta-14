@@ -67,17 +67,10 @@ export const useAuthActions = (userId?: string) => {
     setIsLoading(true);
     
     try {
-      // Clear dev session if in dev mode
-      if (devAuthService.isDevMode()) {
-        devAuthService.clearDevSession();
-        toast({
-          title: 'Signed Out',
-          description: 'You have been signed out successfully.',
-        });
-        window.location.reload(); // Force reload to reset auth state
-        return { error: null };
-      }
+      // Always clear dev session data and use real Supabase auth
+      devAuthService.clearDevSession();
       
+      // Always use production sign out
       const { error } = await authService.signOut();
       
       if (error) {
