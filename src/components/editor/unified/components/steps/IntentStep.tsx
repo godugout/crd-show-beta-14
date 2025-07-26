@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Zap, Navigation, Settings, Copy, Upload, Sparkles } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
-import { QuickCreateModal } from '@/components/editor/quick-create/QuickCreateModal';
+import { RevolutionaryQuickCreate } from '@/components/editor/quick-create/RevolutionaryQuickCreate';
 import type { CreationMode } from '../../types';
 
 interface IntentStepProps {
@@ -148,8 +148,8 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
         </div>
       </div>
 
-      {/* Quick Create Modal */}
-      <QuickCreateModal
+      {/* Revolutionary Quick Create */}
+      <RevolutionaryQuickCreate
         isOpen={showQuickCreate}
         onClose={() => setShowQuickCreate(false)}
         onComplete={(cardData) => {
