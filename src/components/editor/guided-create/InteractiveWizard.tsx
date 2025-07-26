@@ -11,6 +11,11 @@ import { ImageMagicStep } from './steps/ImageMagicStep';
 import { CustomizationPlayground } from './steps/CustomizationPlayground';
 import { FinalTouchesStep } from './steps/FinalTouchesStep';
 import { useCardEditor } from '@/hooks/useCardEditor';
+import { useHapticFeedback } from '@/hooks/useHapticFeedback';
+import { audioCueService } from '@/components/audio/AudioCueService';
+import { gamificationService } from '@/services/gamification/gamificationService';
+import { smartTemplateService } from '@/services/ai/smartTemplateService';
+import { CollaborationWidget } from './components/CollaborationWidget';
 
 interface InteractiveWizardProps {
   onComplete?: (cardData: any) => void;
@@ -42,7 +47,17 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
   const [wizardData, setWizardData] = useState<WizardData>({});
   const [undoHistory, setUndoHistory] = useState<WizardData[]>([]);
   const [showAIAssistant, setShowAIAssistant] = useState(true);
+  const [stepStartTime, setStepStartTime] = useState(Date.now());
+  const [isCollaborating, setIsCollaborating] = useState(false);
+  const [collaborators, setCollaborators] = useState<any[]>([]);
+  const [currentVote, setCurrentVote] = useState<any>(null);
   const cardEditor = useCardEditor();
+  const haptic = useHapticFeedback();
+
+  // Initialize gamification tracking
+  useEffect(() => {
+    gamificationService.awardXP('feature_explored');
+  }, []);
 
   const steps: WizardStep[] = [
     {
@@ -97,7 +112,23 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
 
   const updateWizardData = (stepData: Partial<WizardData>) => {
     setUndoHistory(prev => [...prev, wizardData]);
-    setWizardData(prev => ({ ...prev, ...stepData }));
+    setWizardData(prev => {
+      const newData = { ...prev, ...stepData };
+      
+      // Learn from user choices for smart templates
+      if (stepData.category) {
+        smartTemplateService.learnFromChoice({ type: 'category', value: stepData.category });
+      }
+      if (stepData.frame) {
+        smartTemplateService.learnFromChoice({ type: 'layout', value: stepData.frame.layout || 'default' });
+      }
+      
+      return newData;
+    });
+    
+    // Audio feedback for data updates
+    audioCueService.playSuccess();
+    haptic.success();
   };
 
   const handleUndo = () => {
@@ -110,13 +141,31 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
 
   const handleNext = () => {
     if (currentStepIndex < steps.length - 1) {
+      // Track time spent on step
+      const timeSpent = Date.now() - stepStartTime;
+      if (timeSpent > 600000) { // 10 minutes
+        gamificationService.awardXP('perfectionist', 20);
+      }
+      
+      // Step completion rewards
+      gamificationService.awardXP('step_completed', 10);
+      
       setCurrentStepIndex(prev => prev + 1);
+      setStepStartTime(Date.now());
+      
+      // Enhanced feedback
+      audioCueService.playStepTransition();
+      haptic.studioEnter();
     }
   };
 
   const handlePrevious = () => {
     if (currentStepIndex > 0) {
       setCurrentStepIndex(prev => prev - 1);
+      setStepStartTime(Date.now());
+      
+      audioCueService.playClick();
+      haptic.swipeNavigation();
     }
   };
 
@@ -124,11 +173,18 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
     // Allow navigation to completed steps or current step
     if (stepIndex <= currentStepIndex || steps[stepIndex - 1]?.completed) {
       setCurrentStepIndex(stepIndex);
+      setStepStartTime(Date.now());
+      
+      audioCueService.playClick();
+      haptic.cardInteraction();
     }
   };
 
   const handleComplete = () => {
     if (onComplete) {
+      // Award completion bonuses
+      gamificationService.awardXP('card_created');
+      
       // Convert wizard data to card data format
       const cardData = {
         title: `${wizardData.category} Card`,
@@ -138,6 +194,11 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
         customizations: wizardData.customizations,
         settings: wizardData.finalSettings
       };
+      
+      // Celebration feedback
+      audioCueService.playLevelUp();
+      haptic.premiumUnlock();
+      
       onComplete(cardData);
     }
   };
@@ -243,10 +304,14 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStepIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 1.05 }}
+            transition={{ 
+              duration: 0.6, 
+              ease: "easeInOut",
+              scale: { duration: 0.4 }
+            }}
           >
             {renderCurrentStep()}
           </motion.div>
@@ -259,6 +324,30 @@ export const InteractiveWizard: React.FC<InteractiveWizardProps> = ({
         visible={showAIAssistant}
         onToggle={() => setShowAIAssistant(!showAIAssistant)}
         wizardData={wizardData}
+      />
+
+      {/* Collaboration Widget */}
+      <CollaborationWidget
+        isCollaborating={isCollaborating}
+        collaborators={collaborators}
+        currentVote={currentVote}
+        onToggleCollaboration={() => setIsCollaborating(!isCollaborating)}
+        onStartVote={(type, options) => {
+          setCurrentVote({
+            id: Date.now().toString(),
+            type,
+            options,
+            votes: {},
+            createdBy: 'current-user',
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString()
+          });
+        }}
+        onVote={(voteId, option) => {
+          setCurrentVote((prev: any) => prev ? {
+            ...prev,
+            votes: { ...prev.votes, 'current-user': option }
+          } : null);
+        }}
       />
 
       {/* Progress Indicator */}
