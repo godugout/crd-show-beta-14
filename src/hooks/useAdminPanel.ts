@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useGlobalKeyboardShortcuts } from './useKeyboardShortcuts';
 
 export const useAdminPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Initialize global shortcuts
+  useGlobalKeyboardShortcuts();
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // Ctrl/Cmd + Shift + L to toggle admin panel
-      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === 'l') {
-        event.preventDefault();
-        setIsOpen(prev => !prev);
-      }
+    const handleToggle = () => {
+      setIsOpen(prev => !prev);
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    // Listen for custom events from keyboard shortcuts
+    window.addEventListener('toggle-admin-panel', handleToggle);
+    
+    return () => {
+      window.removeEventListener('toggle-admin-panel', handleToggle);
+    };
   }, []);
 
   return {

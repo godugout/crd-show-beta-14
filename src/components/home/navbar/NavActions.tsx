@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/features/auth/providers/AuthProvider";
 import { CRDButton } from "@/components/ui/design-system";
-import { ProfileDropdown } from "./ProfileDropdown";
+import { ExpandedProfileDropdown } from "./ExpandedProfileDropdown";
 import { NotificationCenter } from "@/components/common/NotificationCenter";
 import { CreditBalance } from "@/components/monetization/CreditBalance";
 
@@ -15,7 +15,7 @@ export const NavActions = () => {
       <div className="flex items-center gap-3 ml-auto">
         <CreditBalance />
         <NotificationCenter />
-        <ProfileDropdown />
+        <ExpandedProfileDropdown />
       </div>
     );
   }
