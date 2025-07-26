@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { CreateFooter } from '@/components/create/CreateFooter';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { AdminTestingPanel } from '@/components/admin/AdminTestingPanel';
+import { useAdminPanel } from '@/hooks/useAdminPanel';
 import type { CardData } from '@/hooks/useCardEditor';
 
 const CreateCRD = () => {
   const navigate = useNavigate();
+  const adminPanel = useAdminPanel();
 
   console.log('CRD Collectibles page loaded - Professional card maker');
 
@@ -39,6 +42,12 @@ const CreateCRD = () => {
           
           {/* Footer */}
           <CreateFooter />
+          
+          {/* Admin Testing Panel */}
+          <AdminTestingPanel 
+            isOpen={adminPanel.isOpen} 
+            onClose={adminPanel.close} 
+          />
           
           {/* Bottom hover trigger area for footer */}
           <div 
