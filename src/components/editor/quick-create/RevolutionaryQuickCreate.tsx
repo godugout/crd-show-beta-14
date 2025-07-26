@@ -88,7 +88,9 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
   const { 
     activeStyle, 
     isApplyingStyle, 
+    isPreviewMode,
     applyStyleVariation, 
+    previewStyleVariation,
     clearStyleVariation 
   } = useStyleVariations();
 
@@ -672,15 +674,20 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
                         id: variation.id as 'epic' | 'classic' | 'futuristic',
                         name: variation.label,
                         icon: variation.icon,
-                        gradient: variation.color
+                        gradient: variation.color,
+                        primaryColor: variation.id === 'epic' ? '#FF6B00' : 
+                                    variation.id === 'classic' ? '#3B82F6' : '#9333EA'
                       }}
                       isActive={activeStyle === variation.id}
                       isLoading={isApplyingStyle}
+                      onHover={(id) => previewStyleVariation(id)}
+                      onHoverEnd={() => previewStyleVariation(null)}
                       onClick={() => {
                         // Apply both the style effects and the image variation
                         applyStyleVariation(variation.id as 'epic' | 'classic' | 'futuristic');
                         applyVariation(variation.id);
                       }}
+                      isPreviewMode={isPreviewMode}
                     />
                     
                     {/* Variation Label */}

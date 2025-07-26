@@ -179,6 +179,8 @@ const STYLE_PRESETS: Record<string, EffectValues> = {
 export const useStyleVariations = () => {
   const [activeStyle, setActiveStyle] = useState<'epic' | 'classic' | 'futuristic' | null>(null);
   const [isApplyingStyle, setIsApplyingStyle] = useState(false);
+  const [previewStyle, setPreviewStyle] = useState<'epic' | 'classic' | 'futuristic' | null>(null);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
   
   const { applyPreset, resetAllEffects } = useEnhancedCardEffects();
 
@@ -247,12 +249,65 @@ export const useStyleVariations = () => {
     }
   }, [applyPreset]);
 
+  // Create preview with reduced intensity for subtle effect
+  const createPreviewEffects = useCallback((basePreset: EffectValues, intensity: number = 0.7): EffectValues => {
+    const previewPreset: EffectValues = {};
+    
+    Object.entries(basePreset).forEach(([effectId, effectConfig]) => {
+      if (effectConfig && typeof effectConfig === 'object' && 'enabled' in effectConfig) {
+        previewPreset[effectId] = {
+          ...effectConfig,
+          intensity: typeof effectConfig.intensity === 'number' 
+            ? effectConfig.intensity * intensity 
+            : effectConfig.intensity
+        };
+      }
+    });
+    
+    return previewPreset;
+  }, []);
+
+  const previewStyleVariation = useCallback(async (
+    variationId: 'epic' | 'classic' | 'futuristic' | null,
+    options?: { intensity?: number; transition?: number }
+  ) => {
+    const { intensity = 0.7, transition = 200 } = options || {};
+    
+    try {
+      setIsPreviewMode(true);
+      setPreviewStyle(variationId);
+      
+      if (variationId && STYLE_PRESETS[variationId]) {
+        const previewPreset = createPreviewEffects(STYLE_PRESETS[variationId], intensity);
+        
+        // Apply preview with quick transition
+        await new Promise(resolve => {
+          setTimeout(() => {
+            applyPreset(previewPreset, `preview-${variationId}`);
+            resolve(true);
+          }, transition);
+        });
+      } else if (activeStyle && STYLE_PRESETS[activeStyle]) {
+        // Revert to current active style
+        await applyPreset(STYLE_PRESETS[activeStyle], activeStyle);
+      } else {
+        // Revert to clean state
+        resetAllEffects();
+      }
+    } catch (error) {
+      console.error('Failed to preview style:', error);
+    } finally {
+      setIsPreviewMode(false);
+    }
+  }, [applyPreset, resetAllEffects, activeStyle, createPreviewEffects]);
+
   const clearStyleVariation = useCallback(() => {
     setIsApplyingStyle(true);
     
     try {
       resetAllEffects();
       setActiveStyle(null);
+      setPreviewStyle(null);
       toast.success('🔄 Effects cleared');
     } catch (error) {
       console.error('Failed to clear style:', error);
@@ -264,8 +319,11 @@ export const useStyleVariations = () => {
 
   return {
     activeStyle,
+    previewStyle,
     isApplyingStyle,
+    isPreviewMode,
     applyStyleVariation,
+    previewStyleVariation,
     clearStyleVariation,
     stylePresets: STYLE_PRESETS
   };
