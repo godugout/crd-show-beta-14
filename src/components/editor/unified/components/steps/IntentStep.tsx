@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Zap, Navigation, Settings, Copy, Upload, Sparkles } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
+import { QuickCreateModal } from '@/components/editor/quick-create/QuickCreateModal';
 import type { CreationMode } from '../../types';
 
 interface IntentStepProps {
@@ -37,9 +38,17 @@ const modeOptions = [
 
 export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
   const { isEnabled } = useFeatureFlags();
+  const [showQuickCreate, setShowQuickCreate] = useState(false);
   
   const handleModeSelect = (mode: CreationMode) => {
     console.log('IntentStep: Mode selected:', mode);
+    
+    // Show Quick Create modal for quick mode
+    if (mode === 'quick') {
+      setShowQuickCreate(true);
+      return;
+    }
+    
     onModeSelect(mode);
   };
 
@@ -138,6 +147,17 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
           </CRDButton>
         </div>
       </div>
+
+      {/* Quick Create Modal */}
+      <QuickCreateModal
+        isOpen={showQuickCreate}
+        onClose={() => setShowQuickCreate(false)}
+        onComplete={(cardData) => {
+          setShowQuickCreate(false);
+          console.log('Quick Create completed:', cardData);
+          // Could trigger navigation to gallery or show success
+        }}
+      />
     </div>
   );
 };
