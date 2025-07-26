@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { CRDButton } from '@/components/ui/design-system/Button';
-import { Search, Grid, Filter, Star, Zap, Eye } from 'lucide-react';
-import { SVGTemplateRenderer } from '@/components/editor/templates/SVGTemplateRenderer';
-import { BASEBALL_CARD_TEMPLATES } from '@/components/editor/templates/BaseballCardTemplates';
+import { Search, Grid, Filter, Star, Zap, Eye, Sparkles } from 'lucide-react';
+import { EnhancedTemplateGrid } from '@/components/editor/templates/EnhancedTemplateGrid';
+import { EnhancedEffectsPanel } from '@/components/editor/tools/EnhancedEffectsPanel';
+import { SmartCardAnalyzer } from '@/components/editor/tools/SmartCardAnalyzer';
 import { CreationLayout } from '../shared/CreationLayout';
 import { CreationPanels } from '../shared/CreationPanels';
 import { CRDDetailsSection } from '../shared/CRDDetailsSection';
 import type { CreationMode } from '../../types';
 import type { CardData } from '@/hooks/useCardEditor';
-import type { DesignTemplate } from '@/types/card';
 
 interface TemplateGalleryStepProps {
   mode: CreationMode;
@@ -21,33 +21,44 @@ interface TemplateGalleryStepProps {
 export const TemplateGalleryStep = ({ mode, cardData, onFieldUpdate }: TemplateGalleryStepProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedTemplate, setSelectedTemplate] = useState<DesignTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<'templates' | 'effects' | 'analyzer'>('templates');
 
   const categories = [
     { id: 'all', name: 'All Frames', icon: Grid },
     { id: 'sports', name: 'Sports', icon: Star },
     { id: 'fantasy', name: 'Fantasy', icon: Zap },
-    { id: 'scifi', name: 'Sci-Fi', icon: Grid },
+    { id: 'modern', name: 'Modern', icon: Grid },
     { id: 'vintage', name: 'Vintage', icon: Grid },
+    { id: 'premium', name: 'Premium', icon: Sparkles },
   ];
 
-  const filteredTemplates = BASEBALL_CARD_TEMPLATES.filter(template => {
-    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         template.description?.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesCategory = selectedCategory === 'all' || 
-                           (selectedCategory === 'sports' && (template.name.includes('Baseball') || template.name.includes('Sports'))) ||
-                           (selectedCategory === 'fantasy' && (template.name.includes('Fantasy') || template.name.includes('Magic'))) ||
-                           (selectedCategory === 'scifi' && (template.name.includes('Sci-Fi') || template.name.includes('Cyber'))) ||
-                           (selectedCategory === 'vintage' && (template.name.includes('Vintage') || template.name.includes('Classic')));
-    
-    return matchesSearch && matchesCategory;
-  });
-
-  const handleTemplateSelect = (template: DesignTemplate) => {
+  const handleTemplateSelect = (template: any) => {
     setSelectedTemplate(template);
-    // Store template selection in a way that matches CardData structure
-    onFieldUpdate('rarity', template.name.includes('Premium') ? 'epic' : 'common');
+    // Store template selection in CardData structure
+    onFieldUpdate('rarity', template.rarity || 'common');
+    // Apply template design to card
+    onFieldUpdate('design_metadata', {
+      template_id: template.id,
+      template_name: template.name,
+      template_category: template.category
+    });
+  };
+
+  const handleEffectChange = (effects: any[]) => {
+    // Store effects in card metadata
+    onFieldUpdate('design_metadata', {
+      ...cardData.design_metadata,
+      effects: effects.filter(e => e.enabled)
+    });
+  };
+
+  const handleAnalysisComplete = (analysis: any) => {
+    // Store analysis results
+    onFieldUpdate('design_metadata', {
+      ...cardData.design_metadata,
+      ai_analysis: analysis
+    });
   };
 
   const leftPanel = (
@@ -55,57 +66,114 @@ export const TemplateGalleryStep = ({ mode, cardData, onFieldUpdate }: TemplateG
       <CardHeader className="pb-4">
         <CardTitle className="text-crd-white flex items-center gap-3 text-lg">
           <Filter className="w-5 h-5" />
-          Filters
+          Design Tools
         </CardTitle>
+        
+        {/* Tab Navigation */}
+        <div className="flex bg-crd-darkest/50 rounded-lg p-1 mt-4">
+          {[
+            { id: 'templates', name: 'Templates', icon: Grid },
+            { id: 'effects', name: 'Effects', icon: Sparkles },
+            { id: 'analyzer', name: 'AI Analysis', icon: Eye }
+          ].map(tab => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm transition-colors ${
+                  activeTab === tab.id
+                    ? 'bg-crd-green text-black'
+                    : 'text-crd-lightGray hover:text-crd-white'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {tab.name}
+              </button>
+            );
+          })}
+        </div>
       </CardHeader>
+      
       <CardContent className="space-y-4">
-        {/* Search */}
-        <div className="space-y-2">
-          <label className="text-crd-lightGray text-sm font-medium">Search Frames</label>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-crd-lightGray w-4 h-4" />
-            <Input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search frames..."
-              className="pl-10 bg-crd-darkest/80 border-crd-mediumGray/40 text-crd-white h-11 text-base focus:border-crd-green/50"
+        {activeTab === 'templates' && (
+          <>
+            {/* Search */}
+            <div className="space-y-2">
+              <label className="text-crd-lightGray text-sm font-medium">Search Templates</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-crd-lightGray w-4 h-4" />
+                <Input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search templates..."
+                  className="pl-10 bg-crd-darkest/80 border-crd-mediumGray/40 text-crd-white h-11 text-base focus:border-crd-green/50"
+                />
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div className="space-y-2">
+              <label className="text-crd-lightGray text-sm font-medium">Categories</label>
+              <div className="space-y-1">
+                {categories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`w-full text-left px-3 py-2 rounded-md transition-colors flex items-center gap-2 ${
+                        selectedCategory === category.id
+                          ? 'bg-crd-green text-black'
+                          : 'text-crd-lightGray hover:bg-crd-mediumGray/20'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      {category.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+        
+        {activeTab === 'effects' && (
+          <div className="max-h-96 overflow-y-auto">
+            <EnhancedEffectsPanel onEffectChange={handleEffectChange} />
+          </div>
+        )}
+        
+        {activeTab === 'analyzer' && (
+          <div className="max-h-96 overflow-y-auto">
+            <SmartCardAnalyzer 
+              cardData={cardData} 
+              onAnalysisComplete={handleAnalysisComplete}
             />
           </div>
-        </div>
-
-        {/* Categories */}
-        <div className="space-y-2">
-          <label className="text-crd-lightGray text-sm font-medium">Categories</label>
-          <div className="space-y-1">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`w-full text-left px-3 py-2 rounded-md transition-colors flex items-center gap-2 ${
-                    selectedCategory === category.id
-                      ? 'bg-crd-green text-black'
-                      : 'text-crd-lightGray hover:bg-crd-mediumGray/20'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {category.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        )}
 
         {/* Current Selection */}
         {selectedTemplate && (
           <div className="border-t border-crd-mediumGray/20 pt-4">
-            <label className="text-crd-lightGray text-sm mb-2 block font-medium">Selected Frame</label>
+            <label className="text-crd-lightGray text-sm mb-2 block font-medium">Selected Template</label>
             <div className="bg-crd-darkest/50 rounded-lg p-3">
               <p className="text-crd-white font-medium">{selectedTemplate.name}</p>
               <p className="text-crd-lightGray text-xs mt-1">
-                {selectedTemplate.description || 'No description available'}
+                {selectedTemplate.description || 'Professional card template'}
               </p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className={`px-2 py-1 rounded text-xs ${
+                  selectedTemplate.isPremium 
+                    ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-400/40' 
+                    : 'bg-gray-500/20 text-gray-400 border border-gray-400/40'
+                }`}>
+                  {selectedTemplate.isPremium ? 'Premium' : 'Free'}
+                </span>
+                <span className="px-2 py-1 rounded text-xs bg-crd-green/20 text-crd-green border border-crd-green/40 capitalize">
+                  {selectedTemplate.rarity || 'common'}
+                </span>
+              </div>
             </div>
           </div>
         )}
@@ -113,124 +181,49 @@ export const TemplateGalleryStep = ({ mode, cardData, onFieldUpdate }: TemplateG
     </Card>
   );
 
-  const centerPanel = (
-    <Card className="bg-crd-darker/90 border-crd-mediumGray/40 backdrop-blur-sm flex-1 flex flex-col">
-      <CardHeader className="pb-4 flex-shrink-0">
+  const mainContent = (
+    <Card className="bg-crd-darker/90 border-crd-mediumGray/40 backdrop-blur-sm flex-1">
+      <CardHeader className="pb-4">
         <CardTitle className="text-crd-white flex items-center gap-3 text-lg">
-          <Eye className="w-5 h-5" />
-          Frame Gallery
+          <Grid className="w-5 h-5" />
+          Enhanced Template Gallery
+          <span className="text-sm bg-crd-green/20 text-crd-green px-2 py-1 rounded">
+            Premium Collection
+          </span>
         </CardTitle>
+        <p className="text-crd-lightGray text-sm mt-2">
+          Professional templates with advanced effects and AI-powered analysis
+        </p>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col">
-        <div className="grid grid-cols-2 gap-4 flex-1 overflow-auto">
-          {filteredTemplates.map((template) => (
-            <div
-              key={template.id}
-              onClick={() => handleTemplateSelect(template)}
-              className={`group relative aspect-[2/3] rounded-lg overflow-hidden cursor-pointer transition-all ${
-                selectedTemplate?.id === template.id
-                  ? 'ring-3 ring-crd-green scale-105 shadow-lg shadow-crd-green/20'
-                  : 'hover:scale-102 hover:ring-2 hover:ring-crd-lightGray/50 hover:shadow-md'
-              }`}
-            >
-              <SVGTemplateRenderer
-                template={template}
-                playerName={cardData.title || 'PLAYER NAME'}
-                teamName="TEAM"
-                imageUrl={cardData.image_url}
-                className="w-full h-full"
-              />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-              
-              {/* Frame Info */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                <h3 className="text-white text-sm font-medium mb-1">{template.name}</h3>
-                <div className="flex items-center justify-between">
-                  <span className="text-crd-lightGray text-xs">
-                    {template.name.includes('Premium') ? 'Premium' : 'Free'}
-                  </span>
-                  {selectedTemplate?.id === template.id && (
-                    <div className="w-5 h-5 bg-crd-green rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Premium Badge */}
-              {template.name.includes('Premium') && (
-                <div className="absolute top-2 right-2 bg-crd-green text-black text-xs px-2 py-1 rounded-full font-semibold">
-                  PRO
-                </div>
-              )}
-            </div>
-          ))}
+      <CardContent>
+        <div className="max-h-[600px] overflow-y-auto">
+          <EnhancedTemplateGrid
+            onTemplateSelect={handleTemplateSelect}
+            selectedTemplate={selectedTemplate?.id}
+            category={selectedCategory}
+            searchQuery={searchQuery}
+          />
         </div>
-
-        {filteredTemplates.length === 0 && (
-          <div className="text-center py-12">
-            <Grid className="w-16 h-16 text-crd-mediumGray mx-auto mb-4" />
-            <h3 className="text-crd-white text-lg font-medium mb-2">No frames found</h3>
-            <p className="text-crd-lightGray">Try adjusting your search or filter criteria</p>
-          </div>
-        )}
       </CardContent>
     </Card>
   );
 
   const rightPanel = (
-    <Card className="bg-crd-darker/90 border-crd-mediumGray/40 backdrop-blur-sm flex-1">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-crd-white text-lg">Frame Info</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {selectedTemplate ? (
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-crd-white font-semibold text-base mb-1">{selectedTemplate.name}</h4>
-              <p className="text-crd-lightGray text-sm">
-                {selectedTemplate.description || 'Professional frame design'}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-crd-lightGray text-sm">Type:</span>
-                <span className="text-crd-white text-sm">
-                  {selectedTemplate.name.includes('Premium') ? 'Premium' : 'Free'}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-crd-lightGray text-sm">Category:</span>
-                <span className="text-crd-white text-sm">Sports</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-crd-lightGray text-sm">Resolution:</span>
-                <span className="text-crd-white text-sm">High Quality</span>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="text-center text-crd-lightGray py-8">
-            <Grid className="w-12 h-12 mx-auto mb-3 opacity-50" />
-            <p>Select a frame to see details</p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <CRDDetailsSection
+      cardData={cardData}
+    />
   );
 
   return (
     <CreationLayout
-      title="Browse Frames"
-      subtitle="Explore our frame gallery and find the perfect design for your card"
+      title="Enhanced Template Studio"
+      subtitle="Choose from premium templates, apply effects, and get AI-powered design insights"
       currentStep={3}
-      totalSteps={4}
+      totalSteps={5}
     >
       <CreationPanels
         leftPanel={leftPanel}
-        centerPanel={centerPanel}
+        centerPanel={mainContent}
         rightPanel={rightPanel}
       />
     </CreationLayout>
