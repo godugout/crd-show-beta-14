@@ -4,7 +4,7 @@ import {
   Layers, Move, Type, Paintbrush, Square, Circle, 
   MousePointer, Hand, ZoomIn, Settings, Play, 
   Save, Undo, Redo, Eye, EyeOff, Lock, Unlock,
-  MoreHorizontal, Palette, Gradient, Image as ImageIcon,
+  MoreHorizontal, Palette, Image as ImageIcon,
   Maximize2, Minimize2, Grid, Ruler
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
