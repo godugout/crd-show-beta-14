@@ -36,21 +36,21 @@ export const EnhancedCreateHero: React.FC = () => {
         </div>
         
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center my-8">
-          <Link to="/create/crd">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center my-8 relative z-20">
+          <Link to="/create/crd" className="pointer-events-auto">
             <CRDButton 
               size="lg" 
               variant="create"
-              className="min-w-[200px]"
+              className="min-w-[200px] pointer-events-auto"
             >
               Start Creating
             </CRDButton>
           </Link>
-          <Link to="/frames">
+          <Link to="/frames" className="pointer-events-auto">
             <CRDButton 
               variant="outline" 
               size="lg" 
-              className="min-w-[200px]"
+              className="min-w-[200px] pointer-events-auto"
             >
               Browse Frames
             </CRDButton>

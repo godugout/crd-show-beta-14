@@ -53,21 +53,21 @@ export const MobileCreateHero: React.FC = () => {
         </div>
         
         {/* CTA Buttons - Reduced Spacing */}
-        <div className="flex flex-col gap-2 justify-center my-4">
-          <Link to="/create/crd">
+        <div className="flex flex-col gap-2 justify-center my-4 relative z-20">
+          <Link to="/create/crd" className="pointer-events-auto">
             <CRDButton 
               size="default" 
               variant="create"
-              className="min-w-[180px] text-base"
+              className="min-w-[180px] text-base pointer-events-auto"
             >
               Start Creating
             </CRDButton>
           </Link>
-          <Link to="/frames">
+          <Link to="/frames" className="pointer-events-auto">
             <CRDButton 
               variant="outline" 
               size="default" 
-              className="min-w-[180px] text-base"
+              className="min-w-[180px] text-base pointer-events-auto"
             >
               Browse Frames
             </CRDButton>

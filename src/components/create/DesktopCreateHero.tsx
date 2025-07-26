@@ -69,27 +69,27 @@ export const DesktopCreateHero: React.FC = () => {
             </h1>
           </div>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center my-12 pointer-events-auto">
-            <Link to="/create/crd">
-              <CRDButton 
-                size="lg" 
-                variant="create"
-                className="min-w-[200px]"
-              >
-                Start Creating
-              </CRDButton>
-            </Link>
-            <Link to="/frames">
-              <CRDButton 
-                variant="outline" 
-                size="lg" 
-                className="min-w-[200px]"
-              >
-                Browse Frames
-              </CRDButton>
-            </Link>
-          </div>
+      {/* CTA Buttons */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center my-12 pointer-events-auto relative z-20">
+        <Link to="/create/crd" className="pointer-events-auto">
+          <CRDButton 
+            size="lg" 
+            variant="create"
+            className="min-w-[200px] pointer-events-auto"
+          >
+            Start Creating
+          </CRDButton>
+        </Link>
+        <Link to="/frames" className="pointer-events-auto">
+          <CRDButton 
+            variant="outline" 
+            size="lg" 
+            className="min-w-[200px] pointer-events-auto"
+          >
+            Browse Frames
+          </CRDButton>
+        </Link>
+      </div>
           
           {/* Animated Tagline */}
           <DesktopAnimatedTagline />

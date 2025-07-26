@@ -33,16 +33,19 @@ export const UnifiedCreationInterface: React.FC<UnifiedCreationInterfaceProps> =
   });
 
   // Initialize with provided card data if available
+  const hasInitialized = React.useRef(false);
+  
   React.useEffect(() => {
-    if (initialCardData && cardEditor) {
+    if (initialCardData && cardEditor && !hasInitialized.current) {
       // Update the card editor with the initial data
       Object.entries(initialCardData).forEach(([key, value]) => {
         if (key !== 'id' && cardEditor.updateCardField) {
           cardEditor.updateCardField(key as keyof CardData, value);
         }
       });
+      hasInitialized.current = true;
     }
-  }, [initialCardData, cardEditor]);
+  }, [initialCardData, cardEditor?.cardData?.id]); // Use stable ID instead of cardEditor object
 
   return (
     <div className="h-full w-full flex flex-col bg-crd-darkest">
