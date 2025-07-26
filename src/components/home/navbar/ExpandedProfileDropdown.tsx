@@ -5,8 +5,6 @@ import { useFeatureFlags } from "@/hooks/useFeatureFlags";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -17,10 +15,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuGroup,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
+import { FeatureFlagsModal } from "./modals/FeatureFlagsModal";
+import { AdminToolsModal } from "./modals/AdminToolsModal";
 import { 
   User, 
   CreditCard, 
@@ -72,6 +69,9 @@ export const ExpandedProfileDropdown = () => {
   const { user, signOut } = useAuth();
   const { flags, isEnabled, toggleFlag } = useFeatureFlags();
   const { metrics } = usePerformanceMonitor();
+  
+  const [featureFlagsOpen, setFeatureFlagsOpen] = useState(false);
+  const [adminToolsOpen, setAdminToolsOpen] = useState(false);
   
   const [systemHealth, setSystemHealth] = useState<SystemHealth>({
     authSystem: 'healthy',
@@ -231,74 +231,28 @@ export const ExpandedProfileDropdown = () => {
           <DropdownMenuSeparator />
 
           {/* Feature Flags */}
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="text-xs h-8">
-              <Flag className="mr-2 h-3 w-3" />
-              Feature Flags
-              <Badge variant="outline" className="ml-auto text-xs">
-                {Object.keys(flags).length}
-              </Badge>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="w-72 max-h-64 overflow-y-auto bg-card/95 backdrop-blur-xl border border-border/30">
-              <ScrollArea className="h-full">
-                <div className="p-2 space-y-2">
-                  {Object.entries(flags).map(([key, flag]) => (
-                    <div key={key} className="flex items-center justify-between p-2 rounded-md hover:bg-accent/50">
-                      <div className="flex-1">
-                        <div className="text-xs font-medium">{flag.name}</div>
-                        <div className="text-xs text-muted-foreground truncate">{flag.description || key}</div>
-                      </div>
-                       <Switch
-                        checked={flag.enabled}
-                        onCheckedChange={() => toggleFlag(key)}
-                        className="ml-2"
-                      />
-                    </div>
-                  ))}
-                  {Object.keys(flags).length === 0 && (
-                    <div className="text-center text-xs text-muted-foreground py-4">
-                      No feature flags available
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
+          <DropdownMenuItem 
+            className="text-xs h-8 cursor-pointer"
+            onClick={() => setFeatureFlagsOpen(true)}
+          >
+            <Flag className="mr-2 h-3 w-3" />
+            Feature Flags
+            <Badge variant="outline" className="ml-auto text-xs">
+              {Object.keys(flags).length}
+            </Badge>
+          </DropdownMenuItem>
 
           {/* Admin Tools */}
           {isAdmin && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="text-xs h-8">
-                  <Crown className="mr-2 h-3 w-3 text-yellow-500" />
-                  Admin Tools
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent className="w-64 bg-card/95 backdrop-blur-xl border border-border/30">
-                  <DropdownMenuItem asChild className="text-xs h-8">
-                    <Link to="/dna/manager">
-                      <Database className="mr-2 h-3 w-3" />
-                      DNA Manager
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="text-xs h-8">
-                    <Link to="/admin/users">
-                      <User className="mr-2 h-3 w-3" />
-                      User Management
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="text-xs h-8">
-                    <Link to="/admin/analytics">
-                      <Activity className="mr-2 h-3 w-3" />
-                      Analytics
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-xs h-8">
-                    <Bug className="mr-2 h-3 w-3" />
-                    Debug Mode
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
+              <DropdownMenuItem 
+                className="text-xs h-8 cursor-pointer"
+                onClick={() => setAdminToolsOpen(true)}
+              >
+                <Crown className="mr-2 h-3 w-3 text-yellow-500" />
+                Admin Tools
+              </DropdownMenuItem>
             </>
           )}
 
@@ -349,6 +303,17 @@ export const ExpandedProfileDropdown = () => {
           </DropdownMenuItem>
         </ScrollArea>
       </DropdownMenuContent>
+
+      {/* Modals */}
+      <FeatureFlagsModal 
+        isOpen={featureFlagsOpen}
+        onClose={() => setFeatureFlagsOpen(false)}
+      />
+      
+      <AdminToolsModal 
+        isOpen={adminToolsOpen}
+        onClose={() => setAdminToolsOpen(false)}
+      />
     </DropdownMenu>
   );
 };
