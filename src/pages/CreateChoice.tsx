@@ -8,7 +8,7 @@ const CreateChoice: React.FC = () => {
   // No scroll resistance - let native scrolling work
 
   return (
-    <div className="min-h-screen bg-crd-darkest overflow-x-hidden">
+    <div className="min-h-screen bg-crd-darkest overflow-x-hidden pt-16">
       <div className="w-full">
         {/* Unified Hero Section with Responsive 3D Positioning */}
         <CreatePageHero />

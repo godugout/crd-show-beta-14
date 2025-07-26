@@ -9,7 +9,7 @@ export default function Index() {
   console.log('Index page rendering - streamlined version');
   
   return (
-    <div className="bg-[#141416] min-h-screen flex flex-col overflow-hidden">
+    <div className="bg-[#141416] min-h-screen flex flex-col overflow-hidden pt-16">
       <main className="w-full flex-1">
         <EnhancedHero />
         <SimplifiedDiscover />

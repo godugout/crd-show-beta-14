@@ -13,7 +13,7 @@ const Collections: React.FC = () => {
   const [showSmartCollectionModal, setShowSmartCollectionModal] = useState(false);
 
   return (
-    <div className="min-h-screen bg-crd-darkest">
+    <div className="min-h-screen bg-crd-darkest pt-16">
       {/* Hero Section */}
       <StandardHero
         label="DISCOVER, COLLECT & CONNECT"
