@@ -73,7 +73,7 @@ export const useCardExport = ({
                              cardRef.current.querySelector('.card-front') as HTMLElement ||
                              cardRef.current;
 
-    // Use dynamic import to match the pattern used in useSimpleCardEditor
+    // Use dynamic import for html2canvas
     const { default: html2canvas } = await import('html2canvas');
 
     const canvas = await html2canvas(cardFrontElement, {
