@@ -7,6 +7,8 @@ import { CardViewer3DContainer } from '@/components/viewer/CardViewer3DContainer
 import { MagicParticles, EnergyParticles, CelebrationParticles } from '@/components/effects/ParticleSystem';
 import { StyleVariationButton } from './StyleVariationButton';
 import { useStyleVariations } from './hooks/useStyleVariations';
+import { useSmartStyleSuggestions } from './hooks/useSmartStyleSuggestions';
+import { SmartSuggestionCard } from './SmartSuggestionCard';
 import { cardAnalysisService } from '@/services/ai/cardAnalysisService';
 import { unifiedDataService } from '@/services/unifiedDataService';
 import { useEnhancedCardInteraction } from '@/components/viewer/hooks/useEnhancedCardInteraction';
@@ -93,6 +95,13 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
     previewStyleVariation,
     clearStyleVariation 
   } = useStyleVariations();
+
+  // Smart style suggestions hook
+  const { 
+    suggestion, 
+    isAnalyzing, 
+    applySuggestion 
+  } = useSmartStyleSuggestions(state.imageUrl, state.analysis);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -654,6 +663,26 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
                   )}
                 </motion.div>
               </div>
+
+              {/* Smart Suggestion Card */}
+              {suggestion && (
+                <motion.div
+                  className="absolute left-8 top-1/2 transform -translate-y-1/2 w-80"
+                  initial={{ opacity: 0, x: -100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <SmartSuggestionCard
+                    suggestion={suggestion}
+                    onApply={(styleId) => {
+                      applySuggestion(styleId);
+                      applyStyleVariation(styleId);
+                      applyVariation(styleId);
+                    }}
+                    isVisible={!isAnalyzing}
+                  />
+                </motion.div>
+              )}
 
               {/* Style Variation Buttons */}
               <motion.div
