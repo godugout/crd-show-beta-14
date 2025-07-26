@@ -23,7 +23,7 @@ const CreateCRD = () => {
 
   return (
     <CRDEditorProvider>
-      <div className="flex flex-col min-h-screen bg-crd-darkest">
+      <div className="flex flex-col min-h-screen bg-crd-darkest pt-16">
         {/* Main Content - Takes remaining space */}
         <div className="flex-1 relative">
           <ErrorBoundary>

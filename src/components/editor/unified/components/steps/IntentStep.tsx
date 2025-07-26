@@ -66,19 +66,10 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
           return (
             <div
               key={option.id}
-              className="relative bg-crd-darker border border-crd-mediumGray/20 rounded-xl p-6 hover:border-crd-green/30 transition-all cursor-pointer group"
-              onClick={() => handleModeSelect(option.id)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleModeSelect(option.id);
-                }
-              }}
+              className="relative bg-crd-darker border border-crd-mediumGray/20 rounded-xl p-6 hover:border-crd-green/30 transition-all cursor-pointer group z-10"
             >
               {option.recommended && (
-                <div className="absolute -top-2 left-4 bg-crd-green text-black text-xs font-bold px-2 py-1 rounded">
+                <div className="absolute -top-2 left-4 bg-crd-green text-black text-xs font-bold px-2 py-1 rounded z-20">
                   Recommended
                 </div>
               )}
@@ -104,9 +95,11 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
 
               <CRDButton
                 variant="outline"
-                className="w-full border-crd-mediumGray/20 text-crd-lightGray hover:text-crd-white group-hover:border-crd-green/30"
+                className="w-full border-crd-mediumGray/20 text-crd-lightGray hover:text-crd-white group-hover:border-crd-green/30 relative z-30 pointer-events-auto"
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
+                  console.log('Button clicked for mode:', option.id);
                   handleModeSelect(option.id);
                 }}
               >
@@ -119,7 +112,7 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
 
 
       {/* Bulk Upload Option */}
-      <div className="bg-crd-darker border border-crd-mediumGray/20 rounded-xl p-6">
+      <div className="bg-crd-darker border border-crd-mediumGray/20 rounded-xl p-6 relative z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-crd-blue/10 rounded-lg flex items-center justify-center">
@@ -132,8 +125,13 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
           </div>
           <CRDButton
             variant="outline"
-            onClick={handleBulkUpload}
-            className="border-crd-mediumGray/20 text-crd-lightGray hover:text-crd-white"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Bulk upload button clicked');
+              handleBulkUpload();
+            }}
+            className="border-crd-mediumGray/20 text-crd-lightGray hover:text-crd-white relative z-30 pointer-events-auto"
           >
             <Upload className="w-4 h-4 mr-2" />
             Start Bulk Upload
