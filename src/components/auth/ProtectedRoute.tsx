@@ -16,11 +16,20 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user, loading } = useAuth();
   const location = useLocation();
 
+  // Debug current auth state
+  console.log('🔐 ProtectedRoute auth state:', { 
+    user: user ? { id: user.id, email: user.email } : null, 
+    loading, 
+    requireAuth, 
+    pathname: location.pathname 
+  });
+
   if (loading) {
     return <LoadingState message="Authenticating..." fullPage size="lg" />;
   }
 
   if (requireAuth && !user) {
+    console.log('🔐 ProtectedRoute: Redirecting to signin - no user found');
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 
