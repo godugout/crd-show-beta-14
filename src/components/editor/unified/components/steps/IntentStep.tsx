@@ -5,6 +5,8 @@ import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { RevolutionaryQuickCreate } from '@/components/editor/quick-create/RevolutionaryQuickCreate';
 import { GuidedCreateFlow } from '@/components/editor/guided-create/GuidedCreateFlow';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import type { CreationMode } from '../../types';
 
 interface IntentStepProps {
@@ -41,11 +43,23 @@ export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
   const { isEnabled } = useFeatureFlags();
   const [showQuickCreate, setShowQuickCreate] = useState(false);
   
-  const handleModeSelect = (mode: CreationMode) => {
+  const handleModeSelect = async (mode: CreationMode) => {
     console.log('IntentStep: Mode selected:', mode);
     
-    // Show Quick Create modal for quick mode
+    // Check if user is authenticated for quick mode
     if (mode === 'quick') {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          toast.error('Please sign in to create cards');
+          return;
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        toast.error('Authentication error. Please try signing in again.');
+        return;
+      }
+      
       setShowQuickCreate(true);
       return;
     }

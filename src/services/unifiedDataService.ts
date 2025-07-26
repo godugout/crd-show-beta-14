@@ -203,7 +203,8 @@ class UnifiedDataService {
   // ===== CARD-SPECIFIC METHODS =====
 
   async saveCard(cardData: CardData): Promise<boolean> {
-    const cardId = cardData.id || `card_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    // Generate proper UUID for new cards
+    const cardId = cardData.id || crypto.randomUUID();
     const cardWithId = { ...cardData, id: cardId };
     
     const success = await this.set('cards', cardId, cardWithId, { needsSync: true });
@@ -479,7 +480,16 @@ class UnifiedDataService {
 
   async syncCardToSupabase(cardId: string, cardData: CardData): Promise<boolean> {
     try {
-      const supabaseCard = this.convertCardDataToSupabaseFormat(cardData);
+      // Get current user for creator_id
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Ensure creator_id is set
+      const cardWithCreator = {
+        ...cardData,
+        creator_id: cardData.creator_id || user?.id || ''
+      };
+      
+      const supabaseCard = this.convertCardDataToSupabaseFormat(cardWithCreator);
       
       const { data, error } = await supabase
         .from('cards')
@@ -586,7 +596,41 @@ class UnifiedDataService {
       template_id: cardData.template_id || null,
       publishing_options: cardData.publishing_options || {},
       creator_attribution: cardData.creator_attribution || {},
-      is_public: cardData.visibility === 'public'
+      is_public: cardData.visibility === 'public',
+      // Add required Supabase fields with defaults
+      base_price: null,
+      card_set_id: null,
+      card_type: 'character',
+      collection_id: null,
+      completed_at: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      current_market_value: null,
+      current_supply: 1,
+      edition_number: null,
+      favorite_count: 0,
+      is_tradeable: true,
+      locked_image_url: null,
+      marketplace_listing: false,
+      mana_cost: {},
+      minting_metadata: {},
+      minting_status: 'not_minted',
+      name: null,
+      power: null,
+      print_available: false,
+      print_metadata: {},
+      royalty_percentage: 5.00,
+      serial_number: null,
+      series: null,
+      series_one_number: null,
+      set_id: null,
+      team_id: null,
+      toughness: null,
+      total_supply: null,
+      verification_status: 'pending',
+      view_count: 0,
+      image_locked: false,
+      crd_catalog_inclusion: true
     };
   }
 

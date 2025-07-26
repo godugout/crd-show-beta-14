@@ -12,6 +12,8 @@ import { visionAnalysisService } from '@/services/ai/visionAnalysisService';
 import { styleTransferService } from '@/services/ai/styleTransferService';
 import { smartStatsService } from '@/services/ai/smartStatsService';
 import { predictiveService } from '@/services/ai/predictiveService';
+import { supabase } from '@/integrations/supabase/client';
+import type { CardData } from '@/types/card';
 import { toast } from 'sonner';
 
 // Speech Recognition interface
@@ -371,12 +373,23 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
     }
   };
 
-  const mintCard = async () => {
+  const handleCreateCard = async () => {
+    if (!state.imageUrl || !state.analysis) return;
+    
     setState(prev => ({ ...prev, isProcessing: true }));
     
     try {
-      const cardData = {
-        id: `quick-${Date.now()}`,
+      // Get current user for creator_id
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error('Please sign in to create cards');
+        setState(prev => ({ ...prev, isProcessing: false }));
+        return;
+      }
+
+      const cardData: CardData = {
+        id: crypto.randomUUID(), // Generate proper UUID
         title: state.analysis?.text?.playerName || state.analysis?.subject?.name || 'Quick Card',
         description: `AI-enhanced ${state.analysis?.cardType || 'custom'} card`,
         image_url: state.imageUrl!,
@@ -390,6 +403,7 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
         },
         visibility: 'private' as const,
         is_public: false,
+        creator_id: user.id, // Ensure creator_id is set
         creator_attribution: { collaboration_type: 'solo' as const },
         publishing_options: {
           marketplace_listing: false,
@@ -414,8 +428,9 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
       }, 3000);
       
     } catch (error) {
+      console.error('Card creation error:', error);
       setState(prev => ({ ...prev, isProcessing: false }));
-      toast.error('Failed to create card');
+      toast.error(error instanceof Error ? error.message : 'Failed to create card. Please try again.');
     }
   };
 
@@ -778,7 +793,7 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
                     </p>
                     
                     <CRDButton
-                      onClick={mintCard}
+                      onClick={handleCreateCard}
                       variant="primary"
                       size="lg"
                       className="px-12 py-4 text-xl font-bold"
