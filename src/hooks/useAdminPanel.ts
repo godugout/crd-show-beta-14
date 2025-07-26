@@ -5,8 +5,8 @@ export const useAdminPanel = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Ctrl/Cmd + Shift + A to toggle admin panel
-      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'A') {
+      // Ctrl/Cmd + Shift + L to toggle admin panel
+      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'L') {
         event.preventDefault();
         setIsOpen(prev => !prev);
       }
