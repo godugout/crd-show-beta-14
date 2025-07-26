@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { CreateFooter } from '@/components/create/CreateFooter';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { AdminTestingPanel } from '@/components/admin/AdminTestingPanel';
+import { AdminFloatingButton } from '@/components/admin/AdminFloatingButton';
 import { useAdminPanel } from '@/hooks/useAdminPanel';
 import type { CardData } from '@/hooks/useCardEditor';
 
@@ -48,6 +49,9 @@ const CreateCRD = () => {
             isOpen={adminPanel.isOpen} 
             onClose={adminPanel.close} 
           />
+          
+          {/* Admin Floating Button */}
+          <AdminFloatingButton onOpenAdminPanel={adminPanel.open} />
           
           {/* Bottom hover trigger area for footer */}
           <div 

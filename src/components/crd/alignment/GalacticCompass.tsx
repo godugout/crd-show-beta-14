@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { RotateCcw, HelpCircle, Play, Pause, RefreshCw, Package, PackageOpen, Globe } from 'lucide-react';
+import { RotateCcw, HelpCircle, Play, Pause, RefreshCw, Package, PackageOpen, Globe, Settings } from 'lucide-react';
 import { EnvironmentSwitcher, type SpaceEnvironment } from '../../studio/EnvironmentSwitcher';
 
 interface GalacticCompassProps {
@@ -14,6 +14,7 @@ interface GalacticCompassProps {
   onToggleGlassCase?: () => void;
   spaceEnvironment?: SpaceEnvironment;
   onSpaceEnvironmentChange?: (environment: SpaceEnvironment) => void;
+  onOpenAdminPanel?: () => void;
 }
 
 // Custom hook for scroll-based fade
@@ -55,7 +56,8 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
   enableGlassCase = true,
   onToggleGlassCase,
   spaceEnvironment = 'starfield',
-  onSpaceEnvironmentChange
+  onSpaceEnvironmentChange,
+  onOpenAdminPanel
 }) => {
   const [compassAngle, setCompassAngle] = useState(0); // 0 = pointing up
   const [isTracking, setIsTracking] = useState(true);
@@ -165,6 +167,26 @@ export const GalacticCompass: React.FC<GalacticCompassProps> = ({
         style={{ opacity: scrollOpacity }}
       >
         <div className="flex flex-col items-end gap-3">
+          {/* Admin Panel Button - Hidden until hover, above all controls */}
+          {onOpenAdminPanel && (
+            <div className="group/admin relative">
+              <button
+                onClick={onOpenAdminPanel}
+                className="opacity-0 group-hover/admin:opacity-100 transition-all duration-300 text-white/40 hover:text-[#3772FF] p-2 rounded-full shadow-lg hover:scale-105 flex items-center justify-center border"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.12) 100%)',
+                  borderColor: 'rgba(255, 255, 255, 0.15)',
+                  backdropFilter: 'blur(12px) saturate(180%)'
+                }}
+                title="Admin Panel (Ctrl/Cmd+Shift+L)"
+              >
+                <Settings className="w-4 h-4 transition-transform group-hover:scale-110" />
+              </button>
+              {/* Hover trigger area */}
+              <div className="absolute -inset-4 opacity-0 group-hover/admin:opacity-100 transition-opacity duration-300" />
+            </div>
+          )}
+          
           {/* Control Buttons - Pause/Play and Refresh above compass */}
           <div className="flex flex-col items-end gap-3">
             {/* Pause/Play Button */}
