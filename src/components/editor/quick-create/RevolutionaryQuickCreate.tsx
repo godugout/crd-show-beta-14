@@ -16,7 +16,7 @@ import { visionAnalysisService } from '@/services/ai/visionAnalysisService';
 import { styleTransferService } from '@/services/ai/styleTransferService';
 import { smartStatsService } from '@/services/ai/smartStatsService';
 import { predictiveService } from '@/services/ai/predictiveService';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/features/auth/providers/AuthProvider';
 import type { CardData } from '@/types/card';
 import { toast } from 'sonner';
 
@@ -67,6 +67,7 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
   onClose,
   onComplete
 }) => {
+  const { user } = useAuth();
   const [state, setState] = useState<CreateState>({
     step: 'capture',
     inputMode: null,
@@ -401,7 +402,6 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
     
     try {
       // Get current user for creator_id
-      const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
         toast.error('Please sign in to create cards');

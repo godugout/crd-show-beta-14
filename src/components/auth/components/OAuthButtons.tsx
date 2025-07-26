@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { CRDButton } from '@/components/ui/design-system';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/features/auth/providers/AuthProvider';
 
 export const OAuthButtons: React.FC = () => {
   const { signInWithOAuth } = useAuth();

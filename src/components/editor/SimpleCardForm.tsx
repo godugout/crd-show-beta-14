@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useSimpleCardEditor } from '@/hooks/useSimpleCardEditor';
 import { useDropzone } from 'react-dropzone';
 import { uploadCardImage } from '@/lib/cardImageUploader';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/features/auth/providers/AuthProvider';
 import { toast } from 'sonner';
 import type { CardRarity } from '@/types/card';
 
