@@ -1,0 +1,114 @@
+-- Fix UUID generation and add comprehensive RLS policies for card creation
+-- Fix the type casting issues from previous migration
+
+-- Create comprehensive RLS policies for cards table with proper type casting
+CREATE POLICY "Users can view public cards" ON public.cards
+  FOR SELECT USING (
+    visibility = 'public' OR 
+    creator_id = auth.uid()::text
+  );
+
+CREATE POLICY "Users can create their own cards" ON public.cards
+  FOR INSERT WITH CHECK (
+    creator_id = auth.uid()::text
+  );
+
+CREATE POLICY "Users can update their own cards" ON public.cards
+  FOR UPDATE USING (
+    creator_id = auth.uid()::text
+  );
+
+CREATE POLICY "Users can delete their own cards" ON public.cards
+  FOR DELETE USING (
+    creator_id = auth.uid()::text
+  );
+
+-- Create storage bucket policies for card images
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('card-images', 'card-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage policies for card images
+CREATE POLICY "Public card images are viewable by everyone" ON storage.objects
+  FOR SELECT USING (bucket_id = 'card-images');
+
+CREATE POLICY "Users can upload card images" ON storage.objects
+  FOR INSERT WITH CHECK (
+    bucket_id = 'card-images' AND
+    auth.uid() IS NOT NULL
+  );
+
+CREATE POLICY "Users can update their own card images" ON storage.objects
+  FOR UPDATE USING (
+    bucket_id = 'card-images' AND
+    auth.uid() IS NOT NULL
+  );
+
+CREATE POLICY "Users can delete their own card images" ON storage.objects
+  FOR DELETE USING (
+    bucket_id = 'card-images' AND
+    auth.uid() IS NOT NULL
+  );
+
+-- Create function to handle card creation with proper UUID
+CREATE OR REPLACE FUNCTION create_card_with_uuid(
+  p_title text,
+  p_description text,
+  p_image_url text,
+  p_tags text[],
+  p_rarity text DEFAULT 'common',
+  p_visibility text DEFAULT 'private',
+  p_design_metadata jsonb DEFAULT '{}'::jsonb
+)
+RETURNS uuid
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  new_card_id uuid;
+  current_user_id text;
+BEGIN
+  -- Get current user ID as text
+  current_user_id := auth.uid()::text;
+  
+  IF current_user_id IS NULL THEN
+    RAISE EXCEPTION 'User must be authenticated';
+  END IF;
+  
+  -- Generate new UUID
+  new_card_id := gen_random_uuid();
+  
+  -- Insert the card
+  INSERT INTO public.cards (
+    id,
+    title,
+    description,
+    creator_id,
+    image_url,
+    thumbnail_url,
+    tags,
+    rarity,
+    visibility,
+    design_metadata,
+    abilities,
+    created_at,
+    updated_at
+  ) VALUES (
+    new_card_id,
+    p_title,
+    p_description,
+    current_user_id,
+    p_image_url,
+    p_image_url, -- Use same URL for thumbnail for now
+    COALESCE(p_tags, ARRAY[]::text[]),
+    p_rarity::card_rarity,
+    p_visibility::visibility_type,
+    p_design_metadata,
+    ARRAY[]::text[], -- Empty abilities array
+    now(),
+    now()
+  );
+  
+  RETURN new_card_id;
+END;
+$$;
