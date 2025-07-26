@@ -23,6 +23,9 @@ import NotFound from '@/pages/NotFound';
 // Authentication pages - keep immediately loaded for better auth flow UX
 import SignIn from '@/pages/auth/SignIn';
 import SignUp from '@/pages/auth/SignUp';
+import VerifyEmail from '@/pages/auth/VerifyEmail';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+import ResetPassword from '@/pages/auth/ResetPassword';
 
 // Lazy load all other pages to reduce initial bundle size
 const CreateEnhanced = lazy(() => import('@/pages/CreateEnhanced'));
@@ -361,6 +364,30 @@ const App = () => {
                     element={
                       <RouteErrorBoundary>
                         <SignUp />
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/auth/verify-email" 
+                    element={
+                      <RouteErrorBoundary>
+                        <VerifyEmail />
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/auth/forgot-password" 
+                    element={
+                      <RouteErrorBoundary>
+                        <ForgotPassword />
+                      </RouteErrorBoundary>
+                    } 
+                  />
+                  <Route 
+                    path="/auth/reset-password" 
+                    element={
+                      <RouteErrorBoundary>
+                        <ResetPassword />
                       </RouteErrorBoundary>
                     } 
                   />

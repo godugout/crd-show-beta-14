@@ -13,7 +13,13 @@ export const useAuthActions = (userId?: string) => {
     setIsLoading(true);
     
     try {
-      const { error } = await authService.signUp(email, password, metadata);
+      // Ensure email verification redirect is included
+      const signUpMetadata = {
+        ...metadata,
+        emailRedirectTo: metadata?.emailRedirectTo || `${window.location.origin}/auth/verify-email`
+      };
+      
+      const { error } = await authService.signUp(email, password, signUpMetadata);
 
       if (error) {
         toast({
