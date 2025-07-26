@@ -6,7 +6,7 @@ export const useModeConfig = () => {
   const modeConfigs = useMemo((): ModeConfig[] => [
     {
       id: 'quick',
-      title: 'Quick Create',
+      title: 'Quick',
       description: 'Simple form-based card creation',
       icon: 'Zap',
       steps: ['intent', 'create', 'templates', 'publish'],
@@ -14,7 +14,7 @@ export const useModeConfig = () => {
     },
     {
       id: 'guided',
-      title: 'Guided Create',
+      title: 'Guided',
       description: 'Step-by-step wizard with help',
       icon: 'Navigation',
       steps: ['intent', 'create', 'templates', 'studio', 'publish'],
@@ -22,7 +22,7 @@ export const useModeConfig = () => {
     },
     {
       id: 'advanced',
-      title: 'Advanced Create',
+      title: 'Advanced',
       description: 'Full editor with all features',
       icon: 'Settings',
       steps: ['intent', 'create', 'templates', 'studio', 'publish'],
@@ -30,7 +30,7 @@ export const useModeConfig = () => {
     },
     {
       id: 'bulk',
-      title: 'Bulk Create',
+      title: 'Bulk',
       description: 'Create multiple cards at once',
       icon: 'Copy',
       steps: ['intent', 'create', 'complete'],
