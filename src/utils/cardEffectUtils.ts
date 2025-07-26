@@ -42,9 +42,9 @@ export const processImageFile = async (file: File): Promise<string> => {
   });
 };
 
-// Generate unique card IDs
+// Generate unique card IDs using UUID
 export const generateCardId = (): string => {
-  return `card_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return crypto.randomUUID();
 };
 
 // Rarity system utilities
