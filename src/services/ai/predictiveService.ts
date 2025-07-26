@@ -296,7 +296,7 @@ class PredictiveService {
     }, {} as Record<string, number>);
 
     const topSport = Object.entries(sportCounts)
-      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'basketball';
+      .sort(([,a], [,b]) => Number(b) - Number(a))[0]?.[0] || 'basketball';
 
     const collections = {
       basketball: {
@@ -496,7 +496,7 @@ class PredictiveService {
     
     const sortedActions = this.actionHistory
       .filter(a => a.action === 'card_created')
-      .sort((a, b) => b.timestamp - a.timestamp);
+      .sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
     
     for (let i = 0; i < sortedActions.length; i++) {
       const daysDiff = Math.floor((now - Number(sortedActions[i].timestamp)) / oneDayMs);
