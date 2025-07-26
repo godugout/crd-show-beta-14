@@ -4,6 +4,7 @@ import { Zap, Navigation, Settings, Copy, Upload, Sparkles } from 'lucide-react'
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { RevolutionaryQuickCreate } from '@/components/editor/quick-create/RevolutionaryQuickCreate';
+import { GuidedCreateFlow } from '@/components/editor/guided-create/GuidedCreateFlow';
 import type { CreationMode } from '../../types';
 
 interface IntentStepProps {
