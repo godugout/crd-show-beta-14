@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { CardViewer3DContainer } from '@/components/viewer/CardViewer3DContainer';
 import { MagicParticles, EnergyParticles, CelebrationParticles } from '@/components/effects/ParticleSystem';
+import { StyleVariationButton } from './StyleVariationButton';
+import { useStyleVariations } from './hooks/useStyleVariations';
 import { cardAnalysisService } from '@/services/ai/cardAnalysisService';
 import { unifiedDataService } from '@/services/unifiedDataService';
 import { useEnhancedCardInteraction } from '@/components/viewer/hooks/useEnhancedCardInteraction';
@@ -81,6 +83,14 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
     morphAmount: 0,
     recommendations: []
   });
+
+  // Style variations hook
+  const { 
+    activeStyle, 
+    isApplyingStyle, 
+    applyStyleVariation, 
+    clearStyleVariation 
+  } = useStyleVariations();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -643,49 +653,48 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
                 </motion.div>
               </div>
 
-              {/* Variation Bubbles */}
+              {/* Style Variation Buttons */}
               <motion.div
                 className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-4"
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                {VARIATIONS.map((variation, index) => {
-                  const Icon = variation.icon;
-                  const isSelected = state.selectedVariation === variation.id;
-                  
-                  return (
-                    <motion.button
-                      key={variation.id}
-                      onClick={() => applyVariation(variation.id)}
-                      className={`
-                        relative w-20 h-20 rounded-full flex items-center justify-center
-                        backdrop-blur-sm border-2 transition-all duration-300
-                        ${isSelected 
-                          ? `bg-gradient-to-br ${variation.color} border-white text-white scale-110` 
-                          : 'bg-card/50 border-border/50 hover:border-primary/50 hover:scale-105'
-                        }
-                      `}
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      whileHover={{ scale: isSelected ? 1.15 : 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      disabled={state.isProcessing}
-                    >
-                      <Icon className="w-8 h-8" />
-                      {isSelected && (
-                        <motion.div
-                          className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium whitespace-nowrap bg-background text-foreground px-2 py-1 rounded-full"
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                        >
-                          {variation.label}
-                        </motion.div>
-                      )}
-                    </motion.button>
-                  );
-                })}
+                {VARIATIONS.map((variation, index) => (
+                  <motion.div
+                    key={variation.id}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                  >
+                    <StyleVariationButton
+                      variation={{
+                        id: variation.id as 'epic' | 'classic' | 'futuristic',
+                        name: variation.label,
+                        icon: variation.icon,
+                        gradient: variation.color
+                      }}
+                      isActive={activeStyle === variation.id}
+                      isLoading={isApplyingStyle}
+                      onClick={() => {
+                        // Apply both the style effects and the image variation
+                        applyStyleVariation(variation.id as 'epic' | 'classic' | 'futuristic');
+                        applyVariation(variation.id);
+                      }}
+                    />
+                    
+                    {/* Variation Label */}
+                    {activeStyle === variation.id && (
+                      <motion.div
+                        className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 text-xs font-medium whitespace-nowrap bg-card/90 backdrop-blur-sm text-foreground px-3 py-1 rounded-full border border-border/50"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        {variation.label}
+                      </motion.div>
+                    )}
+                  </motion.div>
+                ))}
               </motion.div>
 
               {/* Continue Button */}
