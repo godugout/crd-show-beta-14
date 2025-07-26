@@ -248,10 +248,10 @@ export const ExpandedProfileDropdown = () => {
                         <div className="text-xs font-medium">{flag.name}</div>
                         <div className="text-xs text-muted-foreground truncate">{flag.description || key}</div>
                       </div>
-                      <Switch
+                       <Switch
                         checked={flag.enabled}
                         onCheckedChange={() => toggleFlag(key)}
-                        
+                        className="ml-2"
                       />
                     </div>
                   ))}
