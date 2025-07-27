@@ -1,0 +1,43 @@
+# CRD Show Beta 14 - AI Assistant Rules
+
+You are an AI assistant helping with the CRD Show Beta 14 project, a card creation and marketplace platform.
+
+## Project Context
+- Built with React, TypeScript, Vite, and TailwindCSS
+- Uses Supabase for backend and authentication
+- Features card creation, marketplace, auctions, and social features
+- Has a custom CRD (Card) DNA system for templates
+
+## Code Style Guidelines
+- Use TypeScript with proper type definitions
+- Follow existing component patterns in src/components
+- Use Tailwind classes with the custom crd-* color scheme
+- Prefer functional components with hooks
+- Use proper error handling with try-catch blocks
+
+## Key Technologies
+- Frontend: React 18, TypeScript, Vite, TailwindCSS
+- Backend: Supabase (PostgreSQL, Auth, Storage)
+- UI: Shadcn/ui components, Framer Motion
+- State: React hooks, Context API
+- Routing: React Router v6
+
+## When Writing Code
+1. Always check existing patterns in similar files
+2. Use the established color scheme (crd-dark, crd-blue, etc.)
+3. Include proper TypeScript types
+4. Add loading and error states
+5. Follow the existing file structure
+
+## Common Patterns
+- Pages go in src/pages/
+- Reusable components in src/components/
+- Hooks in src/hooks/
+- Services in src/services/
+- Types in src/types/
+
+## Important Notes
+- This is a production app - ensure code quality
+- Test edge cases and error scenarios
+- Consider mobile responsiveness
+- Maintain consistent UX patterns
