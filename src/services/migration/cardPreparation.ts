@@ -3,7 +3,7 @@ import type { CardData } from '@/types/card';
 
 export class CardPreparationService {
   static prepareCardForDatabase(card: CardData, userId: string): any {
-    console.log(`🔧 Preparing card for database: ${card.title}`);
+    
 
     // Map rarity to database enum with fallback
     const rarityMap: Record<string, string> = {

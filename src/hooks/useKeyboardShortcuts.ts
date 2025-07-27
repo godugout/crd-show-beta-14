@@ -68,7 +68,6 @@ export const useGlobalKeyboardShortcuts = () => {
       key: 'l',
       modifiers: { ctrl: true, shift: true },
       action: () => {
-        console.log('🔧 Admin panel shortcut triggered!');
         // Dispatch custom event for admin panel
         window.dispatchEvent(new CustomEvent('toggle-admin-panel'));
       },

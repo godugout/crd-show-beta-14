@@ -17,8 +17,6 @@ const Gallery = () => {
   const { cards, featuredCards, loading, dataSource } = useCards();
   const { convertCardsToCardData } = useCardConversion();
 
-  console.log('🎨 Gallery: Rendering with cards:', cards.length, 'featured:', featuredCards.length, 'source:', dataSource);
-
   if (loading) {
     return <LoadingState message="Loading gallery..." fullPage />;
   }
