@@ -205,8 +205,8 @@ export function usePerformanceMonitor(options: PerformanceMonitorOptions = {}) {
 
   // Memory information
   const getMemoryInfo = useCallback((): MemoryInfo => {
-    if (performance?.memory) {
-      const memory = performance.memory;
+    if ((performance as any)?.memory) {
+      const memory = (performance as any).memory;
       return {
         usedJSHeapSize: memory.usedJSHeapSize,
         totalJSHeapSize: memory.totalJSHeapSize,
