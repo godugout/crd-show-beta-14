@@ -7,13 +7,13 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 
 ## Tasks
 
-- [ ] 1. **Material System Foundation**
-  - [ ] 1.1 Write tests for MaterialSystem hook and core material properties
-  - [ ] 1.2 Implement useMaterialSystem hook with state management
-  - [ ] 1.3 Create MaterialProperties interface and validation logic
-  - [ ] 1.4 Implement texture loading service with caching
-  - [ ] 1.5 Add performance monitoring for material operations
-  - [ ] 1.6 Verify all material system tests pass
+- [x] 1. **Material System Foundation**
+  - [x] 1.1 Write tests for MaterialSystem hook and core material properties
+  - [x] 1.2 Implement useMaterialSystem hook with state management
+  - [x] 1.3 Create MaterialProperties interface and validation logic
+  - [x] 1.4 Implement texture loading service with caching
+  - [x] 1.5 Add performance monitoring for material operations
+  - [x] 1.6 Verify all material system tests pass
 
 - [ ] 2. **PBR Material Implementation**
   - [ ] 2.1 Write tests for Three.js material integration

@@ -141,8 +141,8 @@ export function useTextureLoader(options: TextureLoaderOptions = {}) {
         optimize = false,
       } = options;
 
-      texture.wrapS = wrapS;
-      texture.wrapT = wrapT;
+      texture.wrapS = wrapS as THREE.Wrapping;
+      texture.wrapT = wrapT as THREE.Wrapping;
       texture.flipY = flipY;
 
       if (generateLOD || optimize) {
@@ -257,7 +257,8 @@ export function useTextureLoader(options: TextureLoaderOptions = {}) {
 
   const getCacheMemoryUsage = useCallback((): number => {
     let totalMemory = 0;
-    for (const [, entry] of cache.current.entries()) {
+    const entries = Array.from(cache.current.entries());
+    for (const [, entry] of entries) {
       totalMemory += entry.memorySize;
     }
     return totalMemory;
@@ -276,7 +277,8 @@ export function useTextureLoader(options: TextureLoaderOptions = {}) {
   // Expose cache for testing
   const getCacheEntries = useCallback(() => {
     const entries: Record<string, TextureCacheEntry> = {};
-    for (const [key, value] of cache.current.entries()) {
+    const cacheEntries = Array.from(cache.current.entries());
+    for (const [key, value] of cacheEntries) {
       entries[key] = value;
     }
     return entries;
