@@ -1,24 +1,23 @@
-import { supabase } from '@/integrations/supabase/client';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { User } from '@supabase/supabase-js';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { secureAuthService } from '../services/secureAuthService';
-import { userManagementService } from '../services/userManagementService';
-
-export interface SecureAuthContextType {
-  user: User | null;
-  profile: any | null;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  signUp: (email: string, password: string, fullName: string, username?: string) => Promise<{ success: boolean; error?: string }>;
-  signOut: () => Promise<{ success: boolean; error?: string }>;
-  resetPassword: (email: string) => Promise<{ success: boolean; error?: string }>;
-  updatePassword: (newPassword: string) => Promise<{ success: boolean; error?: string }>;
-  updateProfile: (updates: any) => Promise<{ success: boolean; error?: string }>;
-  rateLimitInfo: {
-    remainingAttempts: number;
-    lockoutTime?: number;
-  } | null;
-}
+import { supabase } from '@/integrations/supabase/client';
+import { enhancedAuthService } from '../services/enhancedAuthService';
+import { profileService } from '../services/profileService';
+import type {
+  AuthContextType,
+  AuthState,
+  AuthSession,
+  AuthError,
+  SignUpData,
+  SignInData,
+  OAuthProvider,
+  PasswordResetRequest,
+  PasswordUpdateData,
+  ProfileUpdateData,
+  RateLimitInfo,
+  UseAuthReturn
+} from '../types/auth.types';
+import type { UserProfile } from '../types/profile.types';
 
 const SecureAuthContext = createContext<SecureAuthContextType | undefined>(undefined);
 
