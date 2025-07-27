@@ -19,28 +19,59 @@ import type {
 } from '../types/auth.types';
 import type { UserProfile } from '../types/profile.types';
 
-const SecureAuthContext = createContext<SecureAuthContextType | undefined>(undefined);
+const SecureAuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useSecureAuth = () => {
+/**
+ * Hook to access the secure auth context
+ */
+export const useSecureAuth = (): UseAuthReturn => {
   const context = useContext(SecureAuthContext);
   if (!context) {
     throw new Error('useSecureAuth must be used within a SecureAuthProvider');
   }
-  return context;
+  
+  // Add computed properties for the hook return
+  const isAuthenticated = context.state === AuthState.AUTHENTICATED && !!context.user;
+  const isLoading = context.state === AuthState.LOADING;
+  
+  const hasRole = useCallback((role: string) => {
+    return context.profile?.roles.includes(role as any) || false;
+  }, [context.profile]);
+  
+  const hasPermission = useCallback((permission: string) => {
+    // Implement permission checking logic based on roles
+    // For now, just check if user is authenticated
+    return isAuthenticated;
+  }, [isAuthenticated]);
+  
+  return {
+    ...context,
+    isAuthenticated,
+    isLoading,
+    hasRole,
+    hasPermission
+  };
 };
 
 interface SecureAuthProviderProps {
   children: React.ReactNode;
+  onAuthStateChange?: (state: AuthState, session: AuthSession | null) => void;
+  requireAuth?: boolean;
+  redirectTo?: string;
 }
 
-export const SecureAuthProvider: React.FC<SecureAuthProviderProps> = ({ children }) => {
+export const SecureAuthProvider: React.FC<SecureAuthProviderProps> = ({ 
+  children, 
+  onAuthStateChange,
+  requireAuth = false,
+  redirectTo = '/auth/signin'
+}) => {
+  const [state, setState] = useState<AuthState>(AuthState.LOADING);
   const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [rateLimitInfo, setRateLimitInfo] = useState<{
-    remainingAttempts: number;
-    lockoutTime?: number;
-  } | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [session, setSession] = useState<AuthSession | null>(null);
+  const [error, setError] = useState<AuthError | null>(null);
+  const [rateLimitInfo, setRateLimitInfo] = useState<RateLimitInfo | null>(null);
 
   // Initialize auth state
   useEffect(() => {
