@@ -77,7 +77,7 @@ export const ImprovedEnvironmentSphere: React.FC<ImprovedEnvironmentSphereProps>
     <div className="absolute inset-0 overflow-hidden">
       {/* Main Environment Layer - Static with subtle breathing */}
       <div 
-        className="absolute inset-0 transition-all duration-[3000ms] ease-in-out"
+        className="absolute inset-0 transition-all duration-1000 ease-in-out"
         style={{
           backgroundImage: `url(${environmentImage})`,
           backgroundSize: '120% 120%',

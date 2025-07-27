@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
@@ -22,7 +21,8 @@ export class ProfileService {
         .eq('id', user.id)
         .single();
 
-      if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 = no rows found
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        // PGRST116 = no rows found
         console.error('Error fetching profile:', fetchError);
         throw fetchError;
       }
@@ -34,11 +34,12 @@ export class ProfileService {
       // Create new profile
       const profileData = {
         id: user.id,
-        username: user.user_metadata?.username || user.email?.split('@')[0] || '',
+        username:
+          user.user_metadata?.username || user.email?.split('@')[0] || '',
         full_name: user.user_metadata?.full_name || '',
         avatar_url: user.user_metadata?.avatar_url || '',
         bio: user.user_metadata?.bio || '',
-        preferences: user.user_metadata?.preferences || {}
+        preferences: user.user_metadata?.preferences || {},
       };
 
       const { data: newProfile, error: createError } = await supabase
@@ -85,7 +86,7 @@ export class ProfileService {
         .from('profiles')
         .update({
           ...updates,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', userId)
         .select()
@@ -96,7 +97,6 @@ export class ProfileService {
         throw error;
       }
 
-      console.log('🔧 Profile updated successfully');
       return data;
     } catch (error) {
       console.error('🔧 Profile update error:', error);

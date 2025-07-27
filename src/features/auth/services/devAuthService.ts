@@ -103,7 +103,6 @@ export class DevAuthService {
   clearDevSession() {
     localStorage.removeItem(this.DEV_USER_KEY);
     localStorage.removeItem(this.DEV_SESSION_KEY);
-    console.log('🔧 Cleared dev session');
   }
 }
 

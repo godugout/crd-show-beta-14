@@ -356,7 +356,7 @@ export const EnhancedHero: React.FC = () => {
         <section className="py-8 sm:py-12 lg:py-20 xl:py-24 min-h-screen lg:min-h-[90vh] flex flex-col justify-center relative overflow-hidden bg-gradient-to-b from-crd-darkest via-crd-darkest to-crd-darker">
           {/* Dynamic Canvas Background Patterns */}
           <div 
-            className="absolute inset-0 transition-all duration-[2000ms] ease-in-out"
+            className="absolute inset-0 transition-all duration-1000 ease-in-out"
             style={{
               opacity: 0.4,
               ...canvasPatterns[currentPatternIndex].style

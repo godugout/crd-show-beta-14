@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSecureAuth } from "@/features/auth/providers/SecureAuthProvider";
 import { LogOut, Palette, Settings, User, Wallet } from "lucide-react";
 import { Link } from "react-router-dom";
 

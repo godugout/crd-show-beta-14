@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { ChevronLeft, ChevronRight, Sparkles, Upload, Palette, Settings, Eye, Share } from 'lucide-react';
 import { useCardEditor } from '@/hooks/useCardEditor';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Palette,
+  Settings,
+  Share,
+  Sparkles,
+  Upload,
+} from 'lucide-react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 // Step Components
-import { PhotoUploadStep } from './steps/PhotoUploadStep';
-import { TemplateSelectionStep } from './steps/TemplateSelectionStep';
 import { CustomizationStep } from './steps/CustomizationStep';
 import { DetailsStep } from './steps/DetailsStep';
+import { PhotoUploadStep } from './steps/PhotoUploadStep';
 import { PreviewStep } from './steps/PreviewStep';
 import { PublishStep } from './steps/PublishStep';
+import { TemplateSelectionStep } from './steps/TemplateSelectionStep';
 
 interface GuidedCreateFlowProps {
   onComplete?: (cardData: any) => void;
   onCancel?: () => void;
+  initialTemplate?: {
+    id: string;
+    name: string;
+    image_url: string;
+    effects: string[];
+    sport?: string;
+  };
 }
 
-type StepType = 'upload' | 'template' | 'customize' | 'details' | 'preview' | 'publish';
+type StepType =
+  | 'upload'
+  | 'template'
+  | 'customize'
+  | 'details'
+  | 'preview'
+  | 'publish';
 
 interface Step {
   id: StepType;
@@ -34,46 +56,49 @@ const steps: Step[] = [
     id: 'upload',
     title: 'Upload Photo',
     description: 'Choose your card image',
-    icon: <Upload className="w-5 h-5" />
+    icon: <Upload className='w-5 h-5' />,
   },
   {
     id: 'template',
     title: 'Select Template',
     description: 'Pick a card design',
-    icon: <Palette className="w-5 h-5" />
+    icon: <Palette className='w-5 h-5' />,
   },
   {
     id: 'customize',
     title: 'Customize Design',
     description: 'Personalize your card',
-    icon: <Settings className="w-5 h-5" />
+    icon: <Settings className='w-5 h-5' />,
   },
   {
     id: 'details',
     title: 'Add Details',
     description: 'Card information',
-    icon: <Sparkles className="w-5 h-5" />
+    icon: <Sparkles className='w-5 h-5' />,
   },
   {
     id: 'preview',
     title: 'Preview',
     description: 'Final review',
-    icon: <Eye className="w-5 h-5" />
+    icon: <Eye className='w-5 h-5' />,
   },
   {
     id: 'publish',
     title: 'Publish',
     description: 'Share your creation',
-    icon: <Share className="w-5 h-5" />
-  }
+    icon: <Share className='w-5 h-5' />,
+  },
 ];
 
 export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
   onComplete,
-  onCancel
+  onCancel,
+  initialTemplate,
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [stepData, setStepData] = useState<Record<string, any>>({});
+  const [stepData, setStepData] = useState<Record<string, any>>({
+    template: initialTemplate ? { selectedTemplate: initialTemplate } : {},
+  });
   const [isProcessing, setIsProcessing] = useState(false);
   const cardEditor = useCardEditor();
 
@@ -83,7 +108,7 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
   const updateStepData = (stepId: string, data: any) => {
     setStepData(prev => ({
       ...prev,
-      [stepId]: { ...prev[stepId], ...data }
+      [stepId]: { ...prev[stepId], ...data },
     }));
   };
 
@@ -138,7 +163,7 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
         series: stepData.details?.series || '',
         tags: stepData.details?.tags || [],
         customization: stepData.customize,
-        publishing_options: stepData.publish
+        publishing_options: stepData.publish,
       };
 
       // Update card editor with final data
@@ -164,7 +189,7 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
       data: stepData[currentStep.id] || {},
       onUpdate: (data: any) => updateStepData(currentStep.id, data),
       cardData: cardEditor.cardData,
-      onFieldUpdate: cardEditor.updateCardField
+      onFieldUpdate: cardEditor.updateCardField,
     };
 
     switch (currentStep.id) {
@@ -186,26 +211,26 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
+    <div className='min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5'>
       {/* Header */}
-      <div className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={onCancel}>
-                <ChevronLeft className="w-4 h-4 mr-2" />
+      <div className='border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50'>
+        <div className='max-w-6xl mx-auto px-6 py-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-4'>
+              <Button variant='ghost' size='sm' onClick={onCancel}>
+                <ChevronLeft className='w-4 h-4 mr-2' />
                 Back
               </Button>
               <div>
-                <h1 className="text-xl font-semibold">Guided Card Creator</h1>
-                <p className="text-sm text-muted-foreground">
+                <h1 className='text-xl font-semibold'>Guided Card Creator</h1>
+                <p className='text-sm text-muted-foreground'>
                   Step {currentStepIndex + 1} of {steps.length}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-64">
-                <Progress value={progress} className="h-2" />
+            <div className='flex items-center gap-4'>
+              <div className='w-64'>
+                <Progress value={progress} className='h-2' />
               </div>
             </div>
           </div>
@@ -213,9 +238,9 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
       </div>
 
       {/* Step Navigator */}
-      <div className="border-b bg-background/50">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+      <div className='border-b bg-background/50'>
+        <div className='max-w-6xl mx-auto px-6 py-4'>
+          <div className='flex items-center justify-between'>
             {steps.map((step, index) => (
               <div
                 key={step.id}
@@ -223,14 +248,14 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
                   index === currentStepIndex
                     ? 'bg-primary text-primary-foreground'
                     : index < currentStepIndex
-                    ? 'bg-primary/20 text-primary'
-                    : 'text-muted-foreground'
+                      ? 'bg-primary/20 text-primary'
+                      : 'text-muted-foreground'
                 }`}
               >
                 {step.icon}
-                <div className="hidden sm:block">
-                  <div className="font-medium text-sm">{step.title}</div>
-                  <div className="text-xs opacity-80">{step.description}</div>
+                <div className='hidden sm:block'>
+                  <div className='font-medium text-sm'>{step.title}</div>
+                  <div className='text-xs opacity-80'>{step.description}</div>
                 </div>
               </div>
             ))}
@@ -239,18 +264,18 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <Card className="border-0 shadow-xl bg-background/80 backdrop-blur-sm">
-          <div className="p-8">
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-2">
+      <div className='max-w-6xl mx-auto px-6 py-8'>
+        <Card className='border-0 shadow-xl bg-background/80 backdrop-blur-sm'>
+          <div className='p-8'>
+            <div className='mb-8'>
+              <div className='flex items-center gap-3 mb-2'>
                 {currentStep.icon}
-                <h2 className="text-2xl font-bold">{currentStep.title}</h2>
+                <h2 className='text-2xl font-bold'>{currentStep.title}</h2>
               </div>
-              <p className="text-muted-foreground">{currentStep.description}</p>
+              <p className='text-muted-foreground'>{currentStep.description}</p>
             </div>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode='wait'>
               <motion.div
                 key={currentStep.id}
                 initial={{ opacity: 0, x: 20 }}
@@ -265,24 +290,24 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between mt-8">
+        <div className='flex justify-between mt-8'>
           <Button
-            variant="outline"
+            variant='outline'
             onClick={handlePrevious}
             disabled={currentStepIndex === 0}
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
+            <ChevronLeft className='w-4 h-4 mr-2' />
             Previous
           </Button>
 
           <Button
             onClick={handleNext}
             disabled={!canProceed() || isProcessing}
-            className="min-w-[120px]"
+            className='min-w-[120px]'
           >
             {isProcessing ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <div className='flex items-center gap-2'>
+                <div className='w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin' />
                 Creating...
               </div>
             ) : currentStepIndex === steps.length - 1 ? (
@@ -290,7 +315,7 @@ export const GuidedCreateFlow: React.FC<GuidedCreateFlowProps> = ({
             ) : (
               <>
                 Next
-                <ChevronRight className="w-4 h-4 ml-2" />
+                <ChevronRight className='w-4 h-4 ml-2' />
               </>
             )}
           </Button>

@@ -40,7 +40,6 @@ const AccountSettings = () => {
         if (userProfile) {
           setFullName(userProfile.fullName || '');
           setBio(userProfile.bio || '');
-          console.log('🔧 Loaded profile from localStorage:', userProfile);
         }
       } catch (error) {
         console.error('🔧 Error loading profile:', error);
