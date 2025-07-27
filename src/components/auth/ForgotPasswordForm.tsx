@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CRDButton } from '@/components/ui/design-system';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { Mail, ArrowLeft } from 'lucide-react';
 import { EmailField } from './components/EmailField';
 import { useAuthForm } from './hooks/useAuthForm';
@@ -13,7 +13,7 @@ interface ForgotPasswordFormData {
 
 export const ForgotPasswordForm: React.FC = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const { resetPassword } = useAuth();
+  const { resetPassword  } = useSecureAuth();
 
   const { formData, isLoading, handleInputChange, handleSubmit } = useAuthForm<ForgotPasswordFormData>({
     initialValues: { email: '' },

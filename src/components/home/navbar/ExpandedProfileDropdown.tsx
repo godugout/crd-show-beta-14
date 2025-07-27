@@ -1,54 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "@/features/auth/providers/AuthProvider";
-import { useFeatureFlags } from "@/hooks/useFeatureFlags";
-import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuGroup,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FeatureFlagsModal } from "./modals/FeatureFlagsModal";
-import { AdminToolsModal } from "./modals/AdminToolsModal";
-import { 
-  User, 
-  CreditCard, 
-  Bookmark, 
-  Settings, 
-  LogOut, 
-  Palette, 
-  Wallet,
-  Monitor,
-  Flag,
-  Activity,
-  Database,
-  Image as ImageIcon,
-  HardDrive,
-  Shield,
-  Zap,
-  Cpu,
-  MemoryStick,
-  Network,
-  RefreshCw,
-  CheckCircle,
-  AlertTriangle,
-  XCircle,
-  Crown,
-  Code,
-  Bug,
-  Gamepad2,
-  Sparkles,
-  Eye,
-  Globe
+import { Progress } from "@/components/ui/progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useSecureAuth } from "@/features/auth/providers/SecureAuthProvider";
+import { useFeatureFlags } from "@/hooks/useFeatureFlags";
+import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
+import {
+    AlertTriangle,
+    Bookmark,
+    CheckCircle,
+    Crown,
+    Flag,
+    LogOut,
+    Monitor,
+    Palette,
+    RefreshCw,
+    Settings,
+    User,
+    Wallet,
+    XCircle
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { AdminToolsModal } from "./modals/AdminToolsModal";
+import { FeatureFlagsModal } from "./modals/FeatureFlagsModal";
 
 interface SystemHealth {
   authSystem: 'healthy' | 'warning' | 'error';
@@ -66,7 +50,7 @@ interface JourneyMetrics {
 }
 
 export const ExpandedProfileDropdown = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useSecureAuth();
   const { flags, isEnabled, toggleFlag } = useFeatureFlags();
   const { metrics } = usePerformanceMonitor();
   

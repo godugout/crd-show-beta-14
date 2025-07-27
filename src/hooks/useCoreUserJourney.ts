@@ -3,10 +3,9 @@
  * Integrates with the core user journey service and provides UI feedback
  */
 
-import { useState, useCallback } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
 import { coreUserJourneyService } from '@/services/coreUserJourney';
 import type { CardData } from '@/types/card';
+import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 
 export interface JourneyProgress {
@@ -18,7 +17,7 @@ export interface JourneyProgress {
 }
 
 export const useCoreUserJourney = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const [progress, setProgress] = useState<JourneyProgress>({
     currentStep: 'registration',
     totalSteps: 5,

@@ -1,17 +1,24 @@
 
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OnboardingLayout } from './components/OnboardingLayout';
 import { CustomSignUpForm } from './CustomSignUpForm';
 import { ProfileSetupForm } from './ProfileSetupForm';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
 
 type OnboardingStep = 'signup' | 'profile-setup' | 'complete';
 
 export const OnboardingFlow: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState<OnboardingStep>('signup');
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
   const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState<OnboardingStep>('signup');
+  const [formData, setFormData] = useState({
+    username: '',
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const handleSignUpComplete = () => {
     setCurrentStep('profile-setup');

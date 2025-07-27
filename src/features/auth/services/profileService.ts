@@ -15,8 +15,6 @@ export interface ProfileData {
 export class ProfileService {
   async ensureProfile(user: User) {
     try {
-      console.log('🔧 Ensuring profile exists for user:', user.id);
-      
       // Check if profile already exists
       const { data: existingProfile, error: fetchError } = await supabase
         .from('profiles')
@@ -25,12 +23,11 @@ export class ProfileService {
         .single();
 
       if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 = no rows found
-        console.error('🔧 Error fetching profile:', fetchError);
+        console.error('Error fetching profile:', fetchError);
         throw fetchError;
       }
 
       if (existingProfile) {
-        console.log('🔧 Profile already exists');
         return existingProfile;
       }
 
@@ -51,14 +48,13 @@ export class ProfileService {
         .single();
 
       if (createError) {
-        console.error('🔧 Error creating profile:', createError);
+        console.error('Error creating profile:', createError);
         throw createError;
       }
 
-      console.log('🔧 Profile created successfully');
       return newProfile;
     } catch (error) {
-      console.error('🔧 Profile service error:', error);
+      console.error('Profile service error:', error);
       throw error;
     }
   }
@@ -85,8 +81,6 @@ export class ProfileService {
 
   async updateProfile(userId: string, updates: ProfileData) {
     try {
-      console.log('🔧 Updating profile for user:', userId, updates);
-      
       const { data, error } = await supabase
         .from('profiles')
         .update({

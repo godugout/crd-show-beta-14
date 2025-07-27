@@ -1,12 +1,11 @@
 
+import { CRDButton, Typography } from "@/components/ui/design-system";
+import { useCards } from "@/hooks/useCards";
 import React from "react";
 import { Link } from "react-router-dom";
-import { CRDButton, Typography } from "@/components/ui/design-system";
-import { useCustomAuth } from "@/features/auth/hooks/useCustomAuth";
-import { useCards } from "@/hooks/useCards";
 
 export const SimplifiedCTA: React.FC = () => {
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
   const { cards } = useCards();
 
   // Mock stats for now - these would come from real data

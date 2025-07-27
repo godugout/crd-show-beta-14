@@ -2,7 +2,7 @@ import React from 'react';
 import { UserPlus, UserCheck } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFollows } from '@/hooks/useFollows';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from '@/hooks/use-toast';
 
 interface FollowButtonProps {
@@ -19,7 +19,7 @@ export const FollowButton: React.FC<FollowButtonProps> = ({
   className = '' 
 }) => {
   const { isFollowing, toggleFollow, loading } = useFollows(userId);
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
 
   // Don't show follow button for own profile
   if (user?.id === userId) {

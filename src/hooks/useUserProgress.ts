@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export interface UserProgress {
@@ -79,7 +79,7 @@ const PROGRESS_MILESTONES: ProgressMilestone[] = [
 ];
 
 export const useUserProgress = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const [lastNotifiedMilestones, setLastNotifiedMilestones] = useState<string[]>([]);
 
   const {

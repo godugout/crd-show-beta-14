@@ -1,10 +1,10 @@
 
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { CardRepository } from '@/repositories/cardRepository';
 import { CardStorageService } from '@/services/cardStorage';
 import type { CardData } from '@/types/card';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export interface SaveResult {
   success: boolean;
@@ -13,7 +13,7 @@ export interface SaveResult {
 }
 
 export const useCardSaveOperations = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 

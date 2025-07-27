@@ -1,11 +1,11 @@
 
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export const AuthPage = () => {
@@ -13,7 +13,7 @@ export const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, user } = useSecureAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,16 +28,16 @@ export const AuthPage = () => {
 
     try {
       if (isSignUp) {
-        const { error } = await signUp(email, password);
-        if (error) {
-          toast.error(error.message);
+        const result = await signUp(email, password, 'User', email.split('@')[0]);
+        if (!result.success) {
+          toast.error(result.error || 'Sign up failed');
         } else {
           toast.success('Account created successfully! Please check your email for verification.');
         }
       } else {
-        const { error } = await signIn(email, password);
-        if (error) {
-          toast.error(error.message);
+        const result = await signIn(email, password);
+        if (!result.success) {
+          toast.error(result.error || 'Sign in failed');
         } else {
           toast.success('Signed in successfully!');
         }

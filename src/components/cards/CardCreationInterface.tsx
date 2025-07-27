@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Upload, Image as ImageIcon, Save } from 'lucide-react';
 import { crdDataService } from '@/services/crdDataService';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from 'sonner';
 import type { CardData } from '@/types/card';
 
@@ -19,7 +19,7 @@ export const CardCreationInterface: React.FC<CardCreationInterfaceProps> = ({
   onComplete,
   onCancel
 }) => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);

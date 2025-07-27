@@ -1,15 +1,15 @@
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useCards } from '@/hooks/useCards';
 import { useCardConversion } from '@/pages/Gallery/hooks/useCardConversion';
 import type { CardData } from '@/types/card';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { SlabPresetConfig } from '../SlabPresets';
 
 export const useShowcaseState = (cardId?: string) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const { cards, featuredCards, userCards, loading, dataSource } = useCards();
   const { convertCardsToCardData } = useCardConversion();
   

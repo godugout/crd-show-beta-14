@@ -5,7 +5,7 @@ import { CRDButton } from '@/components/ui/design-system/Button';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
 import { RevolutionaryQuickCreate } from '@/components/editor/quick-create/RevolutionaryQuickCreate';
 import { GuidedCreateFlow } from '@/components/editor/guided-create/GuidedCreateFlow';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from 'sonner';
 import type { CreationMode } from '../../types';
 
@@ -40,7 +40,7 @@ const modeOptions = [
 ];
 
 export const IntentStep = ({ onModeSelect, onBulkUpload }: IntentStepProps) => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const { isEnabled } = useFeatureFlags();
   const [showQuickCreate, setShowQuickCreate] = useState(false);
   

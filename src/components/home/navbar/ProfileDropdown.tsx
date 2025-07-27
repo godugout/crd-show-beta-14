@@ -1,20 +1,18 @@
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "@/features/auth/providers/AuthProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, CreditCard, Bookmark, Settings, LogOut, Palette, Wallet } from "lucide-react";
+import { LogOut, Palette, Settings, User, Wallet } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const ProfileDropdown = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useSecureAuth();
 
   if (!user) {
     return null;

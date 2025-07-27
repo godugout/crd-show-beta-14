@@ -1,13 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CRDButton, CRDInput } from '@/components/ui/design-system';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { User, Shield, Bell, Palette } from 'lucide-react';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
+import { Bell, Shield, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ProfileData {
   fullName: string;
@@ -16,7 +15,7 @@ interface ProfileData {
 }
 
 const AccountSettings = () => {
-  const { user, signOut } = useCustomAuth();
+  const { user, signOut } = useSecureAuth();
   const [isLoading, setIsLoading] = useState(false);
   
   // Profile settings

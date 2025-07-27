@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { BASEBALL_CARD_TEMPLATES } from '@/components/editor/templates/BaseballCardTemplates';
+import { SVGTemplateRenderer } from '@/components/editor/templates/SVGTemplateRenderer';
+import { convertColorThemeToScheme, type TeamColorScheme } from '@/components/editor/templates/TeamColors';
+import { TeamColorSelector } from '@/components/editor/templates/TeamColorSelector';
+import { UniversalUploadComponent } from '@/components/media/UniversalUploadComponent';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { CRDButton } from '@/components/ui/design-system/Button';
-import { Upload, Image, Palette, Sparkles, Zap, Chrome, Stars, Eye, Frame, FolderOpen } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UniversalUploadComponent } from '@/components/media/UniversalUploadComponent';
-import { SVGTemplateRenderer } from '@/components/editor/templates/SVGTemplateRenderer';
-import { BASEBALL_CARD_TEMPLATES } from '@/components/editor/templates/BaseballCardTemplates';
-import { TeamColorSelector } from '@/components/editor/templates/TeamColorSelector';
-import { useColorThemes } from '@/hooks/useColorThemes';
-import { convertColorThemeToScheme, type TeamColorScheme } from '@/components/editor/templates/TeamColors';
-import type { CreationMode } from '../../types';
+import { Textarea } from '@/components/ui/textarea';
 import type { CardData } from '@/hooks/useCardEditor';
+import { useColorThemes } from '@/hooks/useColorThemes';
 import type { DesignTemplate } from '@/types/card';
+import { Chrome, Eye, FolderOpen, Frame, Image, Palette, Sparkles, Stars, Upload, Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import type { CreationMode } from '../../types';
+import { AIDesignAssistant } from '../AIDesignAssistant';
 
 interface CreateStepProps {
   mode: CreationMode;
@@ -27,6 +26,7 @@ interface CreateStepProps {
 }
 
 export const CreateStep = ({ mode, cardData, onFieldUpdate }: CreateStepProps) => {
+  const { colorThemes, loading: themesLoading } = useColorThemes();
   const [selectedFrame, setSelectedFrame] = useState<DesignTemplate>(BASEBALL_CARD_TEMPLATES[0]);
   const [selectedColorScheme, setSelectedColorScheme] = useState<TeamColorScheme | null>(null);
   const [playerName, setPlayerName] = useState(cardData?.title || 'PLAYER NAME');
@@ -40,7 +40,36 @@ export const CreateStep = ({ mode, cardData, onFieldUpdate }: CreateStepProps) =
   const [holographicIntensity, setHolographicIntensity] = useState([50]);
   const [foilIntensity, setFoilIntensity] = useState([50]);
   
-  const { colorThemes, loading: themesLoading } = useColorThemes();
+  // AI Design Assistant integration
+  const handleAISuggestionApply = (suggestion: any) => {
+    // Apply AI suggestions to card data
+    switch (suggestion.type) {
+      case 'color':
+        if (suggestion.title.includes('Gradient')) {
+          onFieldUpdate('design_metadata', {
+            ...cardData.design_metadata,
+            effects: { ...cardData.design_metadata?.effects, gradient: true }
+          });
+        }
+        break;
+      case 'effect':
+        if (suggestion.title.includes('Holographic')) {
+          onFieldUpdate('design_metadata', {
+            ...cardData.design_metadata,
+            effects: { ...cardData.design_metadata?.effects, holographic: true }
+          });
+        }
+        break;
+      case 'style':
+        if (suggestion.title.includes('Minimalist')) {
+          onFieldUpdate('design_metadata', {
+            ...cardData.design_metadata,
+            style: 'minimalist'
+          });
+        }
+        break;
+    }
+  };
 
   // Set default color scheme when themes load
   useEffect(() => {
@@ -131,6 +160,15 @@ export const CreateStep = ({ mode, cardData, onFieldUpdate }: CreateStepProps) =
               </div>
             </CardContent>
           </Card>
+
+          {/* AI Design Assistant */}
+          <AIDesignAssistant
+            cardTitle={cardData.title}
+            cardDescription={cardData.description}
+            cardImage={cardData.image_url}
+            onSuggestionApply={handleAISuggestionApply}
+            className="flex-1"
+          />
 
           {/* Team Colors */}
           <Card className="bg-crd-darker/90 border-crd-mediumGray/40 backdrop-blur-sm flex-1">

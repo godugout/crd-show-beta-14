@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
+import { useCallback, useEffect, useState } from 'react';
 
 interface StyleUsageStats {
   count: number;
@@ -34,7 +34,7 @@ interface CreationContext {
 const STORAGE_KEY = 'crdmkr_style_analytics';
 
 export const useStyleLearning = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const [userPreferences, setUserPreferences] = useState<StyleAnalytics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

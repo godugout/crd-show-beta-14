@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { LoadingState } from '@/components/common/LoadingState';
 import { crdDataService } from '@/services/crdDataService';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from 'sonner';
 import type { CardData } from '@/types/card';
 
 const UserGallery = () => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const navigate = useNavigate();
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);

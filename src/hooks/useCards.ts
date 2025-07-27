@@ -1,14 +1,13 @@
 
-import { useEffect, useCallback } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
-import { CardMigrationService } from '@/services/cardMigration';
 import { CardFetchingService } from '@/services/cardFetching';
+import { CardMigrationService } from '@/services/cardMigration';
+import { useCallback, useEffect } from 'react';
+import { toast } from 'sonner';
 import { useCardsState } from './useCardsState';
 import { useRealtimeCardSubscription } from './useRealtimeCardSubscription';
-import { toast } from 'sonner';
 
 export const useCards = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const {
     cards,
     featuredCards,

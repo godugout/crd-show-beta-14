@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
 import { CRDButton, CRDInput } from '@/components/ui/design-system';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from '@/hooks/use-toast';
+import React, { useState } from 'react';
 
 interface ProfileSetupFormProps {
   onComplete: () => void;
@@ -20,7 +20,7 @@ export const ProfileSetupForm: React.FC<ProfileSetupFormProps> = ({ onComplete }
   const [fullName, setFullName] = useState('');
   const [bio, setBio] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
 
   const saveProfileToLocalStorage = (profileData: ProfileData) => {
     try {

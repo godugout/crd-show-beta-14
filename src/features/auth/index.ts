@@ -1,7 +1,8 @@
 
-export { AuthProvider, useAuth } from './providers/AuthProvider';
-export { useAuthState } from './hooks/useAuthState';
-export { useAuthActions } from './hooks/useAuthActions';
-export { authService } from './services/authService';
-export { profileService } from './services/profileService';
-export type { AuthState, AuthContextType, OAuthProvider } from './types';
+export { SecureAuthProvider, useSecureAuth } from './providers/SecureAuthProvider';
+export { RateLimiter } from './services/rateLimiter';
+export { SecureAuthService } from './services/secureAuthService';
+export { UserManagementService } from './services/userManagementService';
+export type { AuthContextType, AuthState, OAuthProvider } from './types';
+export { PasswordValidator } from './validators/passwordValidator';
+

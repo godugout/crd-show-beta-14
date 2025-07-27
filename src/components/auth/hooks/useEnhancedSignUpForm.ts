@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { toast } from '@/hooks/use-toast';
 import { validateEmail } from '@/utils/email-validation';
 import { getPasswordStrength } from '@/utils/password-validation';
-import { toast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface EnhancedSignUpFormData {
   email: string;
@@ -26,7 +25,7 @@ export const useEnhancedSignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [emailVerificationSent, setEmailVerificationSent] = useState(false);
   
-  const { signUp } = useAuth();
+  const { signUp } = useSecureAuth();
   const navigate = useNavigate();
 
   const handleInputChange = (field: keyof EnhancedSignUpFormData, value: string | boolean) => {

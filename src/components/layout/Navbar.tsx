@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Plus, Home, Palette, Menu, ShoppingBag, CreditCard, DollarSign } from 'lucide-react';
-import { LogoSelector } from '@/components/home/navbar/LogoSelector';
-import { useEnhancedNavbar } from '@/hooks/useEnhancedNavbar';
-import { useTeamTheme } from '@/hooks/useTeamTheme';
-import { DNAHelixTrigger } from '@/components/auth/DNAHelixTrigger';
 import { AdminTrigger } from '@/components/admin/AdminTrigger';
+import { DNAHelixTrigger } from '@/components/auth/DNAHelixTrigger';
+import { LogoSelector } from '@/components/home/navbar/LogoSelector';
 import { MobileNav } from '@/components/home/navbar/MobileNav';
 import { NavActions } from '@/components/home/navbar/NavActions';
 import { useFlightAnimation } from '@/contexts/FlightAnimationContext';
+import { useEnhancedNavbar } from '@/hooks/useEnhancedNavbar';
+import { useTeamTheme } from '@/hooks/useTeamTheme';
+import { Home, Menu, Plus, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 // Simplified navbar background - prioritize custom header color over theme defaults
 const getNavbarDynamicStyles = (customHeaderColor?: string | null, isHomeTeamMode?: boolean) => {
@@ -88,7 +88,7 @@ export const Navbar = () => {
         data-navbar="main"
         className={`
           ${isHomeTeamMode ? 'navbar-home-team' : ''}
-          fixed top-0 left-0 right-0 z-50 border-b
+          fixed top-0 left-0 right-0 z-[var(--z-fixed)] border-b
           ${getTransitionClass()}
           ${(isVisible && !isFlightActive) ? 'translate-y-0' : '-translate-y-full'}
           ${isScrolled ? 'shadow-lg' : ''}

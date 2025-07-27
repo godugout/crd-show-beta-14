@@ -1,26 +1,26 @@
 
-import React, { useState, useCallback } from 'react';
-import { toast } from 'sonner';
-import { useDropzone } from 'react-dropzone';
-import { uploadCardImage } from '@/lib/cardImageUploader';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useCardEditor } from '@/hooks/useCardEditor';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
+import { uploadCardImage } from '@/lib/cardImageUploader';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { DropZone } from '../upload/DropZone';
 import { FilePreview } from '../upload/FilePreview';
 
 interface UploadSectionProps {
-  cardEditor?: ReturnType<typeof useCardEditor>;
+  onUploadComplete?: (imageUrl: string) => void;
 }
 
-export const UploadSection = ({ cardEditor }: UploadSectionProps) => {
-  const [fileToUpload, setFileToUpload] = useState<File | null>(null);
-  const [uploadPreview, setUploadPreview] = useState<string | null>(null);
+export const UploadSection: React.FC<UploadSectionProps> = ({ onUploadComplete }) => {
+  const { user } = useSecureAuth();
+  const { updateCardImage } = useCardEditor();
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const { user } = useCustomAuth();
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const handleFileSelection = (file: File) => {
-    console.log('📁 File selected:', {
+    console.log('�� File selected:', {
       name: file.name,
       size: file.size,
       type: file.type

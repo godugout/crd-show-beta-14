@@ -1,7 +1,7 @@
 
-import { useEffect, useState } from 'react';
 import { useCRDEditor } from '@/contexts/CRDEditorContext';
 import AssetPreloaderManager from '@/utils/AssetPreloaderSingleton';
+import { useEffect, useState } from 'react';
 
 // Only use placeholder images that actually exist
 const CRITICAL_ASSETS = [
@@ -40,11 +40,8 @@ export const useCRDAssetPreloader = (options: UseCRDAssetPreloaderOptions = {}) 
   const manager = AssetPreloaderManager.getInstance();
 
   useEffect(() => {
-    console.log('🔄 CRD Asset preloader starting:', { enabled, isCompleteCheck: manager.isPreloadingComplete() });
-    
     // If disabled or already complete, skip entirely
     if (!enabled || manager.isPreloadingComplete()) {
-      console.log('✅ CRD Asset preloader: skipping (disabled or complete)');
       setIsComplete(true);
       setLoadedAssets(totalAssets);
       return;
@@ -52,7 +49,6 @@ export const useCRDAssetPreloader = (options: UseCRDAssetPreloaderOptions = {}) 
 
     // For simplicity, just complete immediately since we're only using placeholders
     const timer = setTimeout(() => {
-      console.log('✅ CRD Asset preloader: completing immediately');
       setIsComplete(true);
       setLoadedAssets(totalAssets);
       manager.completePreloading();

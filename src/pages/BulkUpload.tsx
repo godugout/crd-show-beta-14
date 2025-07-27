@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import { analyzeCardImage } from '@/services/cardAnalyzer';
 import { CardRepository } from '@/repositories/cardRepository';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 
 interface UploadedFile {
   id: string;
@@ -23,7 +23,7 @@ const BulkUpload = () => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const navigate = useNavigate();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

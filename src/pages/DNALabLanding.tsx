@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useAdminAuth } from '@/features/admin/hooks/useAdminAuth';
 import { toast } from 'sonner';
 
@@ -53,7 +53,7 @@ export default function DNALabLanding() {
   const [secretCode, setSecretCode] = useState('HELIX2024'); // Pre-filled for dev access
   const [isVerifying, setIsVerifying] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const { isAdmin, isLoading } = useAdminAuth();
 
   // Auto-redirect if already authenticated admin

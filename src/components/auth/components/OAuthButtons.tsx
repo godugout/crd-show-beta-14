@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { CRDButton } from '@/components/ui/design-system';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 
 export const OAuthButtons: React.FC = () => {
-  const { signInWithOAuth } = useAuth();
+  const { signInWithOAuth  } = useSecureAuth();
 
   const handleOAuthSignIn = async (provider: 'google' | 'github' | 'discord') => {
     await signInWithOAuth(provider);

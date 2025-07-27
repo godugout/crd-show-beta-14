@@ -1,0 +1,341 @@
+/* Mobile Responsiveness Improvements */
+
+/* Touch target optimizations */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements meet minimum touch target size */
+  button, 
+  [role="button"], 
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent zoom on form inputs */
+  input, 
+  select, 
+  textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Improve card grid layout for mobile */
+  .card-grid-mobile {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+  
+  /* Optimize card hover effects for touch */
+  .card-hover-base:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .card-hover-base:hover .card-image-hover {
+    transform: scale(1.02);
+  }
+  
+  /* Improve navigation for mobile */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: hsl(var(--crd-darker));
+    border-top: 1px solid hsl(var(--crd-border));
+    z-index: 50;
+    padding: 8px 16px;
+  }
+  
+  /* Adjust main content for mobile nav */
+  .main-content-mobile {
+    padding-bottom: 80px;
+  }
+  
+  /* Improve modal positioning on mobile */
+  .modal-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: hsl(var(--crd-darkest));
+  }
+  
+  /* Better form layout on mobile */
+  .form-mobile {
+    padding: 16px;
+  }
+  
+  .form-mobile .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-mobile input,
+  .form-mobile select,
+  .form-mobile textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid hsl(var(--crd-border));
+    background: hsl(var(--crd-surface));
+    color: hsl(var(--crd-text));
+  }
+  
+  /* Improve marketplace layout */
+  .marketplace-mobile {
+    padding: 16px;
+  }
+  
+  .marketplace-mobile .filters {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .marketplace-mobile .search-bar {
+    width: 100%;
+  }
+  
+  /* Better gallery layout */
+  .gallery-mobile {
+    padding: 12px;
+  }
+  
+  .gallery-mobile .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  /* Improve studio layout on mobile */
+  .studio-mobile {
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .studio-mobile .sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .studio-mobile .main-content {
+    flex: 1;
+    padding: 16px;
+  }
+  
+  /* Better image upload on mobile */
+  .upload-mobile {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .upload-mobile .dropzone {
+    min-height: 120px;
+    border: 2px dashed hsl(var(--crd-border));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--crd-surface));
+  }
+  
+  /* Improve notifications on mobile */
+  .notification-mobile {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 1000;
+    max-width: none;
+  }
+  
+  /* Better loading states on mobile */
+  .loading-mobile {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  /* Improve error boundaries on mobile */
+  .error-mobile {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  /* Better search functionality on mobile */
+  .search-mobile {
+    position: relative;
+    width: 100%;
+  }
+  
+  .search-mobile input {
+    width: 100%;
+    padding: 12px 16px 12px 48px;
+    border-radius: 8px;
+    border: 1px solid hsl(var(--crd-border));
+    background: hsl(var(--crd-surface));
+    color: hsl(var(--crd-text));
+  }
+  
+  .search-mobile .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: hsl(var(--crd-text-dim));
+  }
+  
+  /* Improve marketplace cards on mobile */
+  .marketplace-card-mobile {
+    border-radius: 12px;
+    overflow: hidden;
+    background: hsl(var(--crd-darker));
+    border: 1px solid hsl(var(--crd-border));
+  }
+  
+  .marketplace-card-mobile .card-image {
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+  
+  .marketplace-card-mobile .card-content {
+    padding: 12px;
+  }
+  
+  .marketplace-card-mobile .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .marketplace-card-mobile .card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: hsl(var(--crd-green));
+  }
+  
+  /* Better filters on mobile */
+  .filters-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    background: hsl(var(--crd-darker));
+    border-bottom: 1px solid hsl(var(--crd-border));
+  }
+  
+  .filter-chip-mobile {
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: hsl(var(--crd-surface));
+    border: 1px solid hsl(var(--crd-border));
+    font-size: 12px;
+    color: hsl(var(--crd-text));
+  }
+  
+  .filter-chip-mobile.active {
+    background: hsl(var(--crd-green));
+    color: hsl(var(--crd-black));
+    border-color: hsl(var(--crd-green));
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card-grid-tablet {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .marketplace-tablet {
+    padding: 24px;
+  }
+  
+  .studio-tablet {
+    height: 100vh;
+  }
+  
+  .studio-tablet .sidebar {
+    width: 280px;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-nav {
+    position: relative;
+    padding: 8px 16px;
+  }
+  
+  .main-content-mobile {
+    padding-bottom: 20px;
+  }
+  
+  .studio-mobile {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .studio-mobile .sidebar {
+    max-height: 150px;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card-image-hover {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card-hover-base,
+  .card-image-hover,
+  .card-overlay {
+    transition: none;
+  }
+  
+  .card-hover-base:hover {
+    transform: none;
+  }
+  
+  .card-hover-base:hover .card-image-hover {
+    transform: none;
+  }
+  
+  .animate-pulse {
+    animation: none;
+  }
+  
+  .animate-spin {
+    animation: none;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .card-hover-base {
+    background: hsl(var(--crd-darker));
+  }
+  
+  .card-hover-base:hover {
+    background: hsl(var(--crd-dark));
+  }
+}
+
+/* Print styles */
+@media print {
+  .card-hover-base:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .mobile-nav,
+  .notification-mobile {
+    display: none;
+  }
+} 

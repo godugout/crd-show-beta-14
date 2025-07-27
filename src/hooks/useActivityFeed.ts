@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useEffect, useState } from 'react';
 
 interface ActivityItem {
   id: string;
@@ -17,7 +17,7 @@ interface ActivityItem {
 export const useActivityFeed = () => {
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
 
   useEffect(() => {
     if (user) {

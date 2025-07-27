@@ -1,10 +1,9 @@
 
+import { localCardStorage } from '@/lib/localCardStorage';
+import { supabase } from '@/integrations/supabase/client';
+import type { CardData } from '@/types/card';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
-import { localCardStorage } from '@/lib/localCardStorage';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
-import { supabase } from '@/lib/supabase-client';
-import type { CardData } from '@/types/card';
 
 export const useLocalAutoSave = (
   cardData: CardData,
@@ -13,7 +12,7 @@ export const useLocalAutoSave = (
   autoSaveInterval: number = 5000, // Save locally every 5 seconds
   syncDelay: number = 30000 // Sync to server after 30 seconds of inactivity
 ) => {
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
   const lastSaveTime = useRef<number>(0);
   const syncTimeoutRef = useRef<NodeJS.Timeout>();
 

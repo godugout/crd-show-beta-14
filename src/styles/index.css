@@ -12,8 +12,10 @@
 @import './theme.css';
 @import './custom.css';
 @import './card-effects.css';
+@import './card-hover-effects.css';
 @import './glass-morphism.css';
 @import './mobile-first.css';
+@import './mobile-responsive-improvements.css';
 
 /* New responsive enhancements */
 @import './responsive-enhancements.css';

@@ -98,14 +98,31 @@
     hsl(var(--crd-surface)) 25%, 
     hsl(var(--crd-surface-light)) 50%, 
     hsl(var(--crd-hover)) 75%, 
-    hsl(var(--crd-blue) / 0.1) 90%, 
-    hsl(var(--crd-blue) / 0.2) 100%
+    hsl(var(--crd-black)) 100%
   );
-  --gradient-space-to-purple: linear-gradient(180deg, 
+  
+  --gradient-space-to-purple: linear-gradient(135deg, 
     hsl(var(--crd-black)) 0%, 
-    hsl(var(--crd-purple) / 0.1) 70%, 
-    hsl(var(--crd-purple) / 0.2) 100%
+    hsl(var(--crd-surface)) 25%, 
+    hsl(var(--crd-purple)) 75%, 
+    hsl(var(--crd-black)) 100%
   );
+
+  /* Layout System */
+  --navbar-height: 4rem; /* 64px - Standard navbar height */
+  --navbar-height-mobile: 3.5rem; /* 56px - Mobile navbar height */
+  --content-top-padding: calc(var(--navbar-height) + 1rem); /* Navbar height + 16px padding */
+  --content-top-padding-mobile: calc(var(--navbar-height-mobile) + 0.75rem); /* Mobile navbar + 12px padding */
+  
+  /* Z-Index System */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
 
   /* Animation System */
   --transition-fast: 0.15s ease-out;

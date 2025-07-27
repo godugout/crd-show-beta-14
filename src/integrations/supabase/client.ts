@@ -2,16 +2,59 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://kwxsnkckyjkmpdzrsyxi.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eHNua2NreWprbXBkenJzeXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1OTQ3NDQsImV4cCI6MjA2NTE3MDc0NH0.s4nuV8CnLnHhfTFUlMQVg5XFV4VluJtJaxAyc3hWBPU";
+// Environment-based configuration with fallback to hardcoded values
+const getSupabaseConfig = () => {
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  
+  if (url && key) {
+    // Validate URL format
+    if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+      throw new Error('Invalid Supabase URL format');
+    }
+    
+    // Validate key format (basic check)
+    if (!key.startsWith('eyJ')) {
+      throw new Error('Invalid Supabase API key format');
+    }
+    
+    return { url, key };
+  }
+  
+  // Fallback to hardcoded values for development
+  const isDevelopment = import.meta.env.DEV;
+  
+  if (isDevelopment) {
+    // Development environment - use the existing dev project
+    return {
+      url: "https://wxlwhqlbxyuyujhqeyur.supabase.co",
+      key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4bHdocWxieHl1eXVqaHFleXVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyMjAyNTMsImV4cCI6MjA1Mzc5NjI1M30.6TlBEqXOPZRgwhPrHQBYjMMVzmCTmCb-Q1-sNnFhVrc"
+    };
+  } else {
+    // Production environment - use the Lovable project
+    return {
+      url: "https://kwxsnkckyjkmpdzrsyxi.supabase.co",
+      key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eHNua2NreWprbXBkenJzeXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1OTQ3NDQsImV4cCI6MjA2NTE3MDc0NH0.s4nuV8CnLnHhfTFUlMQVg5XFV4VluJtJaxAyc3hWBPU"
+    };
+  }
+};
+
+const config = getSupabaseConfig();
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+export const supabase = createClient<Database>(config.url, config.key, {
   auth: {
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
   }
 });
+
+// Export the config for debugging (without sensitive data)
+export const supabaseConfig = {
+  url: config.url,
+  hasKey: !!config.key,
+  isConfigured: true
+};

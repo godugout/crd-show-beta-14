@@ -1,8 +1,8 @@
 
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/utils/logger';
+import { useCallback, useEffect, useState } from 'react';
 
 interface AdminUser {
   id: string;
@@ -15,7 +15,7 @@ const adminAuthCache = new Map<string, { data: AdminUser | null; timestamp: numb
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export const useAdminAuth = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

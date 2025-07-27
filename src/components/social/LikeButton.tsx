@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { useLikes } from '@/hooks/useLikes';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from '@/hooks/use-toast';
 
 interface LikeButtonProps {
@@ -16,7 +16,7 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
   showCount = true 
 }) => {
   const { isLiked, likeCount, toggleLike, loading } = useLikes(cardId);
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
 
   const handleLike = async (e: React.MouseEvent) => {
     e.preventDefault();

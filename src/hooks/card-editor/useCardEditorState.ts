@@ -1,15 +1,15 @@
 
-import { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import type { CardData } from '@/types/card';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface UseCardEditorStateOptions {
   initialData?: Partial<CardData>;
 }
 
 export const useCardEditorState = (options: UseCardEditorStateOptions = {}) => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   const { initialData = {} } = options;
   
   const [cardData, setCardData] = useState<CardData>({

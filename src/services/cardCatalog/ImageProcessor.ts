@@ -1,5 +1,5 @@
 
-import { DetectedCard, AutoExtractedData } from './types';
+import { AutoExtractedData, DetectedCard } from './types';
 
 export class ImageProcessor {
   async loadImage(file: File): Promise<HTMLImageElement> {
@@ -70,18 +70,13 @@ export class ImageProcessor {
   }
 
   async processImage(file: File, sessionId: string): Promise<DetectedCard[]> {
-    console.log('🖼️ ImageProcessor.processImage called with:', { fileName: file.name, sessionId });
-    
     const startTime = Date.now();
 
     try {
       // 1. Load and analyze image
-      console.log('📖 Loading image...');
       const imageData = await this.loadImage(file);
-      console.log('✅ Image loaded successfully');
       
       // 2. For now, create mock detections to test the flow
-      console.log('🔍 Creating mock detections for testing...');
       const mockDetections = [
         {
           x: 50,
@@ -99,8 +94,6 @@ export class ImageProcessor {
         }
       ];
       
-      console.log('🎯 Mock detections created:', mockDetections);
-      
       // 3. Extract and enhance each detected card
       const cards: DetectedCard[] = [];
       
@@ -108,7 +101,6 @@ export class ImageProcessor {
         const detection = mockDetections[i];
         
         try {
-          console.log(`🔧 Processing card ${i}...`);
           const extractedCard = await this.extractCard(imageData, detection, i);
           const enhancedCard = await this.enhanceCard(extractedCard);
           const enrichedCard = await this.extractMetadata(enhancedCard);
@@ -130,9 +122,8 @@ export class ImageProcessor {
           };
           
           cards.push(card);
-          console.log(`✅ Card ${i} processed successfully`);
         } catch (error) {
-          console.error(`❌ Failed to process card ${i}:`, error);
+          console.error(`Failed to process card ${i}:`, error);
           cards.push({
             id: `${sessionId}_card_${i}`,
             originalFile: file,
@@ -150,10 +141,9 @@ export class ImageProcessor {
         }
       }
 
-      console.log('🎉 processImage completed with', cards.length, 'cards');
       return cards;
     } catch (error) {
-      console.error('💥 processImage failed:', error);
+      console.error('processImage failed:', error);
       throw error;
     }
   }

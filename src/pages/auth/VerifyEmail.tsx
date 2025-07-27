@@ -3,13 +3,13 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthLayout } from '@/components/auth/AuthLayout';
 import { CRDButton } from '@/components/ui/design-system';
 import { Mail, CheckCircle, AlertTriangle, RefreshCw } from 'lucide-react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from '@/hooks/use-toast';
 
 const VerifyEmail: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const [isResending, setIsResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   

@@ -16,7 +16,7 @@ import { visionAnalysisService } from '@/services/ai/visionAnalysisService';
 import { styleTransferService } from '@/services/ai/styleTransferService';
 import { smartStatsService } from '@/services/ai/smartStatsService';
 import { predictiveService } from '@/services/ai/predictiveService';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import type { CardData } from '@/types/card';
 import { toast } from 'sonner';
 
@@ -67,7 +67,7 @@ export const RevolutionaryQuickCreate: React.FC<RevolutionaryQuickCreateProps> =
   onClose,
   onComplete
 }) => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const [state, setState] = useState<CreateState>({
     step: 'capture',
     inputMode: null,

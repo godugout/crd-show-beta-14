@@ -1,21 +1,24 @@
 
-import React, { useState } from 'react';
-import { CRDButton } from '@/components/ui/design-system/Button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { CRDButton } from '@/components/ui/design-system/Button';
 import { Input } from '@/components/ui/input';
-import { 
-  Search, 
-  ArrowLeft, 
-  ArrowRight, 
-  Crown, 
-  Gem, 
-  Star,
-  Sparkles,
-  Filter,
-  Grid,
-  List
+import {
+    ArrowLeft,
+    ArrowRight,
+    Crown,
+    Filter,
+    Gem,
+    Grid,
+    List,
+    Search,
+    Sparkles,
+    Star,
+    Layers,
+    Download
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface TemplateSelectionSectionProps {
   cardEditor: ReturnType<typeof import('@/hooks/useCardEditor').useCardEditor>;
@@ -28,6 +31,7 @@ export const TemplateSelectionSection: React.FC<TemplateSelectionSectionProps> =
   onNext,
   onPrevious
 }) => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -230,6 +234,57 @@ export const TemplateSelectionSection: React.FC<TemplateSelectionSectionProps> =
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* CRDMKR Promotion Section */}
+      {searchQuery === '' && selectedCategory === 'all' && (
+        <div className="space-y-4">
+          <Card className="bg-gradient-to-r from-crd-blue/20 to-crd-purple/20 border-crd-blue/30 overflow-hidden">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="w-5 h-5 text-crd-blue" />
+                    <Badge variant="secondary" className="bg-crd-blue/20 text-crd-blue border-crd-blue/30">
+                      Premium Tool
+                    </Badge>
+                  </div>
+                  <h3 className="text-xl font-bold text-crd-white mb-2">CRDMKR Studio</h3>
+                  <p className="text-crd-lightGray mb-4">
+                    Convert your Photoshop designs into professional card templates with our advanced PSD-to-CRD conversion tool.
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-crd-lightGray mb-4">
+                    <div className="flex items-center gap-1">
+                      <Layers className="w-4 h-4" />
+                      <span>Layer Extraction</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Sparkles className="w-4 h-4" />
+                      <span>Auto Frame Generation</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Download className="w-4 h-4" />
+                      <span>Export Templates</span>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={() => navigate('/crdmkr')}
+                    className="bg-crd-blue hover:bg-crd-lightBlue text-white"
+                  >
+                    <Crown className="w-4 h-4 mr-2" />
+                    Try CRDMKR Studio
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+                <div className="hidden lg:block">
+                  <div className="w-32 h-44 bg-gradient-to-br from-crd-blue/20 to-crd-purple/20 rounded-lg border border-crd-blue/30 flex items-center justify-center">
+                    <Crown className="w-12 h-12 text-crd-blue" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
 

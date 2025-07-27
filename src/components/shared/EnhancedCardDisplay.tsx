@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { CRDButton } from '@/components/ui/design-system/Button';
-import { OptimizedImage } from './OptimizedImage';
-import { Eye, Edit, Share2 } from 'lucide-react';
-import { getRarityStyles, getRarityBadgeStyles, type CardRarity } from '@/utils/cardDisplayUtils';
 import type { CardData } from '@/types/card';
+import { getRarityBadgeStyles, getRarityStyles, type CardRarity } from '@/utils/cardDisplayUtils';
+import { Edit, Eye, Share2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { OptimizedImage } from './OptimizedImage';
 
 interface EnhancedCardDisplayProps {
   card: CardData;
@@ -30,11 +30,11 @@ export const EnhancedCardDisplay: React.FC<EnhancedCardDisplayProps> = ({
 
   return (
     <Card 
-      className={`
-        relative overflow-hidden bg-crd-darker transition-all duration-200 ease-out cursor-pointer
-        hover:scale-105 hover:-translate-y-1
-        ${className}
-      `}
+      className={cn(
+        "relative overflow-hidden bg-crd-darker cursor-pointer card-hover-base",
+        `card-hover-${card.rarity}`,
+        className
+      )}
       style={{
         borderColor: rarityStyles.borderColor,
         boxShadow: rarityStyles.hasGlow 
@@ -58,10 +58,13 @@ export const EnhancedCardDisplay: React.FC<EnhancedCardDisplayProps> = ({
         <OptimizedImage
           src={card.image_url || ''}
           alt={card.title}
-          className="w-full h-full object-cover transition-all duration-300"
+          className="w-full h-full object-cover card-image-hover"
           size="medium"
           showSkeleton={true}
         />
+        
+        {/* Hover overlay */}
+        <div className="card-overlay" />
         
         {/* Gradient Overlay for Glow Effect */}
         {rarityStyles.hasGlow && (

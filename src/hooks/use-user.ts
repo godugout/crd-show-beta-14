@@ -1,9 +1,9 @@
 
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useProfile } from '@/hooks/useProfile';
 
 export const useUser = () => {
-  const { user: authUser, loading: authLoading } = useAuth();
+  const { user: authUser, loading: authLoading } = useSecureAuth();
   const { profile, isLoading: profileLoading, error } = useProfile(authUser?.id);
 
   // Combine auth user with profile data

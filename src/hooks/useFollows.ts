@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useEffect, useState } from 'react';
 
 interface FollowStats {
   followersCount: number;
@@ -15,7 +15,7 @@ export const useFollows = (targetUserId?: string) => {
     isFollowing: false
   });
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
 
   useEffect(() => {
     if (targetUserId) {

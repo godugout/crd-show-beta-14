@@ -1,7 +1,7 @@
 
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
 
 export interface SignUpFormData {
   email: string;
@@ -21,7 +21,7 @@ export const useSignUpForm = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   
-  const { signUp } = useAuth();
+  const { signUp } = useSecureAuth();
   const navigate = useNavigate();
 
   const handleInputChange = (field: keyof SignUpFormData, value: string) => {

@@ -1,11 +1,10 @@
 
-import React from 'react';
-import { Save, Share, Download, Settings, Moon, ArrowLeft, Cloud, CloudOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { useCardEditor } from '@/hooks/useCardEditor';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
 import { unifiedDataService } from '@/services/unifiedDataService';
+import { ArrowLeft, Cloud, CloudOff, Download, Moon, Save, Settings, Share } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 interface EditorHeaderProps {
@@ -13,7 +12,7 @@ interface EditorHeaderProps {
 }
 
 export const EditorHeader = ({ cardEditor }: EditorHeaderProps) => {
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
 
   const handleSave = async () => {
     if (!cardEditor) {

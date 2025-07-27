@@ -148,3 +148,78 @@
     width: 100%;
   }
 }
+
+/* Base styles for the application */
+
+/* Global content spacing to prevent navbar overlap */
+body {
+  padding-top: var(--content-top-padding);
+}
+
+/* Mobile responsive padding */
+@media (max-width: 768px) {
+  body {
+    padding-top: var(--content-top-padding-mobile);
+  }
+}
+
+/* Ensure all main content areas have proper spacing */
+main {
+  min-height: calc(100vh - var(--content-top-padding));
+  padding-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  main {
+    min-height: calc(100vh - var(--content-top-padding-mobile));
+    padding-top: 0.75rem;
+  }
+}
+
+/* Specific page containers that need navbar spacing */
+.page-container {
+  padding-top: var(--content-top-padding);
+  min-height: calc(100vh - var(--content-top-padding));
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding-top: var(--content-top-padding-mobile);
+    min-height: calc(100vh - var(--content-top-padding-mobile));
+  }
+}
+
+/* Hero sections and full-height content */
+.hero-section {
+  margin-top: calc(-1 * var(--content-top-padding));
+  padding-top: var(--content-top-padding);
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    margin-top: calc(-1 * var(--content-top-padding-mobile));
+    padding-top: var(--content-top-padding-mobile);
+  }
+}
+
+/* Ensure modals and overlays are above navbar */
+.modal-overlay,
+.overlay {
+  z-index: var(--z-modal-backdrop);
+}
+
+.modal-content {
+  z-index: var(--z-modal);
+}
+
+/* Fix for any absolute positioned elements */
+.absolute-navbar-safe {
+  top: var(--content-top-padding);
+}
+
+@media (max-width: 768px) {
+  .absolute-navbar-safe {
+    top: var(--content-top-padding-mobile);
+  }
+}

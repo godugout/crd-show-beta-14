@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { CardGridSkeleton } from '@/components/common/EnhancedLoadingStates';
+import { BuyNowModal } from '@/components/marketplace/BuyNowModal';
+import { CreateListingModal } from '@/components/marketplace/CreateListingModal';
+import { FeaturedCarousel } from '@/components/marketplace/FeaturedCarousel';
 import { MarketplaceHero } from '@/components/marketplace/MarketplaceHero';
 import { PremiumFilters } from '@/components/marketplace/PremiumFilters';
-import { FeaturedCarousel } from '@/components/marketplace/FeaturedCarousel';
 import { TradingCard } from '@/components/marketplace/TradingCard';
-import { CreateListingModal } from '@/components/marketplace/CreateListingModal';
-import { BuyNowModal } from '@/components/marketplace/BuyNowModal';
+import { Button } from '@/components/ui/button';
 import { useMarketplaceData } from '@/hooks/useMarketplaceData';
 import { useTeamTheme } from '@/hooks/useTeamTheme';
-import { Button } from '@/components/ui/button';
-import { Plus, Grid, List, SlidersHorizontal, ShoppingCart } from 'lucide-react';
+import { Grid, List, Plus, SlidersHorizontal } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 export interface MarketplaceFilters {
   searchQuery: string;
@@ -36,6 +37,23 @@ const Marketplace = () => {
   });
 
   const { listings, loading, totalCount, fetchListings } = useMarketplaceData(filters);
+  
+  // Enhanced search with debouncing
+  const [searchTimeout, setSearchTimeout] = React.useState<NodeJS.Timeout | null>(null);
+  
+  const handleSearchChange = (searchQuery: string) => {
+    // Clear existing timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+    
+    // Set new timeout for debounced search
+    const timeout = setTimeout(() => {
+      setFilters(prev => ({ ...prev, searchQuery }));
+    }, 300);
+    
+    setSearchTimeout(timeout);
+  };
 
   // Mock featured cards - in real app this would come from API
   const featuredCards = listings.slice(0, 4).map(listing => ({
@@ -60,9 +78,7 @@ const Marketplace = () => {
     setFilters(prev => ({ ...prev, ...newFilters }));
   };
 
-  const handleSearchChange = (searchQuery: string) => {
-    setFilters(prev => ({ ...prev, searchQuery }));
-  };
+  // This is now handled by the enhanced search function above
 
   const handleCardClick = (cardId: string) => {
     const listing = listings.find(l => l.id === cardId);
@@ -201,18 +217,7 @@ const Marketplace = () => {
 
             {/* Loading State */}
             {loading && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="trading-card animate-pulse">
-                    <div className="w-full h-[60%] bg-crd-surface-light" />
-                    <div className="p-4 space-y-3">
-                      <div className="h-4 bg-crd-surface-light rounded" />
-                      <div className="h-6 bg-crd-surface-light rounded w-3/4" />
-                      <div className="h-5 bg-crd-surface-light rounded w-1/2" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <CardGridSkeleton count={8} className="mt-6" />
             )}
 
             {/* Empty State */}

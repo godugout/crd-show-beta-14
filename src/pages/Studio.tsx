@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { ImmersiveCardViewer } from '@/components/viewer/ImmersiveCardViewer';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { LoadingState } from '@/components/common/LoadingState';
+import { EnhancedMobileStudioInteractions } from '@/components/studio/components/EnhancedMobileStudioInteractions';
+import { MobileStudioControlsRedesigned } from '@/components/studio/components/MobileStudioControlsRedesigned';
+import type { CaseStyle } from '@/components/studio/components/StudioCaseSelector';
 import { StudioCardManager } from '@/components/studio/StudioCardManager';
 import { ProfessionalWorkspace } from '@/components/studio/workspace';
-import { LoadingState } from '@/components/common/LoadingState';
-import { ErrorBoundary } from '@/components/common/ErrorBoundary';
-import { NoCardSelected } from './Studio/components/NoCardSelected';
-import { DatabaseSeedPrompt } from './Studio/components/DatabaseSeedPrompt';
-import { MobileStudioControlsRedesigned } from '@/components/studio/components/MobileStudioControlsRedesigned';
-import { EnhancedMobileStudioInteractions } from '@/components/studio/components/EnhancedMobileStudioInteractions';
+import { ImmersiveCardViewer } from '@/components/viewer/ImmersiveCardViewer';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { useResponsiveBreakpoints } from '@/hooks/useResponsiveBreakpoints';
-import type { CaseStyle } from '@/components/studio/components/StudioCaseSelector';
-import { useStudioState } from './Studio/hooks/useStudioState';
-import { checkIfDatabaseHasCards } from '@/utils/seedDatabase';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
 import type { CardData } from '@/types/card';
+import { checkIfDatabaseHasCards } from '@/utils/seedDatabase';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { DatabaseSeedPrompt } from './Studio/components/DatabaseSeedPrompt';
+import { NoCardSelected } from './Studio/components/NoCardSelected';
+import { useStudioState } from './Studio/hooks/useStudioState';
 
 // Helper function to convert CardData to the format expected by ImmersiveCardViewer
 const convertCardForViewer = (card: CardData) => {
@@ -64,7 +64,7 @@ const convertCardForViewer = (card: CardData) => {
 
 const Studio = () => {
   const { cardId } = useParams();
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const { deviceType } = useResponsiveBreakpoints();
   const [showSeedPrompt, setShowSeedPrompt] = useState(false);
   const [hasCheckedDatabase, setHasCheckedDatabase] = useState(false);
@@ -156,17 +156,9 @@ const Studio = () => {
     return <NoCardSelected />;
   }
 
-  // Debug info in development
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`🎮 Studio rendering card: ${selectedCard.title} from ${dataSource} source`);
-    console.log('🖼️ Card image URL:', selectedCard.image_url);
-  }
-
   // Convert card and mockCards for viewer compatibility
   const viewerCard = convertCardForViewer(selectedCard);
   const viewerCards = mockCards.map(convertCardForViewer);
-
-  console.log('🎯 Converted viewer card:', viewerCard.title, 'Image URL:', viewerCard.image_url);
 
   const handleViewerShare = (card: any) => {
     // Convert back to original CardData format for the handler
@@ -232,12 +224,10 @@ const Studio = () => {
             currentCardIndex={currentCardIndex}
             onCardChange={handleCardChange}
             onRefresh={async () => {
-              console.log('🔄 Refreshing studio data...');
               // Add refresh logic here - reload cards, update data, etc.
               await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate refresh
             }}
             onRotationChange={(rotation) => {
-              console.log('🔄 Card rotation changed:', rotation);
               // Handle rotation changes for 3D card
             }}
           >

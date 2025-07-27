@@ -1,5 +1,5 @@
 
-import { User, Session } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 
 export class DevAuthService {
   private readonly DEV_USER_KEY = 'dev_auth_user';
@@ -14,14 +14,7 @@ export class DevAuthService {
     const hostname = window.location.hostname;
     const isLocalhost = ['localhost', '127.0.0.1', '0.0.0.0'].includes(hostname) || hostname.startsWith('localhost');
     
-    console.log('🔧 Dev mode check:', { 
-      nodeEnv: process.env.NODE_ENV, 
-      hostname, 
-      isDevEnv, 
-      isLocalhost,
-      devModeEnabled,
-      result: devModeEnabled && isDevEnv && isLocalhost
-    });
+
     
     // Only enable dev mode for localhost AND with explicit flag
     return devModeEnabled && isDevEnv && isLocalhost;
@@ -36,7 +29,6 @@ export class DevAuthService {
   }
 
   forceCreateDevSession() {
-    console.log('🔧 Force creating dev session...');
     return this.createDevUserSession();
   }
 
@@ -82,7 +74,6 @@ export class DevAuthService {
     localStorage.setItem(this.DEV_USER_KEY, JSON.stringify(devUser));
     localStorage.setItem(this.DEV_SESSION_KEY, JSON.stringify(devSession));
 
-    console.log('🔧 Created dev user session');
     return { user: devUser, session: devSession, error: null };
   }
 

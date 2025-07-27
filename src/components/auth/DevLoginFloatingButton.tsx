@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { User, X } from 'lucide-react';
 import { devAuthService } from '@/features/auth/services/devAuthService';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from 'sonner';
 
 export const DevLoginFloatingButton: React.FC = () => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
   const [isMinimized, setIsMinimized] = useState(false);
 
   const handleDevLogin = () => {

@@ -1,17 +1,17 @@
 
+import { CRDButton } from '@/components/ui/design-system';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { CRDButton } from '@/components/ui/design-system';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
 import { AuthFormContainer } from './components/AuthFormContainer';
-import { UsernameField } from './components/UsernameField';
 import { PasscodeField } from './components/PasscodeField';
+import { UsernameField } from './components/UsernameField';
 
 export const CustomSignInForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [passcode, setPasscode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn } = useCustomAuth();
+  const { signIn } = useSecureAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {

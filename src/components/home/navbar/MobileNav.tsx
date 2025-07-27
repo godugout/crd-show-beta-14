@@ -1,8 +1,8 @@
+import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { X } from "lucide-react";
-import { useAuth } from "@/features/auth/providers/AuthProvider";
-import { cn } from "@/lib/utils";
+import { useSecureAuth } from "@/features/auth/providers/SecureAuthProvider";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -21,7 +21,7 @@ const navigationItems = [
 
 export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
 
   const isActive = (path: string) => {
     if (path === '/collections') {

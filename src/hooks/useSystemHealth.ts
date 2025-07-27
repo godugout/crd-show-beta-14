@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
 export type HealthStatus = 'healthy' | 'warning' | 'error';
 
@@ -22,7 +22,7 @@ export interface JourneyMetrics {
 }
 
 export const useSystemHealth = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
   
   const [health, setHealth] = useState<SystemHealthCheck>({
     authSystem: 'healthy',

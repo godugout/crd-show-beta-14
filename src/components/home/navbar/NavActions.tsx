@@ -1,14 +1,12 @@
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "@/features/auth/providers/AuthProvider";
-import { CRDButton } from "@/components/ui/design-system";
-import { ExpandedProfileDropdown } from "./ExpandedProfileDropdown";
 import { NotificationCenter } from "@/components/common/NotificationCenter";
 import { CreditBalance } from "@/components/monetization/CreditBalance";
+import { useSecureAuth } from "@/features/auth/providers/SecureAuthProvider";
+import { Link } from "react-router-dom";
+import { ExpandedProfileDropdown } from "./ExpandedProfileDropdown";
 
 export const NavActions = () => {
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
 
   if (user) {
     return (

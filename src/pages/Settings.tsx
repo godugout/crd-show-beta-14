@@ -1,18 +1,17 @@
 
-import React, { useState } from 'react';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
-import { useProfile } from '@/hooks/useProfile';
+import { LoadingState } from '@/components/common/LoadingState';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { LoadingState } from '@/components/common/LoadingState';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import { useProfile } from '@/hooks/useProfile';
+import { Eye, Globe, Mail, MapPin, Save, User } from 'lucide-react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { User, Mail, Globe, MapPin, Save, Eye, EyeOff } from 'lucide-react';
 
 interface UserPreferences {
   darkMode?: boolean;
@@ -24,7 +23,7 @@ interface UserPreferences {
 }
 
 const Settings = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useSecureAuth();
   const { profile, updateProfile, isLoading, isUpdating } = useProfile(user?.id);
   
   const [formData, setFormData] = useState({

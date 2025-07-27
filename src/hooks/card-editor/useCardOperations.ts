@@ -1,10 +1,10 @@
 
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
+import { supabase } from '@/integrations/supabase/client';
+import type { CardData } from '@/types/card';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { supabase } from '@/lib/supabase-client';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
 import { v4 as uuidv4 } from 'uuid';
-import type { CardData } from '@/types/card';
 
 // UUID validation function
 const isValidUUID = (str: string): boolean => {
@@ -48,7 +48,7 @@ export const useCardOperations = (
 ) => {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const { user } = useCustomAuth();
+  const { user } = useSecureAuth();
 
   const saveCard = async (): Promise<boolean> => {
     setIsSaving(true);

@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useEffect, useState } from 'react';
 
 export const useLikes = (cardId: string) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
+  const { user } = useSecureAuth();
 
   useEffect(() => {
     if (cardId) {

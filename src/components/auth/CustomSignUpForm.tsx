@@ -1,22 +1,19 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { CRDButton } from '@/components/ui/design-system';
-import { useCustomAuth } from '@/features/auth/hooks/useCustomAuth';
-import { AuthFormContainer } from './components/AuthFormContainer';
-import { UsernameField } from './components/UsernameField';
-import { PasscodeField } from './components/PasscodeField';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface CustomSignUpFormProps {
-  onComplete?: () => void;
-}
-
-export const CustomSignUpForm: React.FC<CustomSignUpFormProps> = ({ onComplete }) => {
-  const [username, setUsername] = useState('');
-  const [passcode, setPasscode] = useState('');
-  const [confirmPasscode, setConfirmPasscode] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { signUp } = useCustomAuth();
+export const CustomSignUpForm: React.FC = () => {
+  const { signUp } = useSecureAuth();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    username: '',
+    fullName: ''
+  });
 
   const isFormValid = username.length >= 3 && 
     passcode.length >= 4 && 

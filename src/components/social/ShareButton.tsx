@@ -3,7 +3,7 @@ import { Share2, Copy, ExternalLink } from 'lucide-react';
 import { CRDButton } from '@/components/ui/design-system/Button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/features/auth/providers/AuthProvider';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
 import { toast } from '@/hooks/use-toast';
 
 interface ShareButtonProps {
@@ -21,7 +21,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
   className = '',
   variant = 'icon'
 }) => {
-  const { user } = useAuth();
+  const { user  } = useSecureAuth();
 
   const shareUrl = `${window.location.origin}/cards/${cardId}`;
 

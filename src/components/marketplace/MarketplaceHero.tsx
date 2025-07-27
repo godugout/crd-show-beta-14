@@ -60,6 +60,12 @@ export const MarketplaceHero: React.FC<MarketplaceHeroProps> = ({
                          focus:border-primary focus:ring-2 focus:ring-primary/20
                          hover:border-primary/50 transition-all duration-200
                          placeholder:text-crd-text-dim"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && searchQuery.trim()) {
+                    // Trigger search on Enter
+                    onSearchChange(searchQuery.trim());
+                  }
+                }}
               />
             </div>
             <div className="lg:w-auto w-full">

@@ -10,13 +10,13 @@
  * Only visible in development mode and can be dismissed permanently.
  */
 
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, XCircle, RefreshCw, X } from 'lucide-react';
-import { useCoreUserJourney } from '@/hooks/useCoreUserJourney';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
+import { AlertTriangle, CheckCircle, RefreshCw, X, XCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 interface SystemHealth {
   authSystem: 'healthy' | 'degraded' | 'failed';
@@ -35,7 +35,7 @@ interface JourneyMetrics {
 }
 
 export const BetaStabilityMonitor: React.FC = () => {
-  const { getJourneyStatus, user } = useCoreUserJourney();
+  const { user } = useSecureAuth();
   const [systemHealth, setSystemHealth] = useState<SystemHealth>({
     authSystem: 'healthy',
     cardCreation: 'healthy',
@@ -93,8 +93,8 @@ export const BetaStabilityMonitor: React.FC = () => {
     // Database connectivity check
     try {
       // This is a lightweight check that doesn't create data
-      const journeyStatus = getJourneyStatus();
-      if (journeyStatus === undefined) {
+      // For now, we'll assume database is healthy if auth is working
+      if (!user) {
         newHealth.database = 'degraded';
       }
     } catch {

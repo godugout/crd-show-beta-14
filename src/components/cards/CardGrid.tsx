@@ -79,7 +79,10 @@ const CardGridItem = memo(({ card, index }: { card: CardData; index: number }) =
       }}
     >
       <Card 
-        className="card-themed rounded-xl overflow-hidden relative"
+        className={cn(
+          "card-themed rounded-xl overflow-hidden relative card-hover-base",
+          `card-hover-${rarity}`
+        )}
         style={{
           border: `2px solid ${rarityStyles.borderColor}`,
           boxShadow: rarityStyles.hasGlow 
@@ -96,19 +99,23 @@ const CardGridItem = memo(({ card, index }: { card: CardData; index: number }) =
         </Badge>
 
         <div className="aspect-[3/4] relative overflow-hidden bg-crd-mediumGray">
-          {imageLoading && (
-            <Skeleton className="absolute inset-0 bg-crd-mediumGray" />
-          )}
+                  {imageLoading && (
+          <div className="absolute inset-0 card-skeleton" />
+        )}
           <img
             src={displayImage}
             alt={card.title || 'Card'}
-            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
+            className={cn(
+              "w-full h-full object-cover card-image-hover",
               imageLoading ? 'opacity-0' : 'opacity-100'
-            }`}
+            )}
             loading="lazy"
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
+          
+          {/* Hover overlay */}
+          <div className="card-overlay" />
           
           {/* Glow Overlay */}
           {rarityStyles.hasGlow && (
