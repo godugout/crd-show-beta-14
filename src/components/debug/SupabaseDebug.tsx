@@ -1,5 +1,5 @@
-import { supabaseConfig } from '@/integrations/supabase/client';
 import React from 'react';
+import { supabaseConfig } from '@/lib/supabase-client';
 
 export const SupabaseDebug: React.FC = () => {
   const isDevelopment = import.meta.env.DEV;
@@ -13,5 +13,7 @@ export const SupabaseDebug: React.FC = () => {
         <span className="text-gray-300">{supabaseConfig.url.split('.')[0].split('//')[1]}</span>
       </div>
     </div>
+  );
+}; 
   );
 }; 

@@ -1,6 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { User } from '@supabase/supabase-js';
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { secureAuthService } from '../services/secureAuthService';
 import { userManagementService } from '../services/userManagementService';
 
@@ -34,7 +34,7 @@ interface SecureAuthProviderProps {
   children: React.ReactNode;
 }
 
-const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ children }) => {
+export const SecureAuthProvider: React.FC<SecureAuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -127,8 +127,10 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
 
   const signUp = async (email: string, password: string, fullName: string, username?: string) => {
     try {
-      const result = await secureAuthService.signUp(email, password, {
-        full_name: fullName,
+      const result = await userManagementService.createUser({
+        email,
+        password,
+        fullName,
         username
       });
       
@@ -154,10 +156,14 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
   const signOut = async () => {
     try {
       const result = await secureAuthService.signOut();
-      return {
-        success: result.success,
-        error: result.error
-      };
+      
+      if (result.success) {
+        setUser(null);
+        setProfile(null);
+        setRateLimitInfo(null);
+      }
+      
+      return result;
     } catch (error) {
       console.error('Sign out error:', error);
       return {
@@ -185,7 +191,7 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
       console.error('Reset password error:', error);
       return {
         success: false,
-        error: 'An unexpected error occurred during password reset.'
+        error: 'An unexpected error occurred while resetting password.'
       };
     }
   };
@@ -193,10 +199,7 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
   const updatePassword = async (newPassword: string) => {
     try {
       const result = await secureAuthService.updatePassword(newPassword);
-      return {
-        success: result.success,
-        error: result.error
-      };
+      return result;
     } catch (error) {
       console.error('Update password error:', error);
       return {
@@ -216,6 +219,11 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
       }
 
       const result = await userManagementService.updateUserProfile(user.id, updates);
+      
+      if (result.success && result.profile) {
+        setProfile(result.profile);
+      }
+      
       return {
         success: result.success,
         error: result.error
@@ -229,7 +237,7 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
     }
   };
 
-  const contextValue = useMemo(() => ({
+  const value: SecureAuthContextType = {
     user,
     profile,
     loading,
@@ -240,13 +248,11 @@ const SecureAuthProviderComponent: React.FC<SecureAuthProviderProps> = ({ childr
     updatePassword,
     updateProfile,
     rateLimitInfo
-  }), [user, profile, loading, rateLimitInfo]);
+  };
 
   return (
-    <SecureAuthContext.Provider value={contextValue}>
+    <SecureAuthContext.Provider value={value}>
       {children}
     </SecureAuthContext.Provider>
   );
-};
-
-export const SecureAuthProvider = React.memo(SecureAuthProviderComponent); 
+}; rComponent); 

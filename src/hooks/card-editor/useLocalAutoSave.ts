@@ -1,6 +1,6 @@
 
 import { localCardStorage } from '@/lib/localCardStorage';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase-client';
 import type { CardData } from '@/types/card';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
@@ -127,5 +127,8 @@ export const useLocalAutoSave = (
         syncToServer(cardData.id);
       }
     }
+  };
+};
+
   };
 };

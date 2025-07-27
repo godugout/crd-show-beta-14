@@ -1,6 +1,6 @@
 
 import { useSecureAuth } from '@/features/auth/providers/SecureAuthProvider';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase-client';
 import type { CardData } from '@/types/card';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -181,5 +181,8 @@ export const useCardOperations = (
     publishCard,
     isSaving,
     lastSaved
+  };
+};
+
   };
 };
