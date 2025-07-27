@@ -174,16 +174,16 @@ export function usePBRMaterial(options: PBRMaterialOptions = {}) {
           case 'envMapIntensity':
             material.envMapIntensity = validatedValue;
             break;
-          case 'albedo':
-            if (value instanceof THREE.Color) {
-              material.color.copy(value as any);
-            }
-            break;
-          case 'emission':
-            if (value instanceof THREE.Color) {
-              material.emissive.copy(value as any);
-            }
-            break;
+                  case 'albedo':
+          if (typeof value === 'object' && value && 'r' in value) {
+            material.color.copy(value as any);
+          }
+          break;
+        case 'emission':
+          if (typeof value === 'object' && value && 'r' in value) {
+            material.emissive.copy(value as any);
+          }
+          break;
         }
 
         // Mark material for update

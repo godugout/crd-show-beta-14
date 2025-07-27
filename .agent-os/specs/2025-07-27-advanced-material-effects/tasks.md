@@ -15,13 +15,13 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
   - [x] 1.5 Add performance monitoring for material operations
   - [x] 1.6 Verify all material system tests pass
 
-- [ ] 2. **PBR Material Implementation**
-  - [ ] 2.1 Write tests for Three.js material integration
-  - [ ] 2.2 Implement PBR material wrapper with standard properties
-  - [ ] 2.3 Add support for metallic, roughness, and normal maps
-  - [ ] 2.4 Create material property validation and clamping
-  - [ ] 2.5 Implement real-time material updates
-  - [ ] 2.6 Verify all PBR material tests pass
+- [x] 2. **PBR Material Implementation**
+  - [x] 2.1 Write tests for Three.js material integration
+  - [x] 2.2 Implement PBR material wrapper with standard properties
+  - [x] 2.3 Add support for metallic, roughness, and normal maps
+  - [x] 2.4 Create material property validation and clamping
+  - [x] 2.5 Implement real-time material updates
+  - [x] 2.6 Verify all PBR material tests pass
 
 - [ ] 3. **Lighting System Enhancement**
   - [ ] 3.1 Write tests for dynamic lighting components
