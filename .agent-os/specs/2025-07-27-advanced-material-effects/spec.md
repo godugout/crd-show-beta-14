@@ -49,3 +49,9 @@ As a card collector, I want to view cards with realistic lighting and material e
 1. **Interactive Material Panel** - Users can select and customize materials with real-time preview
 2. **High-Quality 3D Rendering** - Cards render with realistic materials and lighting at 60fps on desktop, 30fps minimum on mobile
 3. **Material Presets Library** - At least 12 preset materials covering common card finishes (matte, glossy, metallic variants, holographic effects)
+
+## Spec Documentation
+
+- Tasks: @.agent-os/specs/2025-07-27-advanced-material-effects/tasks.md
+- Technical Specification: @.agent-os/specs/2025-07-27-advanced-material-effects/sub-specs/technical-spec.md
+- Tests Specification: @.agent-os/specs/2025-07-27-advanced-material-effects/sub-specs/tests.md
