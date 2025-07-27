@@ -1,3 +1,5 @@
+import { AuthTestComponent } from '@/components/auth/AuthTestComponent';
+import { ThemeTester } from '@/components/admin/ThemeTester';
 import { DevLoginFloatingButton } from '@/components/auth/DevLoginFloatingButton';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { LoadingState } from '@/components/common/LoadingState';
@@ -47,13 +49,26 @@ const SimpleCardCreate = lazy(() => import('@/pages/SimpleCardCreate'));
 const CRDMKRPSDReviewPage = lazy(() => import('@/pages/CRDMKRPSDReviewPage'));
 const CRDMaker = lazy(() => import('@/pages/CRDMaker'));
 const WowFactorDemo = lazy(() => import('@/pages/WowFactorDemo'));
-const ClaudeDashboard = lazy(() => import('@/components/admin/ClaudeIntegrationDashboard').then(module => ({ default: module.ClaudeIntegrationDashboard })));
-const NavbarSpacingTest = lazy(() => import('@/components/layout/NavbarSpacingTest').then(module => ({ default: module.NavbarSpacingTest })));
-const SecureAuthTest = lazy(() => import('@/pages/SecureAuthTest').then(module => ({ default: module.SecureAuthTest })));
+const ClaudeDashboard = lazy(() =>
+  import('@/components/admin/ClaudeIntegrationDashboard').then(module => ({
+    default: module.ClaudeIntegrationDashboard,
+  }))
+);
+const NavbarSpacingTest = lazy(() =>
+  import('@/components/layout/NavbarSpacingTest').then(module => ({
+    default: module.NavbarSpacingTest,
+  }))
+);
+const SecureAuthTest = lazy(() =>
+  import('@/pages/SecureAuthTest').then(module => ({
+    default: module.SecureAuthTest,
+  }))
+);
 
 // Development/testing pages - low priority for lazy loading
 const UploadTestPage = lazy(() => import('@/pages/UploadTestPage'));
 const DNATestPage = lazy(() => import('@/pages/DNATestPage'));
+const DesignGuide = lazy(() => import('@/pages/DesignGuide'));
 
 // DNA/Admin pages - perfect candidates for lazy loading
 const DNAManager = lazy(() => import('@/pages/DNAManager'));
@@ -210,6 +225,16 @@ export const App: React.FC = () => {
                           <RouteErrorBoundary>
                             <Suspense fallback={<RouteLoading />}>
                               <DNATestPage />
+                            </Suspense>
+                          </RouteErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path='/design-guide'
+                        element={
+                          <RouteErrorBoundary>
+                            <Suspense fallback={<RouteLoading />}>
+                              <DesignGuide />
                             </Suspense>
                           </RouteErrorBoundary>
                         }
@@ -376,26 +401,26 @@ export const App: React.FC = () => {
                           </RouteErrorBoundary>
                         }
                       />
-                                  <Route
-              path='/test/navbar-spacing'
-              element={
-                <RouteErrorBoundary>
-                  <Suspense fallback={<RouteLoading />}>
-                    <NavbarSpacingTest />
-                  </Suspense>
-                </RouteErrorBoundary>
-              }
-            />
-            <Route
-              path='/test/secure-auth'
-              element={
-                <RouteErrorBoundary>
-                  <Suspense fallback={<RouteLoading />}>
-                    <SecureAuthTest />
-                  </Suspense>
-                </RouteErrorBoundary>
-              }
-            />
+                      <Route
+                        path='/test/navbar-spacing'
+                        element={
+                          <RouteErrorBoundary>
+                            <Suspense fallback={<RouteLoading />}>
+                              <NavbarSpacingTest />
+                            </Suspense>
+                          </RouteErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path='/test/secure-auth'
+                        element={
+                          <RouteErrorBoundary>
+                            <Suspense fallback={<RouteLoading />}>
+                              <SecureAuthTest />
+                            </Suspense>
+                          </RouteErrorBoundary>
+                        }
+                      />
 
                       {/* Auth pages - immediately loaded for better UX */}
                       <Route
@@ -476,6 +501,7 @@ export const App: React.FC = () => {
                       <BetaStabilityMonitor />
                       <SupabaseDebug />
                       <AuthTestComponent />
+                      <ThemeTester />
                     </>
                   )}
                   <GlobalSecretMenu />
