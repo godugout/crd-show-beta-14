@@ -19,7 +19,8 @@
     "subagent-test": "node scripts/test-subagents.js",
     "dev-simple": "./scripts/simple-dev.sh",
     "dev-optimized": "NODE_OPTIONS=\"--max-old-space-size=512\" npm run dev",
-    "setup-env": "./scripts/setup-environment.sh"
+    "setup-env": "./scripts/setup-environment.sh",
+    "dev:ai": "npx -y @anthropic-ai/claude-code"
   },
   "dependencies": {
     "@capacitor/android": "^7.4.2",

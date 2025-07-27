@@ -71,3 +71,33 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Claude Code CLI Integration
+
+Cardshow/CRD works great with Anthropic’s **Claude Code** CLI for large–scale refactors, multi-file edits, and advanced git workflows.
+
+### Installation & Usage
+
+```bash
+# 1  Install globally
+npm install -g @anthropic-ai/claude-code
+
+# 2  From the project root
+claude            # starts an interactive Claude session
+```
+
+### Authentication Options
+
+1. **Browser OAuth** (default) – Anthropic Console
+2. **Claude App** – if you have Pro/Max
+3. **API Key** – set `ANTHROPIC_API_KEY`
+
+### Recommended Workflow inside Cursor
+
+1. Open Cursor’s integrated terminal.
+2. Run `claude` and let it index the repo.
+3. Keep Cursor’s inline AI for small changes, use Claude Code for repo-wide tasks.
+
+### Helper Scripts
+
+After running `npm run dev:ai` (see _package.json_) the CLI starts automatically in the correct directory with environment variables loaded.
