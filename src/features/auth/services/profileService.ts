@@ -8,7 +8,7 @@ export interface ProfileData {
   avatar_url?: string;
   website?: string;
   location?: string;
-  preferences?: Record<string, any>;
+  preferences?: Record<string, unknown>;
 }
 
 export class ProfileService {

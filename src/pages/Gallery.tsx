@@ -40,9 +40,7 @@ const Gallery = () => {
           !card.image_url.startsWith('blob:') && 
           !card.image_url.includes('undefined');
         
-        if (!hasValidImage) {
-          console.log('🎨 Filtering out card with invalid image:', card.title, card.image_url);
-        }
+        // Filter out cards with invalid images
         
         return hasValidImage || !card.image_url;
       });
