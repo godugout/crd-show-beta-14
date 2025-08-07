@@ -85,6 +85,12 @@ export const useEnhancedNavbar = ({
       currentScrollY > lastScrollY.current ? 'down' :
       currentScrollY < lastScrollY.current ? 'up' : 'idle';
 
+    // Calculate if user is near bottom of page
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const distanceFromBottom = documentHeight - (currentScrollY + windowHeight);
+    const isNearBottom = distanceFromBottom < 200; // Show navbar when within 200px of bottom
+
     // Update scroll metrics
     setScrollMetrics({
       scrollY: currentScrollY,
@@ -104,6 +110,9 @@ export const useEnhancedNavbar = ({
     // Visibility logic
     if (currentScrollY <= threshold) {
       // Always show at the top
+      updateVisibility(true);
+    } else if (isNearBottom) {
+      // Always show when near bottom of page for navigation
       updateVisibility(true);
     } else if (direction === 'up' && currentScrollY > threshold) {
       // Scrolling up - show with velocity-based delay
